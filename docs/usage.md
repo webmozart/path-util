@@ -192,10 +192,10 @@ echo Path::getDirectory("C:\Programs");
 Additionally, you can use `Path::getRoot()` to obtain the root of a path:
 
 ```php
-echo Path::getDirectory("/etc/apache2/sites-available");
+echo Path::getRoot("/etc/apache2/sites-available");
 // => /
 
-echo Path::getDirectory("C:\Programs\Apache\Config");
+echo Path::getRoot("C:\Programs\Apache\Config");
 // => C:/
 ```
 
