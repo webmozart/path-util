@@ -72,7 +72,7 @@ If you are having problems, send a mail to bschussek@gmail.com or shout out to
 License
 -------
 
-Puli and its documentation are licensed under the [MIT license].
+All contents of this package are licensed under the [MIT license].
 
 [Bernhard Schussek]: http://webmozarts.com
 [The Community Contributors]: https://github.com/webmozart/path-util/graphs/contributors
