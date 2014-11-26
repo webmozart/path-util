@@ -9,7 +9,7 @@ File Path Utility
 [![Total Downloads](https://poser.pugx.org/webmozart/path-util/downloads.png)](https://packagist.org/packages/webmozart/path-util)
 [![Dependency Status](https://www.versioneye.com/php/webmozart:path-util/1.0.0/badge.png)](https://www.versioneye.com/php/webmozart:path-util/1.0.0)
 
-Latest release: none
+Latest release: [1.0.0](https://packagist.org/packages/webmozart/path-util#1.0.0)
 
 PHP >= 5.3.3
 
