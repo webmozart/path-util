@@ -18,7 +18,7 @@ Canonicalization
 ----------------
 
 *Canonicalization* is the transformation of a path into a normalized format.
-You can canonicalize with `Path::canonicalize()`:
+You can canonicalize a path with `Path::canonicalize()`:
 
 ```php
 echo Path::canonicalize('/var/www/vhost/webmozart/../config.ini');
@@ -27,14 +27,14 @@ echo Path::canonicalize('/var/www/vhost/webmozart/../config.ini');
 
 The following modifications happen during canonicalization:
 
-* `.` segments are removed;
-* `..` segments are resolved;
+* "." segments are removed;
+* ".." segments are resolved;
 * backslashes ("\") are converted into forward slashes ("/");
 * root paths ("/" and "C:/") always terminate with a slash;
 * non-root paths never terminate with a slash.
 
 You can pass absolute paths and relative paths to `canonicalize()`. When a
-relative path is passed, `..` segments at the beginning of the path are kept:
+relative path is passed, ".." segments at the beginning of the path are kept:
 
 ```php
 echo Path::canonicalize('../uploads/../config/config.yml');
@@ -70,7 +70,14 @@ echo Path::makeAbsolute('/usr/share/lib/config.ini', '/var/www/project');
 // => /usr/share/lib/config.ini
 ```
 
-This is very useful if you want to be able to accept relative paths (for 
+The method resolves ".." segments, if there are any:
+
+```php
+echo Path::makeAbsolute('../config/config.yml', '/var/www/project/uploads');
+// => /var/www/project/config/config.yml
+```
+
+This method is very useful if you want to be able to accept relative paths (for 
 example, relative to the root directory of your project) and absolute paths at
 the same time.
 
@@ -81,7 +88,7 @@ echo Path::makeRelative('/var/www/project/config/config.yml', '/var/www/project'
 // => config/config.yml
 ```
 
-If the path is not within the base path, the method will prepend `..` segments
+If the path is not within the base path, the method will prepend ".." segments
 as necessary:
 
 ```php
@@ -102,7 +109,7 @@ All four methods internally canonicalize the passed path.
 Finding Longest Common Base Paths
 ---------------------------------
 
-When you cache absolute file paths on the file system, this leads to a lot of 
+When you store absolute file paths on the file system, this leads to a lot of 
 duplicated information:
 
 ```php
@@ -115,7 +122,7 @@ return array(
 );
 ```
 
-Especially when caching many paths, the amount of duplicated information is
+Especially when storing many paths, the amount of duplicated information is
 noticeable. You can use `Path::getLongestCommonBasePath()` to check a list of
 paths for a common base path:
 
@@ -132,8 +139,7 @@ Path::getLongestCommonBasePath($paths);
 // => /var/www/vhosts/project/httpdocs
 ```
 
-You can use this path together with `Path::makeRelative()` to shorten your 
-cache file:
+Use this path together with `Path::makeRelative()` to shorten the stored paths:
 
 ```php
 $bp = '/var/www/vhosts/project/httpdocs';
@@ -175,15 +181,14 @@ This method has a few quirks:
 * `dirname("Programs")` returns ".", not ""
 * `dirname()` does not canonicalize the result
 
-You can use `Path::getDirectory()` as alternative which fixes these shortcomings:
+`Path::getDirectory()` fixes these shortcomings:
 
 ```php
 echo Path::getDirectory("C:\Programs");
 // => C:/
 ```
 
-Additionally, you can use `Path::getRoot()` to obtain the root directory of a
-longer path:
+Additionally, you can use `Path::getRoot()` to obtain the root of a path:
 
 ```php
 echo Path::getDirectory("/etc/apache2/sites-available");
