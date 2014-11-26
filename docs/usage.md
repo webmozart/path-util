@@ -9,7 +9,8 @@ Dealing with file paths usually involves some difficulties:
   backslashes by default ("\").
   
 * **Absolute/Relative Paths**: Web applications frequently need to deal with
-  absolute and relative paths. Converting one to the other is difficult.
+  absolute and relative paths. Converting one to the other properly is tricky
+  and repetitive.
 
 This package provides few, but robust utility methods to simplify your life
 when dealing with file paths.
