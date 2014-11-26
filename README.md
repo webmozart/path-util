@@ -25,6 +25,12 @@ echo Path::canonicalize('/var/www/vhost/webmozart/../config.ini');
 echo Path::canonicalize('C:\Programs\Webmozart\..\config.ini');
 // => C:/Programs/config.ini
 
+echo Path::makeAbsolute('config/config.yml', '/var/www/project');
+// => /var/www/project/config/config.yml
+
+echo Path::makeRelative('/var/www/project/config/config.yml', '/var/www/project/uploads');
+// => ../config/config.yml
+
 $paths = array(
     '/var/www/vhosts/project/httpdocs/config/config.yml',
     '/var/www/vhosts/project/httpdocs/images/banana.gif',
