@@ -41,6 +41,8 @@ Path::getLongestCommonBasePath($paths);
 // => /var/www/vhosts/project/httpdocs
 ```
 
+Learn more in the [Documentation].
+
 Authors
 -------
 
