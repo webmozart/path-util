@@ -18,8 +18,8 @@ when dealing with file paths.
 Canonicalization
 ----------------
 
-*Canonicalization* is the transformation of a path into a normalized format.
-You can canonicalize a path with `Path::canonicalize()`:
+*Canonicalization* is the transformation of a path into a normalized (the
+"canonical") format. You can canonicalize a path with `Path::canonicalize()`:
 
 ```php
 echo Path::canonicalize('/var/www/vhost/webmozart/../config.ini');
