@@ -17,12 +17,12 @@ This package provides robust, cross-platform utility functions for normalizing,
 comparing and modifying file paths:
 
 ```php
-use Webmozart\\PathUtil\\Path;
+use Webmozart\PathUtil\Path;
 
 echo Path::canonicalize('/var/www/vhost/webmozart/../config.ini');
 // => /var/www/vhost/config.ini
 
-echo Path::canonicalize('C:\\Programs\\Webmozart\\..\\config.ini');
+echo Path::canonicalize('C:\Programs\Webmozart\..\config.ini');
 // => C:/Programs/config.ini
 
 $paths = array(

@@ -6,7 +6,7 @@ Dealing with file paths usually involves some difficulties:
 * **System Heterogeneity**: File paths look different on different platforms. 
   UNIX file paths start with a slash ("/"), while Windows file paths start with
   a system drive ("C:"). UNIX uses forward slashes, while Windows uses 
-  backslashes by default ("\\").
+  backslashes by default ("\").
   
 * **Absolute/Relative Paths**: Web applications frequently need to deal with
   absolute and relative paths. Converting one to the other is difficult.
@@ -29,7 +29,7 @@ The following modifications happen during canonicalization:
 
 * `.` segments are removed;
 * `..` segments are resolved;
-* backslashes ("\\") are converted into forward slashes ("/");
+* backslashes ("\") are converted into forward slashes ("/");
 * root paths ("/" and "C:/") always terminate with a slash;
 * non-root paths never terminate with a slash.
 
@@ -93,7 +93,7 @@ Use `isAbsolute()` and `isRelative()` to check whether a path is absolute or
 relative:
 
 ```php
-Path::isAbsolute('C:\\Programs\\PHP\\php.ini')
+Path::isAbsolute('C:\Programs\PHP\php.ini')
 // => true
 ```
 
@@ -178,7 +178,7 @@ This method has a few quirks:
 You can use `Path::getDirectory()` as alternative which fixes these shortcomings:
 
 ```php
-echo Path::getDirectory("C:\\Programs");
+echo Path::getDirectory("C:\Programs");
 // => C:/
 ```
 
@@ -189,7 +189,7 @@ longer path:
 echo Path::getDirectory("/etc/apache2/sites-available");
 // => /
 
-echo Path::getDirectory("C:\\Programs\\Apache\\Config");
+echo Path::getDirectory("C:\Programs\Apache\Config");
 // => C:/
 ```
 
