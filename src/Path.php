@@ -399,7 +399,7 @@ class Path
         $dotDotPrefix = '';
 
         foreach ($baseParts as $i => $basePart) {
-            if ($basePart === $parts[$i]) {
+            if (isset($parts[$i]) && $basePart === $parts[$i]) {
                 unset($parts[$i]);
 
                 continue;

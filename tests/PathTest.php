@@ -397,6 +397,12 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('/webmozart/puli/css/style.css', '/webmozart/.././puli', '../webmozart/puli/css/style.css'),
             array('/webmozart/puli/css/style.css', '/webmozart/../../puli', '../webmozart/puli/css/style.css'),
 
+            // first argument shorter than second
+            array('/css', '/webmozart/puli', '../../css'),
+
+            // second argument shorter than first
+            array('/webmozart/puli', '/css', '../webmozart/puli'),
+
             array('\\webmozart\\puli\\css\\style.css', '\\webmozart\\puli', 'css/style.css'),
             array('\\webmozart\\css\\style.css', '\\webmozart\\puli', '../css/style.css'),
             array('\\css\\style.css', '\\webmozart\\puli', '../../css/style.css'),
