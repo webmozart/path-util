@@ -265,7 +265,7 @@ class Path
     {
         $basePath = (string) $basePath;
 
-        if ('' !== $basePath && !static::isAbsolute($basePath)) {
+        if (!static::isAbsolute($basePath)) {
             throw new \InvalidArgumentException(sprintf(
                 'The base path "%s" is not an absolute path.',
                 $basePath
@@ -351,11 +351,9 @@ class Path
     public static function makeRelative($path, $basePath)
     {
         $path = static::canonicalize($path);
-
-        list ($root, $relativePath) = self::split($path);
-
         $basePath = static::canonicalize($basePath);
 
+        list ($root, $relativePath) = self::split($path);
         list ($baseRoot, $relativeBasePath) = self::split($basePath);
 
         // If the base path is given as absolute path and the path is already
@@ -553,13 +551,17 @@ class Path
      * list ($root, $path) = Path::split("C:")
      * // => array("C:/", "")
      *
-     * @param string $path The path to split
+     * @param string $path The canonical path to split
      *
      * @return array An array with the root directory and the remaining relative
      *               path
      */
     private static function split($path)
     {
+        if ('' === $path) {
+            return array('', '');
+        }
+
         $root = '';
         $length = strlen($path);
 

@@ -1,6 +1,12 @@
 Changelog
 =========
 
+* 1.0.2 (@release_date@)
+
+ * Path::makeAbsolute() fails now if the base path is not absolute
+ * Path::makeRelative() now works when a relative path is passed and the base
+   path is empty
+
 * 1.0.1 (2014-12-03)
 
  * Added PHP 5.6 to Travis.

@@ -247,97 +247,75 @@ class PathTest extends \PHPUnit_Framework_TestCase
     public function providePathTests()
     {
         return array(
-            // relative to path
-            array('/webmozart/puli', 'css/style.css', '/webmozart/puli/css/style.css'),
-            array('/webmozart/puli', '../css/style.css', '/webmozart/css/style.css'),
-            array('/webmozart/puli', '../../css/style.css', '/css/style.css'),
+            // relative to absolute path
+            array('css/style.css', '/webmozart/puli', '/webmozart/puli/css/style.css'),
+            array('../css/style.css', '/webmozart/puli', '/webmozart/css/style.css'),
+            array('../../css/style.css', '/webmozart/puli', '/css/style.css'),
 
             // relative to root
-            array('/', 'css/style.css', '/css/style.css'),
-            array('C:', 'css/style.css', 'C:/css/style.css'),
-            array('C:/', 'css/style.css', 'C:/css/style.css'),
+            array('css/style.css', '/', '/css/style.css'),
+            array('css/style.css', 'C:', 'C:/css/style.css'),
+            array('css/style.css', 'C:/', 'C:/css/style.css'),
         );
     }
 
     public function provideMakeAbsoluteTests()
     {
         return array_merge($this->providePathTests(), array(
-            // relative to empty
-            array('', 'css/style.css', '/css/style.css'),
-            array(null, 'css/style.css', '/css/style.css'),
-
-            array('', 'css\\style.css', '/css/style.css'),
-            array(null, 'css\\style.css', '/css/style.css'),
-
             // collapse dots
-            array('/webmozart/puli', 'css/./style.css', '/webmozart/puli/css/style.css'),
-            array('/webmozart/puli', 'css/../style.css', '/webmozart/puli/style.css'),
-            array('/webmozart/puli', 'css/./../style.css', '/webmozart/puli/style.css'),
-            array('/webmozart/puli', 'css/.././style.css', '/webmozart/puli/style.css'),
-            array('/webmozart/puli', './css/style.css', '/webmozart/puli/css/style.css'),
+            array('css/./style.css', '/webmozart/puli', '/webmozart/puli/css/style.css'),
+            array('css/../style.css', '/webmozart/puli', '/webmozart/puli/style.css'),
+            array('css/./../style.css', '/webmozart/puli', '/webmozart/puli/style.css'),
+            array('css/.././style.css', '/webmozart/puli', '/webmozart/puli/style.css'),
+            array('./css/style.css', '/webmozart/puli', '/webmozart/puli/css/style.css'),
 
-            array('\\webmozart\\puli', 'css\\.\\style.css', '/webmozart/puli/css/style.css'),
-            array('\\webmozart\\puli', 'css\\..\\style.css', '/webmozart/puli/style.css'),
-            array('\\webmozart\\puli', 'css\\.\\..\\style.css', '/webmozart/puli/style.css'),
-            array('\\webmozart\\puli', 'css\\..\\.\\style.css', '/webmozart/puli/style.css'),
-            array('\\webmozart\\puli', '.\\css\\style.css', '/webmozart/puli/css/style.css'),
+            array('css\\.\\style.css', '\\webmozart\\puli', '/webmozart/puli/css/style.css'),
+            array('css\\..\\style.css', '\\webmozart\\puli', '/webmozart/puli/style.css'),
+            array('css\\.\\..\\style.css', '\\webmozart\\puli', '/webmozart/puli/style.css'),
+            array('css\\..\\.\\style.css', '\\webmozart\\puli', '/webmozart/puli/style.css'),
+            array('.\\css\\style.css', '\\webmozart\\puli', '/webmozart/puli/css/style.css'),
 
             // collapse dots on root
-            array('/', './css/style.css', '/css/style.css'),
-            array('/', '../css/style.css', '/css/style.css'),
-            array('/', '../css/./style.css', '/css/style.css'),
-            array('/', '../css/../style.css', '/style.css'),
-            array('/', '../css/./../style.css', '/style.css'),
-            array('/', '../css/.././style.css', '/style.css'),
+            array('./css/style.css', '/', '/css/style.css'),
+            array('../css/style.css', '/', '/css/style.css'),
+            array('../css/./style.css', '/', '/css/style.css'),
+            array('../css/../style.css', '/', '/style.css'),
+            array('../css/./../style.css', '/', '/style.css'),
+            array('../css/.././style.css', '/', '/style.css'),
 
-            array('\\', '.\\css\\style.css', '/css/style.css'),
-            array('\\', '..\\css\\style.css', '/css/style.css'),
-            array('\\', '..\\css\\.\\style.css', '/css/style.css'),
-            array('\\', '..\\css\\..\\style.css', '/style.css'),
-            array('\\', '..\\css\\.\\..\\style.css', '/style.css'),
-            array('\\', '..\\css\\..\\.\\style.css', '/style.css'),
+            array('.\\css\\style.css', '\\', '/css/style.css'),
+            array('..\\css\\style.css', '\\', '/css/style.css'),
+            array('..\\css\\.\\style.css', '\\', '/css/style.css'),
+            array('..\\css\\..\\style.css', '\\', '/style.css'),
+            array('..\\css\\.\\..\\style.css', '\\', '/style.css'),
+            array('..\\css\\..\\.\\style.css', '\\', '/style.css'),
 
-            array('C:/', './css/style.css', 'C:/css/style.css'),
-            array('C:/', '../css/style.css', 'C:/css/style.css'),
-            array('C:/', '../css/./style.css', 'C:/css/style.css'),
-            array('C:/', '../css/../style.css', 'C:/style.css'),
-            array('C:/', '../css/./../style.css', 'C:/style.css'),
-            array('C:/', '../css/.././style.css', 'C:/style.css'),
+            array('./css/style.css', 'C:/', 'C:/css/style.css'),
+            array('../css/style.css', 'C:/', 'C:/css/style.css'),
+            array('../css/./style.css', 'C:/', 'C:/css/style.css'),
+            array('../css/../style.css', 'C:/', 'C:/style.css'),
+            array('../css/./../style.css', 'C:/', 'C:/style.css'),
+            array('../css/.././style.css', 'C:/', 'C:/style.css'),
 
-            array('C:\\', '.\\css\\style.css', 'C:/css/style.css'),
-            array('C:\\', '..\\css\\style.css', 'C:/css/style.css'),
-            array('C:\\', '..\\css\\.\\style.css', 'C:/css/style.css'),
-            array('C:\\', '..\\css\\..\\style.css', 'C:/style.css'),
-            array('C:\\', '..\\css\\.\\..\\style.css', 'C:/style.css'),
-            array('C:\\', '..\\css\\..\\.\\style.css', 'C:/style.css'),
-
-            // collapse dots on empty
-            array('', './css/style.css', '/css/style.css'),
-            array('', '../css/style.css', '/css/style.css'),
-            array('', '../css/./style.css', '/css/style.css'),
-            array('', '../css/../style.css', '/style.css'),
-            array('', '../css/./../style.css', '/style.css'),
-            array('', '../css/.././style.css', '/style.css'),
-
-            array('', '.\\css\\style.css', '/css/style.css'),
-            array('', '..\\css\\style.css', '/css/style.css'),
-            array('', '..\\css\\.\\style.css', '/css/style.css'),
-            array('', '..\\css\\..\\style.css', '/style.css'),
-            array('', '..\\css\\.\\..\\style.css', '/style.css'),
-            array('', '..\\css\\..\\.\\style.css', '/style.css'),
+            array('.\\css\\style.css', 'C:\\', 'C:/css/style.css'),
+            array('..\\css\\style.css', 'C:\\', 'C:/css/style.css'),
+            array('..\\css\\.\\style.css', 'C:\\', 'C:/css/style.css'),
+            array('..\\css\\..\\style.css', 'C:\\', 'C:/style.css'),
+            array('..\\css\\.\\..\\style.css', 'C:\\', 'C:/style.css'),
+            array('..\\css\\..\\.\\style.css', 'C:\\', 'C:/style.css'),
 
             // absolute paths
-            array('/webmozart/puli', '/css/style.css', '/css/style.css'),
-            array('/webmozart/puli', '\\css\\style.css', '/css/style.css'),
-            array('C:/webmozart/puli', 'C:/css/style.css', 'C:/css/style.css'),
-            array('D:/webmozart/puli', 'D:\\css\\style.css', 'D:/css/style.css'),
+            array('/css/style.css', '/webmozart/puli', '/css/style.css'),
+            array('\\css\\style.css', '/webmozart/puli', '/css/style.css'),
+            array('C:/css/style.css', 'C:/webmozart/puli', 'C:/css/style.css'),
+            array('D:\\css\\style.css', 'D:/webmozart/puli', 'D:/css/style.css'),
         ));
     }
 
     /**
      * @dataProvider provideMakeAbsoluteTests
      */
-    public function testMakeAbsolute($basePath, $relativePath, $absolutePath)
+    public function testMakeAbsolute($relativePath, $basePath, $absolutePath)
     {
         $this->assertSame($absolutePath, Path::makeAbsolute($relativePath, $basePath));
     }
@@ -348,6 +326,22 @@ class PathTest extends \PHPUnit_Framework_TestCase
     public function testMakeAbsoluteFailsIfBasePathNotAbsolute()
     {
         Path::makeAbsolute('css/style.css', 'webmozart/puli');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMakeAbsoluteFailsIfBasePathEmpty()
+    {
+        Path::makeAbsolute('css/style.css', '');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMakeAbsoluteFailsIfBasePathNull()
+    {
+        Path::makeAbsolute('css/style.css', null);
     }
 
     public function provideAbsolutePathsWithDifferentRoots()
@@ -382,7 +376,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
     public function provideMakeRelativeTests()
     {
         $paths = array_map(function (array $arguments) {
-            return array($arguments[2], $arguments[0], $arguments[1]);
+            return array($arguments[2], $arguments[1], $arguments[0]);
         }, $this->providePathTests());
 
         return array_merge($paths, array(
@@ -423,6 +417,14 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('css/style.css', 'webmozart/puli', '../../css/style.css'),
             array('css\\style.css', 'webmozart\\puli', '../../css/style.css'),
 
+            // relative to empty
+            array('css/style.css', '', 'css/style.css'),
+            array('css\\style.css', '', 'css/style.css'),
+
+            // relative to null
+            array('css/style.css', null, 'css/style.css'),
+            array('css\\style.css', null, 'css/style.css'),
+
             // different slashes in path and base path
             array('/webmozart/puli/css/style.css', '\\webmozart\\puli', 'css/style.css'),
             array('\\webmozart\\puli\\css\\style.css', '/webmozart/puli', 'css/style.css'),
@@ -440,9 +442,25 @@ class PathTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testMakeRelativeFailsIfBasePathNotAbsolute()
+    public function testMakeRelativeFailsIfAbsolutePathAndBasePathNotAbsolute()
     {
         Path::makeRelative('/webmozart/puli/css/style.css', 'webmozart/puli');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMakeRelativeFailsIfAbsolutePathAndBasePathEmpty()
+    {
+        Path::makeRelative('/webmozart/puli/css/style.css', '');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMakeRelativeFailsIfBasePathNull()
+    {
+        Path::makeRelative('/webmozart/puli/css/style.css', null);
     }
 
     /**
