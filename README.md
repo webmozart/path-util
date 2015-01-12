@@ -1,13 +1,12 @@
 File Path Utility
 =================
 
-[![Build Status](https://travis-ci.org/webmozart/path-util.png?branch=master)](https://travis-ci.org/webmozart/path-util)
+[![Build Status](https://travis-ci.org/webmozart/path-util.svg?branch=master)](https://travis-ci.org/webmozart/path-util)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webmozart/path-util/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/webmozart/path-util/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/webmozart/path-util/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/webmozart/path-util/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/b8c658df-0cce-4566-bf55-75da109aa6d7/mini.png)](https://insight.sensiolabs.com/projects/b8c658df-0cce-4566-bf55-75da109aa6d7)
-[![Latest Stable Version](https://poser.pugx.org/webmozart/path-util/v/stable.png)](https://packagist.org/packages/webmozart/path-util)
-[![Total Downloads](https://poser.pugx.org/webmozart/path-util/downloads.png)](https://packagist.org/packages/webmozart/path-util)
-[![Dependency Status](https://www.versioneye.com/php/webmozart:path-util/1.0.1/badge.png)](https://www.versioneye.com/php/webmozart:path-util/1.0.1)
+[![Latest Stable Version](https://poser.pugx.org/webmozart/path-util/v/stable.svg)](https://packagist.org/packages/webmozart/path-util)
+[![Total Downloads](https://poser.pugx.org/webmozart/path-util/downloads.svg)](https://packagist.org/packages/webmozart/path-util)
+[![Dependency Status](https://www.versioneye.com/php/webmozart:path-util/1.0.1/badge.svg)](https://www.versioneye.com/php/webmozart:path-util/1.0.1)
 
 Latest release: [1.0.1](https://packagist.org/packages/webmozart/path-util#1.0.1)
 
