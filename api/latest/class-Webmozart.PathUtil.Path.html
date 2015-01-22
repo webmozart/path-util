@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class Webmozart\PathUtil\Path | Webmozart Path Utility API</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li class="active">
+					<a href="namespace-Webmozart.html">
+						Webmozart<span></span>
+					</a>
+
+						<ul>
+				<li class="active">
+					<a href="namespace-Webmozart.PathUtil.html">
+						PathUtil					</a>
+
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li class="active"><a href="class-Webmozart.PathUtil.Path.html">Path</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-Webmozart.PathUtil.html" title="Summary of Webmozart\PathUtil"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class Path</h1>
+
+
+	<div class="description">
+	<p>Contains utility methods for handling path strings.</p>
+
+<p>The methods in this class are able to deal with both UNIX and Windows paths
+with both forward and backward slashes. All methods return normalized parts
+containing only forward slashes and no excess "." and ".." segments.</p>
+	</div>
+
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-Webmozart.html">Webmozart</a>\<a href="namespace-Webmozart.PathUtil.html">PathUtil</a><br>
+		
+
+				<b>Author:</b>
+				Bernhard Schussek <a href="&#x6d;&#x61;&#105;&#108;&#116;&#x6f;&#x3a;&#x62;&#115;&#99;h&#x75;&#x73;&#115;&#101;&#107;&#x40;&#x67;&#x6d;&#97;&#105;l&#x2e;&#x63;&#111;&#109;">&#x62;&#115;&#99;h&#x75;&#x73;&#115;&#101;&#107;&#x40;&#x67;&#x6d;&#97;&#105;l&#x2e;&#x63;&#111;&#109;</a><br>
+				<b>Since:</b>
+				1.0<br>
+			<b>Located at</b> <a href="source-class-Webmozart.PathUtil.Path.html#14-590" title="Go to source code">Path.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="canonicalize" id="_canonicalize">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_canonicalize">#</a>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#26-85" title="Go to source code">canonicalize</a>( <span>string <var>$path</var></span> )</code>
+
+		<div class="description short">
+			<p>Canonicalizes the given path.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Canonicalizes the given path.</p>
+
+<p>During normalization, all slashes are replaced by forward slashes ("/").
+Furthermore, all "." and ".." segments are removed as far as possible.
+".." segments at the beginning of relative paths are not removed.</p>
+
+<pre><span class="php-keyword1">echo</span> Path::canonicalize(<span class="php-quote">&quot;\webmozart\puli\..\css\style.css&quot;</span>);
+<span class="php-comment">// =&gt; /webmozart/style.css</span>
+
+<span class="php-keyword1">echo</span> Path::canonicalize(<span class="php-quote">&quot;../css/./style.css&quot;</span>);
+<span class="php-comment">// =&gt; ../css/style.css</span></pre>
+
+<p>This method is able to deal with both UNIX and Windows paths.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd>A path string</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>The canonical path
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getDirectory" id="_getDirectory">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getDirectory">#</a>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#87-135" title="Go to source code">getDirectory</a>( <span>string <var>$path</var></span> )</code>
+
+		<div class="description short">
+			<p>Returns the directory part of the path.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns the directory part of the path.</p>
+
+<p>This method is similar to PHP's dirname(), but handles various cases
+where dirname() returns a weird result:
+ - dirname() does not accept backslashes on UNIX - dirname("C:/webmozart") returns "C:", not "C:/" - dirname("C:/") returns ".", not "C:/" - dirname("C:") returns ".", not "C:/" - dirname("webmozart") returns ".", not "" - dirname() does not canonicalize the result</p>
+
+<p>This method fixes these shortcomings and behaves like dirname()
+otherwise.</p>
+
+<p>The result is a canonical path.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd>A path string</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br><p>The canonical directory part. Returns the root directory
+               if the root directory is passed. Returns an empty string
+               if a relative path is passed that contains no slashes.
+               Returns an empty string if an empty string is passed</p>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getRoot" id="_getRoot">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getRoot">#</a>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#137-174" title="Go to source code">getRoot</a>( <span>string <var>$path</var></span> )</code>
+
+		<div class="description short">
+			<p>Returns the root directory of a path.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns the root directory of a path.</p>
+
+<p>The result is a canonical path.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd>A path string</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br><p>The canonical root directory. Returns an empty string if
+               the given path is relative or empty</p>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isAbsolute" id="_isAbsolute">
+
+		<td class="attributes"><code>
+			 public static
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isAbsolute">#</a>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#176-209" title="Go to source code">isAbsolute</a>( <span>string <var>$path</var></span> )</code>
+
+		<div class="description short">
+			<p>Returns whether a path is absolute.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns whether a path is absolute.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd>A path string</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br><p>Returns true if the path is absolute, false if it is
+                relative or empty</p>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isRelative" id="_isRelative">
+
+		<td class="attributes"><code>
+			 public static
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isRelative">#</a>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#211-222" title="Go to source code">isRelative</a>( <span>string <var>$path</var></span> )</code>
+
+		<div class="description short">
+			<p>Returns whether a path is relative.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns whether a path is relative.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd>A path string</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br><p>Returns true if the path is relative or empty, false if
+                it is absolute</p>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="makeAbsolute" id="_makeAbsolute">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_makeAbsolute">#</a>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#224-294" title="Go to source code">makeAbsolute</a>( <span>string <var>$path</var></span>, <span>string <var>$basePath</var></span> )</code>
+
+		<div class="description short">
+			<p>Turns a relative path into an absolute path.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Turns a relative path into an absolute path.</p>
+
+<p>Usually, the relative path is appended to the given base path. Dot
+segments ("." and "..") are removed/collapsed and all slashes turned
+into forward slashes.</p>
+
+<pre><span class="php-keyword1">echo</span> Path::makeAbsolute(<span class="php-quote">&quot;../style.css&quot;</span>, <span class="php-quote">&quot;/webmozart/puli/css&quot;</span>);
+<span class="php-comment">// =&gt; /webmozart/puli/style.css</span></pre>
+
+<p>If an absolute path is passed, that path is returned unless its root
+directory is different than the one of the base path. In that case, an
+exception is thrown.</p>
+
+<pre>Path::makeAbsolute(<span class="php-quote">&quot;/style.css&quot;</span>, <span class="php-quote">&quot;/webmozart/puli/css&quot;</span>);
+<span class="php-comment">// =&gt; /style.css</span>
+
+Path::makeAbsolute(<span class="php-quote">&quot;C:/style.css&quot;</span>, <span class="php-quote">&quot;C:/webmozart/puli/css&quot;</span>);
+<span class="php-comment">// =&gt; C:/style.css</span>
+
+Path::makeAbsolute(<span class="php-quote">&quot;C:/style.css&quot;</span>, <span class="php-quote">&quot;/webmozart/puli/css&quot;</span>);
+<span class="php-comment">// InvalidArgumentException</span></pre>
+
+<p>If the base path is not an absolute path, an exception is thrown.</p>
+
+<p>The result is a canonical path.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd>A path to make absolute</dd>
+					<dt><var>$basePath</var></dt>
+					<dd>An absolute base path</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>An absolute path in canonical form
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					InvalidArgumentException<br><p>If the base path is not absolute or if
+                                  the given path is an absolute path with
+                                  a different root than the base path</p>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="makeRelative" id="_makeRelative">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_makeRelative">#</a>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#296-410" title="Go to source code">makeRelative</a>( <span>string <var>$path</var></span>, <span>string <var>$basePath</var></span> )</code>
+
+		<div class="description short">
+			<p>Turns a path into a relative path.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Turns a path into a relative path.</p>
+
+<p>The relative path is created relative to the given base path:</p>
+
+<pre><span class="php-keyword1">echo</span> Path::makeRelative(<span class="php-quote">&quot;/webmozart/style.css&quot;</span>, <span class="php-quote">&quot;/webmozart/puli&quot;</span>);
+<span class="php-comment">// =&gt; ../style.css</span></pre>
+
+<p>If a relative path is passed and the base path is absolute, the relative
+path is returned unchanged:</p>
+
+<pre>Path::makeRelative(<span class="php-quote">&quot;style.css&quot;</span>, <span class="php-quote">&quot;/webmozart/puli/css&quot;</span>);
+<span class="php-comment">// =&gt; style.css</span></pre>
+
+<p>If both paths are relative, the relative path is created with the
+assumption that both paths are relative to the same directory:</p>
+
+<pre>Path::makeRelative(<span class="php-quote">&quot;style.css&quot;</span>, <span class="php-quote">&quot;webmozart/puli/css&quot;</span>);
+<span class="php-comment">// =&gt; ../../../style.css</span></pre>
+
+<p>If both paths are absolute, their root directory must be the same,
+otherwise an exception is thrown:</p>
+
+<pre>Path::makeRelative(<span class="php-quote">&quot;C:/webmozart/style.css&quot;</span>, <span class="php-quote">&quot;/webmozart/puli&quot;</span>);
+<span class="php-comment">// InvalidArgumentException</span></pre>
+
+<p>If the passed path is absolute, but the base path is not, an exception
+is thrown as well:</p>
+
+<pre>Path::makeRelative(<span class="php-quote">&quot;/webmozart/style.css&quot;</span>, <span class="php-quote">&quot;webmozart/puli&quot;</span>);
+<span class="php-comment">// InvalidArgumentException</span></pre>
+
+<p>If the base path is not an absolute path, an exception is thrown.</p>
+
+<p>The result is a canonical path.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd>A path to make relative</dd>
+					<dt><var>$basePath</var></dt>
+					<dd>An base path</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>A relative path in canonical form
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					InvalidArgumentException<br><p>If the base path is not absolute or if
+                                  the given path has a different root
+                                  than the base path</p>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isLocal" id="_isLocal">
+
+		<td class="attributes"><code>
+			 public static
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isLocal">#</a>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#412-422" title="Go to source code">isLocal</a>( <span>string <var>$path</var></span> )</code>
+
+		<div class="description short">
+			<p>Returns whether the given path is on the local filesystem.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns whether the given path is on the local filesystem.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd>A path string</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>Returns true if the path is local, false for a URL
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getLongestCommonBasePath" id="_getLongestCommonBasePath">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getLongestCommonBasePath">#</a>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#424-499" title="Go to source code">getLongestCommonBasePath</a>( <span>array <var>$paths</var></span> )</code>
+
+		<div class="description short">
+			<p>Returns the longest common base path of a set of paths.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns the longest common base path of a set of paths.</p>
+
+<p>Dot segments ("." and "..") are removed/collapsed and all slashes turned
+into forward slashes.</p>
+
+<pre><span class="php-var">$basePath</span> = Path::getLongestCommonBasePath(<span class="php-keyword1">array</span>( <span class="php-quote">'/webmozart/css/style.css'</span>, <span class="php-quote">'/webmozart/css/..'</span>
+));
+<span class="php-comment">// =&gt; /webmozart</span></pre>
+
+<p>The root is returned if no common base path can be found:</p>
+
+<pre><span class="php-var">$basePath</span> = Path::getLongestCommonBasePath(<span class="php-keyword1">array</span>( <span class="php-quote">'/webmozart/css/style.css'</span>, <span class="php-quote">'/puli/css/..'</span>
+));
+<span class="php-comment">// =&gt; /</span></pre>
+
+<p>If the paths are located on different Windows partitions, <code>null</code> is
+returned.</p>
+
+<pre><span class="php-var">$basePath</span> = Path::getLongestCommonBasePath(<span class="php-keyword1">array</span>( <span class="php-quote">'C:/webmozart/css/style.css'</span>, <span class="php-quote">'D:/webmozart/css/..'</span>
+));
+<span class="php-comment">// =&gt; null</span></pre>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$paths</var></dt>
+					<dd>A list of paths.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br><p>The longest common base path in canonical form or <code>null</code>
+               if the paths are on different Windows partitions.</p>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isBasePath" id="_isBasePath">
+
+		<td class="attributes"><code>
+			 public static
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isBasePath">#</a>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#501-537" title="Go to source code">isBasePath</a>( <span>string <var>$basePath</var></span>, <span>string <var>$ofPath</var></span> )</code>
+
+		<div class="description short">
+			<p>Returns whether a path is a base path of another path.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns whether a path is a base path of another path.</p>
+
+<p>Dot segments ("." and "..") are removed/collapsed and all slashes turned
+into forward slashes.</p>
+
+<pre>Path::isBasePath(<span class="php-quote">'/webmozart'</span>, <span class="php-quote">'/webmozart/css'</span>);
+<span class="php-comment">// =&gt; true</span>
+
+Path::isBasePath(<span class="php-quote">'/webmozart'</span>, <span class="php-quote">'/webmozart'</span>);
+<span class="php-comment">// =&gt; true</span>
+
+Path::isBasePath(<span class="php-quote">'/webmozart'</span>, <span class="php-quote">'/webmozart/..'</span>);
+<span class="php-comment">// =&gt; false</span>
+
+Path::isBasePath(<span class="php-quote">'/webmozart'</span>, <span class="php-quote">'/puli'</span>);
+<span class="php-comment">// =&gt; false</span></pre>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$basePath</var></dt>
+					<dd>The base path to test.</dd>
+					<dt><var>$ofPath</var></dt>
+					<dd>The other path.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>Whether the base path is a base path of the other path.
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		Webmozart Path Utility API API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>

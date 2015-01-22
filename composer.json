@@ -1,0 +1,18 @@
+{
+    "license": "MIT",
+    "description": "The Webmozart Path Utility API documentation",
+    "homepage": "https://webmozart.github.io/path-util/api",
+    "authors": [
+        {
+            "name": "Bernhard Schussek",
+            "email": "bschussek@gmail.com"
+        }
+    ],
+    "require": {
+        "webmozart/path-util": "~1.0",
+        "apigen/apigen": "~4.1@dev"
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
