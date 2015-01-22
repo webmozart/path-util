@@ -3,14 +3,14 @@ Changelog
 
 * 1.0.2 (2015-01-12)
 
- * Path::makeAbsolute() fails now if the base path is not absolute
- * Path::makeRelative() now works when a relative path is passed and the base
+ * `Path::makeAbsolute()` fails now if the base path is not absolute
+ * `Path::makeRelative()` now works when a relative path is passed and the base
    path is empty
 
 * 1.0.1 (2014-12-03)
 
  * Added PHP 5.6 to Travis.
- * Fixed bug in Path::makeRelative() when first argument is shorter than second
+ * Fixed bug in `Path::makeRelative()` when first argument is shorter than second
  * Made HHVM compatibility mandatory in .travis.yml
  * Added PHP 5.3.3 to travis.yml
 
