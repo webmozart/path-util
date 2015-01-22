@@ -31,7 +31,7 @@ License
 
 The documentation is licensed under the [MIT license].
 
-[Path Utility]: http://github.com/webmozart/path-util
+[Path Utility]: https://github.com/webmozart/path-util
 [GitHub Pages]: https://pages.github.com
 [issue tracker]: https://github.com/webmozart/path-util/issues
 [@webmozart]: https://twitter.com/PuliPHP

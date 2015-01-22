@@ -2,3 +2,5 @@ source:
     - vendor/webmozart/path-util/src
 
 title: Webmozart Path Utility API
+
+baseUrl: https://webmozart.github.io/path-util/api/latest

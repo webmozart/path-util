@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "58937f68f4a1f181d3d40cb99e453e6f",
+    "hash": "6563b80b67697702c72fabd8f66393ec",
     "packages": [
         {
             "name": "andrewsville/php-token-reflection",
