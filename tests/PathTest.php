@@ -16,6 +16,7 @@ use Webmozart\PathUtil\Path;
 /**
  * @since  1.0
  * @author Bernhard Schussek <bschussek@gmail.com>
+ * @author Thomas Schulz <mail@king2500.net>
  */
 class PathTest extends \PHPUnit_Framework_TestCase
 {
@@ -169,6 +170,141 @@ class PathTest extends \PHPUnit_Framework_TestCase
     public function testGetDirectory($path, $directory)
     {
         $this->assertSame($directory, Path::getDirectory($path));
+    }
+
+    public function provideGetFilenameTests()
+    {
+        return array(
+            array('/webmozart/puli/style.css', 'style.css'),
+            array('/webmozart/puli/STYLE.CSS', 'STYLE.CSS'),
+            array('/webmozart/puli/style.css/', 'style.css'),
+            array('/webmozart/puli/', 'puli'),
+            array('/webmozart/puli', 'puli'),
+            array('/', ''),
+            array('', ''),
+        );
+    }
+
+    /**
+     * @dataProvider provideGetFilenameTests
+     */
+    public function testGetFilename($path, $filename)
+    {
+        $this->assertSame($filename, Path::getFilename($path));
+    }
+
+    public function provideGetFilenameWithoutExtensionTests()
+    {
+        return array(
+            array('/webmozart/puli/style.css.twig', null, 'style.css'),
+            array('/webmozart/puli/style.css.', null, 'style.css'),
+            array('/webmozart/puli/style.css', null, 'style'),
+            array('/webmozart/puli/style.css', null, 'style'),
+            array('/webmozart/puli/', null, 'puli'),
+            array('/webmozart/puli', null, 'puli'),
+            array('/', null, ''),
+            array('', null, ''),
+
+            array('/webmozart/puli/style.css', 'css', 'style'),
+            array('/webmozart/puli/style.css', 'twig', 'style.css'),
+            array('/webmozart/puli/style.css', '', 'style.css'),
+        );
+    }
+
+    /**
+     * @dataProvider provideGetFilenameWithoutExtensionTests
+     */
+    public function testGetFilenameWithoutExtension($path, $extension, $filename)
+    {
+        $this->assertSame($filename, Path::getFilenameWithoutExtension($path, $extension));
+    }
+
+    public function provideGetExtensionTests()
+    {
+        return array(
+            array('/webmozart/puli/style.css.twig', false, 'twig'),
+            array('/webmozart/puli/style.css', false, 'css'),
+            array('/webmozart/puli/style.css.', false, ''),
+            array('/webmozart/puli/', false, ''),
+            array('/webmozart/puli', false, ''),
+            array('/', false, ''),
+            array('', false, ''),
+
+            array('/webmozart/puli/style.CSS', false, 'CSS'),
+            array('/webmozart/puli/style.CSS', true, 'css'),
+        );
+    }
+
+    /**
+     * @dataProvider provideGetExtensionTests
+     */
+    public function testGetExtension($path, $forceLowerCase, $extension)
+    {
+        $this->assertSame($extension, Path::getExtension($path, $forceLowerCase));
+    }
+
+    public function provideHasExtensionTests()
+    {
+        return array(
+            array(true, '/webmozart/puli/style.css.twig', null, false),
+            array(true, '/webmozart/puli/style.css', null, false),
+            array(false, '/webmozart/puli/style.css.', null, false),
+            array(false, '/webmozart/puli/', null, false),
+            array(false, '/webmozart/puli', null, false),
+            array(false, '/', null, false),
+            array(false, '', null, false),
+
+            array(true, '/webmozart/puli/style.css.twig', 'twig', false),
+            array(false, '/webmozart/puli/style.css.twig', 'css', false),
+            array(true, '/webmozart/puli/style.css', 'css', false),
+            array(true, '/webmozart/puli/style.css.', '', false),
+            array(false, '/webmozart/puli/', 'ext', false),
+            array(false, '/webmozart/puli', 'ext', false),
+            array(false, '/', 'ext', false),
+            array(false, '', 'ext', false),
+
+            array(false, '/webmozart/puli/style.css', 'CSS', false),
+            array(true, '/webmozart/puli/style.css', 'CSS', true),
+            array(false, '/webmozart/puli/style.CSS', 'css', false),
+            array(true, '/webmozart/puli/style.CSS', 'css', true),
+
+            array(true, '/webmozart/puli/style.css', array('ext', 'css'), false),
+            array(true, '/webmozart/puli/style.css.', array('ext', ''), false),
+            array(false, '/webmozart/puli/style.css', array('foo', 'bar', ''), false),
+        );
+    }
+
+    /**
+     * @dataProvider provideHasExtensionTests
+     */
+    public function testHasExtension($hasExtension, $path, $extension, $ignoreCase)
+    {
+        $this->assertSame($hasExtension, Path::hasExtension($path, $extension, $ignoreCase));
+    }
+
+    public function provideChangeExtensionTests()
+    {
+        return array(
+            array('/webmozart/puli/style.css.twig', 'html', '/webmozart/puli/style.css.html'),
+            array('/webmozart/puli/style.css', 'sass', '/webmozart/puli/style.sass'),
+            array('/webmozart/puli/style.css', '', '/webmozart/puli/style.'),
+            array('/webmozart/puli/style.css.', 'twig', '/webmozart/puli/style.css.twig'),
+            array('/webmozart/puli/style.css.', '', '/webmozart/puli/style.css.'),
+            array('/webmozart/puli/', 'css', '/webmozart/puli/'),
+            array('/webmozart/puli', 'css', '/webmozart/puli.css'),
+            array('/', 'css', '/'),
+            array('', 'css', ''),
+        );
+    }
+
+    /**
+     * @dataProvider provideChangeExtensionTests
+     */
+    public function testChangeExtension($path, $extension, $pathExpected)
+    {
+        static $call = 0;
+        $this->assertSame($pathExpected, Path::changeExtension($path, $extension));
+        $call++;
     }
 
     public function provideIsAbsolutePathTests()

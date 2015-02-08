@@ -174,6 +174,132 @@ class Path
     }
 
     /**
+     * Returns the filename from a file path.
+     *
+     * @param string $path  The path string
+     *
+     * @return string Filename.
+     */
+    public static function getFilename($path)
+    {
+        if ('' === $path) {
+            return '';
+        }
+
+        return basename($path);
+	}
+
+    /**
+     * Returns the filename without the extension from a file path.
+     *
+     * @param string       $path      The path string
+     * @param string|null  $extension If specified, only that extension is cut off
+     *
+     * @return string Filename without extension.
+     */
+    public static function getFilenameWithoutExtension($path, $extension = null)
+    {
+        if ('' === $path) {
+            return '';
+        }
+
+        if (null !== $extension) {
+            return trim(basename($path, $extension), '.');
+        }
+
+        return pathinfo($path, PATHINFO_FILENAME);
+    }
+
+    /**
+     * Returns the extension from a file path.
+     *
+     * @param string $path           The path string
+     * @param bool   $forceLowerCase Forces the extension to be lower-case
+     *
+     * @return string Extension from a file path.
+     */
+    public static function getExtension($path, $forceLowerCase = false)
+    {
+        if ('' === $path) {
+            return '';
+        }
+
+        $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+        if ($forceLowerCase) {
+            $ext = function_exists('mb_strtolower') ? mb_strtolower($ext) : strtolower($ext);
+        }
+
+        return $ext;
+    }
+
+    /**
+     * Returns whether the path has an extension.
+     *
+     * @param string            $path        The path string
+     * @param string|array|null $extension   If null or not provided, checks if an extension exists,
+     *                                       otherwise checks for the specified extension or array of extensions
+     * @param bool              $ignoreCase  Whether to ignore case-sensitivity
+     *
+     * @return bool true if the path has an (or the specified) extension, otherwise false
+     */
+    public static function hasExtension($path, $extension = null, $ignoreCase = false)
+    {
+        if ('' === $path) {
+            return false;
+        }
+
+        $ext = self::getExtension($path, $ignoreCase);
+
+        // Only check if path has any extension
+        if (null === $extension) {
+            return !empty($ext);
+        }
+
+        // Make an array of extensions
+        if (!is_array($extension)) {
+            $extension = array(trim($extension, '.'));
+        }
+
+        if ($ignoreCase) {
+            $strToLower = function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower';
+            $extension = array_map($strToLower, $extension);
+        }
+
+        return in_array($ext, $extension);
+    }
+
+    /**
+     * Changes the extension of a path string.
+     *
+     * @param string $path      The path string with filename.ext to change
+     * @param string $extension New extension
+     *
+     * @return string The new path string.
+     */
+    public static function changeExtension($path, $extension)
+    {
+        if ('' === $path) {
+            return '';
+        }
+
+        $ext = self::getExtension($path);
+        $extension = trim($extension, '.');
+
+        // No extension for paths
+        if ('/' == substr($path, -1)) {
+            return $path;
+        }
+
+        // No extension in path
+        if (empty($ext)) {
+            return $path . ('.' == substr($path, -1) ? '' : '.') . $extension;
+        }
+
+        return substr($path, 0, -strlen($ext)).$extension;
+    }
+
+    /**
      * Returns whether a path is absolute.
      *
      * @param string $path A path string
