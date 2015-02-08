@@ -20,6 +20,7 @@ namespace Webmozart\PathUtil;
  *
  * @since  1.0
  * @author Bernhard Schussek <bschussek@gmail.com>
+ * @author Thomas Schulz <mail@king2500.net>
  */
 class Path
 {
