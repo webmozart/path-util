@@ -238,11 +238,7 @@ class Path
         $extension = pathinfo($path, PATHINFO_EXTENSION);
 
         if ($forceLowerCase) {
-            if (function_exists('mb_strtolower')) {
-                $extension = mb_strtolower($extension, mb_detect_encoding($extension));
-            } else {
-                $extension = strtolower($extension);
-            }
+            $extension = self::toLower($extension);
         }
 
         return $extension;
@@ -284,11 +280,7 @@ class Path
 
         foreach($extensions as $key => $extension) {
             if ($ignoreCase) {
-                if (function_exists('mb_strtolower')) {
-                    $extension = mb_strtolower($extension, mb_detect_encoding($extension));
-                } else {
-                    $extension = strtolower($extension);
-                }
+                $extension = self::toLower($extension);
             }
 
             // remove leading '.' in extensions array
@@ -739,6 +731,21 @@ class Path
         }
 
         return array($root, $path);
+    }
+
+    /**
+     * Converts string to lower-case (multi-byte safe if mbstring is installed).
+     *
+     * @param string $str The string
+     * @return string Lower case string
+     */
+    private static function toLower($str)
+    {
+        if (function_exists('mb_strtolower')) {
+            return mb_strtolower($str, mb_detect_encoding($str));
+        }
+
+        return strtolower($str);
     }
 
     private function __construct()
