@@ -179,7 +179,9 @@ class Path
      *
      * @param string $path  The path string
      *
-     * @return string Filename.
+     * @return string Filename
+     *
+     * @since 1.1
      */
     public static function getFilename($path)
     {
@@ -188,15 +190,18 @@ class Path
         }
 
         return basename($path);
-	}
+    }
 
     /**
      * Returns the filename without the extension from a file path.
      *
      * @param string       $path      The path string
      * @param string|null  $extension If specified, only that extension is cut off
+     *                                (may contain leading dot)
      *
-     * @return string Filename without extension.
+     * @return string Filename without extension
+     *
+     * @since 1.1
      */
     public static function getFilenameWithoutExtension($path, $extension = null)
     {
@@ -205,7 +210,8 @@ class Path
         }
 
         if (null !== $extension) {
-            return trim(basename($path, $extension), '.');
+            // remove extension and trailing dot
+            return rtrim(basename($path, $extension), '.');
         }
 
         return pathinfo($path, PATHINFO_FILENAME);
@@ -216,8 +222,12 @@ class Path
      *
      * @param string $path           The path string
      * @param bool   $forceLowerCase Forces the extension to be lower-case
+     *                               (Requires mbstring extension for correct
+     *                               multi-byte character handling in extension)
      *
-     * @return string Extension from a file path.
+     * @return string Extension from a file path (without leading dot)
+     *
+     * @since 1.1
      */
     public static function getExtension($path, $forceLowerCase = false)
     {
@@ -225,58 +235,78 @@ class Path
             return '';
         }
 
-        $ext = pathinfo($path, PATHINFO_EXTENSION);
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
 
         if ($forceLowerCase) {
-            $ext = function_exists('mb_strtolower') ? mb_strtolower($ext) : strtolower($ext);
+            if (function_exists('mb_strtolower')) {
+                $extension = mb_strtolower($extension, mb_detect_encoding($extension));
+            } else {
+                $extension = strtolower($extension);
+            }
         }
 
-        return $ext;
+        return $extension;
     }
 
     /**
      * Returns whether the path has an extension.
      *
      * @param string            $path        The path string
-     * @param string|array|null $extension   If null or not provided, checks if an extension exists,
-     *                                       otherwise checks for the specified extension or array of extensions
+     * @param string|array|null $extensions  If null or not provided, checks if an
+     *                                       extension exists, otherwise checks for
+     *                                       the specified extension or array of extensions
+     *                                       (with or without leading dot)
      * @param bool              $ignoreCase  Whether to ignore case-sensitivity
+     *                                       (Requires mbstring extension for correct
+     *                                       multi-byte character handling in extension)
      *
      * @return bool true if the path has an (or the specified) extension, otherwise false
+     *
+     * @since 1.1
      */
-    public static function hasExtension($path, $extension = null, $ignoreCase = false)
+    public static function hasExtension($path, $extensions = null, $ignoreCase = false)
     {
         if ('' === $path) {
             return false;
         }
 
-        $ext = self::getExtension($path, $ignoreCase);
+        $actualExtension = self::getExtension($path, $ignoreCase);
 
         // Only check if path has any extension
-        if (null === $extension) {
-            return !empty($ext);
+        if (null === $extensions) {
+            return !empty($actualExtension);
         }
 
         // Make an array of extensions
-        if (!is_array($extension)) {
-            $extension = array(trim($extension, '.'));
+        if (!is_array($extensions)) {
+            $extensions = array(ltrim($extensions, '.'));
         }
 
-        if ($ignoreCase) {
-            $strToLower = function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower';
-            $extension = array_map($strToLower, $extension);
+        foreach($extensions as $key => $extension) {
+            if ($ignoreCase) {
+                if (function_exists('mb_strtolower')) {
+                    $extension = mb_strtolower($extension, mb_detect_encoding($extension));
+                } else {
+                    $extension = strtolower($extension);
+                }
+            }
+
+            // remove leading '.' in extensions array
+            $extensions[$key] = ltrim($extension, '.');
         }
 
-        return in_array($ext, $extension);
+        return in_array($actualExtension, $extensions);
     }
 
     /**
      * Changes the extension of a path string.
      *
      * @param string $path      The path string with filename.ext to change
-     * @param string $extension New extension
+     * @param string $extension New extension (with or without leading dot)
      *
-     * @return string The new path string.
+     * @return string The path string with new file extension
+     *
+     * @since 1.1
      */
     public static function changeExtension($path, $extension)
     {
@@ -284,20 +314,20 @@ class Path
             return '';
         }
 
-        $ext = self::getExtension($path);
-        $extension = trim($extension, '.');
+        $actualExtension = self::getExtension($path);
+        $extension = ltrim($extension, '.');
 
         // No extension for paths
         if ('/' == substr($path, -1)) {
             return $path;
         }
 
-        // No extension in path
-        if (empty($ext)) {
+        // No actual extension in path
+        if (empty($actualExtension)) {
             return $path . ('.' == substr($path, -1) ? '' : '.') . $extension;
         }
 
-        return substr($path, 0, -strlen($ext)).$extension;
+        return substr($path, 0, -strlen($actualExtension)).$extension;
     }
 
     /**

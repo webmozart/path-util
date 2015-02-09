@@ -199,15 +199,22 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('/webmozart/puli/style.css.twig', null, 'style.css'),
             array('/webmozart/puli/style.css.', null, 'style.css'),
             array('/webmozart/puli/style.css', null, 'style'),
-            array('/webmozart/puli/style.css', null, 'style'),
+            array('/webmozart/puli/.style.css', null, '.style'),
             array('/webmozart/puli/', null, 'puli'),
             array('/webmozart/puli', null, 'puli'),
             array('/', null, ''),
             array('', null, ''),
 
             array('/webmozart/puli/style.css', 'css', 'style'),
+            array('/webmozart/puli/style.css', '.css', 'style'),
             array('/webmozart/puli/style.css', 'twig', 'style.css'),
+            array('/webmozart/puli/style.css', '.twig', 'style.css'),
             array('/webmozart/puli/style.css', '', 'style.css'),
+            array('/webmozart/puli/style.css.', '', 'style.css'),
+            array('/webmozart/puli/style.css.', '.', 'style.css'),
+            array('/webmozart/puli/style.css.', '.css', 'style.css'),
+            array('/webmozart/puli/.style.css', 'css', '.style'),
+            array('/webmozart/puli/.style.css', '.css', '.style'),
         );
     }
 
@@ -221,7 +228,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     public function provideGetExtensionTests()
     {
-        return array(
+        $tests = array(
             array('/webmozart/puli/style.css.twig', false, 'twig'),
             array('/webmozart/puli/style.css', false, 'css'),
             array('/webmozart/puli/style.css.', false, ''),
@@ -232,7 +239,15 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
             array('/webmozart/puli/style.CSS', false, 'CSS'),
             array('/webmozart/puli/style.CSS', true, 'css'),
+            array('/webmozart/puli/style.ÄÖÜ', false, 'ÄÖÜ'),
         );
+
+        if (extension_loaded('mbstring')) {
+            // This can only be tested, when mbstring is installed
+            $tests[] = array('/webmozart/puli/style.ÄÖÜ', true, 'äöü');
+        }
+
+        return $tests;
     }
 
     /**
@@ -245,7 +260,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     public function provideHasExtensionTests()
     {
-        return array(
+        $tests = array(
             array(true, '/webmozart/puli/style.css.twig', null, false),
             array(true, '/webmozart/puli/style.css', null, false),
             array(false, '/webmozart/puli/style.css.', null, false),
@@ -257,6 +272,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array(true, '/webmozart/puli/style.css.twig', 'twig', false),
             array(false, '/webmozart/puli/style.css.twig', 'css', false),
             array(true, '/webmozart/puli/style.css', 'css', false),
+            array(true, '/webmozart/puli/style.css', '.css', false),
             array(true, '/webmozart/puli/style.css.', '', false),
             array(false, '/webmozart/puli/', 'ext', false),
             array(false, '/webmozart/puli', 'ext', false),
@@ -267,11 +283,22 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array(true, '/webmozart/puli/style.css', 'CSS', true),
             array(false, '/webmozart/puli/style.CSS', 'css', false),
             array(true, '/webmozart/puli/style.CSS', 'css', true),
+            array(true, '/webmozart/puli/style.ÄÖÜ', 'ÄÖÜ', false),
 
             array(true, '/webmozart/puli/style.css', array('ext', 'css'), false),
+            array(true, '/webmozart/puli/style.css', array('.ext', '.css'), false),
             array(true, '/webmozart/puli/style.css.', array('ext', ''), false),
             array(false, '/webmozart/puli/style.css', array('foo', 'bar', ''), false),
+            array(false, '/webmozart/puli/style.css', array('.foo', '.bar', ''), false),
         );
+
+        if (extension_loaded('mbstring')) {
+            // This can only be tested, when mbstring is installed
+            $tests[] = array(true, '/webmozart/puli/style.ÄÖÜ', 'äöü', true);
+            $tests[] = array(true, '/webmozart/puli/style.ÄÖÜ', array('äöü'), true);
+        }
+
+        return $tests;
     }
 
     /**
@@ -287,9 +314,12 @@ class PathTest extends \PHPUnit_Framework_TestCase
         return array(
             array('/webmozart/puli/style.css.twig', 'html', '/webmozart/puli/style.css.html'),
             array('/webmozart/puli/style.css', 'sass', '/webmozart/puli/style.sass'),
+            array('/webmozart/puli/style.css', '.sass', '/webmozart/puli/style.sass'),
             array('/webmozart/puli/style.css', '', '/webmozart/puli/style.'),
             array('/webmozart/puli/style.css.', 'twig', '/webmozart/puli/style.css.twig'),
             array('/webmozart/puli/style.css.', '', '/webmozart/puli/style.css.'),
+            array('/webmozart/puli/style.css', 'äöü', '/webmozart/puli/style.äöü'),
+            array('/webmozart/puli/style.äöü', 'css', '/webmozart/puli/style.css'),
             array('/webmozart/puli/', 'css', '/webmozart/puli/'),
             array('/webmozart/puli', 'css', '/webmozart/puli.css'),
             array('/', 'css', '/'),
