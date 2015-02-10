@@ -275,7 +275,7 @@ class Path
 
         // Make an array of extensions
         if (!is_array($extensions)) {
-            $extensions = array(ltrim($extensions, '.'));
+            $extensions = array($extensions);
         }
 
         foreach($extensions as $key => $extension) {
