@@ -657,7 +657,7 @@ class Path
             }
 
             // Make the base path shorter until it fits into path
-            while (true)  {
+            while (true) {
                 if ('.' === $basePath) {
                     // No more base paths
                     $basePath = '';
@@ -678,6 +678,57 @@ class Path
         }
 
         return $bpRoot.$basePath;
+    }
+
+    /**
+     * Combines two or more path strings.
+     *
+     * The result is a canonical path.
+     *
+     * @param array|string $paths,... Paths parts as parameters or array
+     *
+     * @return null|string The combined path
+     *
+     * @since 1.2
+     */
+    public static function combine($paths)
+    {
+        if (!is_array($paths)) {
+            $paths = func_get_args();
+        }
+
+        $finalPath = null;
+        $wasScheme = false;
+
+        foreach ($paths as $path) {
+            $path = (string) $path;
+
+            if ('' === $path) {
+                continue;
+            }
+
+            if (null === $finalPath) {
+                // For first part we keep slashes, like '/top', 'C:\' or 'phar://'
+                $finalPath = $path;
+                $wasScheme = (strpos($path, '://') !== false);
+                continue;
+            }
+
+            // Only add slash if previous part didn't end with '/' or '\'
+            if (!in_array(substr($finalPath, -1), array('/', '\\'))) {
+                $finalPath .= '/';
+            }
+
+            // If first part included a scheme like 'phar://' we allow current part to start with '/', otherwise trim
+            $finalPath .= $wasScheme ? $path : ltrim($path, '/');
+            $wasScheme = false;
+        }
+
+        if (null === $finalPath) {
+            return null;
+        }
+
+        return self::canonicalize($finalPath);
     }
 
     /**

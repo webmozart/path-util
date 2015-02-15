@@ -945,4 +945,112 @@ class PathTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame($result, Path::isBasePath($path, $ofPath));
     }
+
+    public function provideCombineTests()
+    {
+        $object = new ObjectConvertibleToString('object/path');
+
+        return array(
+            array(null, null, null),
+            array('/path/to/test', null, '/path/to/test'),
+            array('/path/to//test', null, '/path/to/test'),
+            array(null, '/path/to/test', '/path/to/test'),
+            array(null, '/path/to//test', '/path/to/test'),
+
+            array('/path/to/test', 'subdir', '/path/to/test/subdir'),
+            array('/path/to/test/', 'subdir', '/path/to/test/subdir'),
+            array('/path/to/test', '/subdir', '/path/to/test/subdir'),
+            array('/path/to/test/', '/subdir', '/path/to/test/subdir'),
+            array('/path/to/test', './subdir', '/path/to/test/subdir'),
+            array('/path/to/test/', './subdir', '/path/to/test/subdir'),
+            array('/path/to/test/', '../parentdir', '/path/to/parentdir'),
+            array('/path/to/test', '../parentdir', '/path/to/parentdir'),
+            array('path/to/test/', '/subdir', 'path/to/test/subdir'),
+            array('path/to/test', '/subdir', 'path/to/test/subdir'),
+            array('../path/to/test', '/subdir', '../path/to/test/subdir'),
+            array('path', '../../subdir', '../subdir'),
+            array('/path', '../../subdir', '/subdir'),
+            array('../path', '../../subdir', '../../subdir'),
+
+            array('/path/to/test', 123, '/path/to/test/123'),
+            array('/path/to/test', $object, '/path/to/test/object/path'),
+
+            array(array('/path/to/test', 'subdir'), null, '/path/to/test/subdir'),
+            array(array('/path/to/test', '/subdir'), null, '/path/to/test/subdir'),
+            array(array('/path/to/test/', 'subdir'), null, '/path/to/test/subdir'),
+            array(array('/path/to/test/', '/subdir'), null, '/path/to/test/subdir'),
+
+            array(array('/path'), null, '/path'),
+            array(array('/path', 'to', '/test'), null, '/path/to/test'),
+            array(array('/path', null, '/test'), null, '/path/test'),
+            array(array('path', 'to', 'test'), null, 'path/to/test'),
+            array(array(), null, null),
+
+            array('base/path', 'to/test', 'base/path/to/test'),
+
+            array('C:\\path\\to\\test', 'subdir', 'C:/path/to/test/subdir'),
+            array('C:\\path\\to\\test\\', 'subdir', 'C:/path/to/test/subdir'),
+            array('C:\\path\\to\\test', '/subdir', 'C:/path/to/test/subdir'),
+            array('C:\\path\\to\\test\\', '/subdir', 'C:/path/to/test/subdir'),
+
+            array('/', 'subdir', '/subdir'),
+            array('/', '/subdir', '/subdir'),
+            array('C:/', 'subdir', 'C:/subdir'),
+            array('C:/', '/subdir', 'C:/subdir'),
+            array('C:\\', 'subdir', 'C:/subdir'),
+            array('C:\\', '/subdir', 'C:/subdir'),
+            array('C:', 'subdir', 'C:/subdir'),
+            array('C:', '/subdir', 'C:/subdir'),
+
+            array('phar://', '/path/to/test', 'phar:///path/to/test'),
+            array('phar:///', '/path/to/test', 'phar:///path/to/test'),
+            array('phar:///path/to/test', 'subdir', 'phar:///path/to/test/subdir'),
+            array('phar:///path/to/test', 'subdir/', 'phar:///path/to/test/subdir'),
+            array('phar:///path/to/test', '/subdir', 'phar:///path/to/test/subdir'),
+            array('phar:///path/to/test/', 'subdir', 'phar:///path/to/test/subdir'),
+            array('phar:///path/to/test/', '/subdir', 'phar:///path/to/test/subdir'),
+
+            array('phar://', 'C:/path/to/test', 'phar://C:/path/to/test'),
+            array('phar://', 'C:\\path\\to\\test', 'phar://C:/path/to/test'),
+            array('phar://C:/path/to/test', 'subdir', 'phar://C:/path/to/test/subdir'),
+            array('phar://C:/path/to/test', 'subdir/', 'phar://C:/path/to/test/subdir'),
+            array('phar://C:/path/to/test', '/subdir', 'phar://C:/path/to/test/subdir'),
+            array('phar://C:/path/to/test/', 'subdir', 'phar://C:/path/to/test/subdir'),
+            array('phar://C:/path/to/test/', '/subdir', 'phar://C:/path/to/test/subdir'),
+            array('phar://C:', 'path/to/test', 'phar://C:/path/to/test'),
+            array('phar://C:', '/path/to/test', 'phar://C:/path/to/test'),
+            array('phar://C:/', 'path/to/test', 'phar://C:/path/to/test'),
+            array('phar://C:/', '/path/to/test', 'phar://C:/path/to/test'),
+        );
+    }
+
+    /**
+     * @dataProvider provideCombineTests
+     */
+    public function testCombine($path1, $path2, $result)
+    {
+        $this->assertSame($result, Path::combine($path1, $path2));
+    }
+
+    public function testCombineVarArgs()
+    {
+        $this->assertSame('/path', Path::combine('/path'));
+        $this->assertSame('/path/to', Path::combine('/path', 'to'));
+        $this->assertSame('/path/to/test', Path::combine('/path', 'to', '/test'));
+        $this->assertSame('/path/to/test/subdir', Path::combine('/path', 'to', '/test', 'subdir/'));
+    }
+}
+
+class ObjectConvertibleToString
+{
+    private $path;
+
+    public function __construct($path)
+    {
+        $this->path = $path;
+    }
+    public function __toString()
+    {
+        return $this->path;
+    }
 }
