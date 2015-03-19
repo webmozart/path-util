@@ -1,7 +1,7 @@
 Changelog
 =========
 
-* 1.1.0 (@release_date@)
+* 1.1.0 (2015-03-19)
 
  * added `Path::getFilename()`
  * added `Path::getFilenameWithoutExtension()`
