@@ -38,6 +38,31 @@ $paths = array(
 
 Path::getLongestCommonBasePath($paths);
 // => /var/www/vhosts/project/httpdocs
+
+Path::getFilename('/views/index.html.twig');
+// => index.html.twig
+
+Path::getFilenameWithoutExtension('/views/index.html.twig');
+// => index.html
+
+Path::getFilenameWithoutExtension('/views/index.html.twig', 'html.twig');
+Path::getFilenameWithoutExtension('/views/index.html.twig', '.html.twig');
+// => index
+
+Path::getExtension('/views/index.html.twig');
+// => twig
+
+Path::hasExtension('/views/index.html.twig');
+// => true
+
+Path::hasExtension('/views/index.html.twig', 'twig');
+// => true
+
+Path::hasExtension('/images/profile.jpg', array('jpg', 'png', 'gif'));
+// => true
+
+Path::changeExtension('/images/profile.jpeg', 'jpg');
+// => /images/profile.jpg
 ```
 
 Learn more in the [Documentation] and the [API Docs].
