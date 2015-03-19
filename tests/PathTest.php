@@ -256,6 +256,9 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('css/style.css', '/', '/css/style.css'),
             array('css/style.css', 'C:', 'C:/css/style.css'),
             array('css/style.css', 'C:/', 'C:/css/style.css'),
+
+            // same sub directories in different base directories
+            array('../../puli/css/style.css', '/webmozart/css', '/puli/css/style.css'),
         );
     }
 

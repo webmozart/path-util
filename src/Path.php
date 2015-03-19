@@ -396,13 +396,18 @@ class Path
         $baseParts = explode('/', $relativeBasePath);
         $dotDotPrefix = '';
 
+        // Once we found a non-matching part in the prefix, we need to add
+        // "../" parts for all remaining parts
+        $match = true;
+
         foreach ($baseParts as $i => $basePart) {
-            if (isset($parts[$i]) && $basePart === $parts[$i]) {
+            if ($match && isset($parts[$i]) && $basePart === $parts[$i]) {
                 unset($parts[$i]);
 
                 continue;
             }
 
+            $match = false;
             $dotDotPrefix .= '../';
         }
 

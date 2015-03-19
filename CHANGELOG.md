@@ -1,6 +1,12 @@
 Changelog
 =========
 
+* 1.0.3 (@release_date@)
+
+ * `Path::makeRelative()` now works when the absolute path and the base path
+   have equal directory names beneath different base directories
+   (e.g. "/webmozart/css/style.css" relative to "/puli/css")
+   
 * 1.0.2 (2015-01-12)
 
  * `Path::makeAbsolute()` fails now if the base path is not absolute
