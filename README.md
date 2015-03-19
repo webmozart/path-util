@@ -9,6 +9,7 @@ File Path Utility
 [![Dependency Status](https://www.versioneye.com/php/webmozart:path-util/1.1.0/badge.svg)](https://www.versioneye.com/php/webmozart:path-util/1.1.0)
 
 Latest release: [1.1.0](https://packagist.org/packages/webmozart/path-util#1.1.0)
+
 PHP >= 5.3.3
 
 This package provides robust, cross-platform utility functions for normalizing,
