@@ -6,10 +6,9 @@ File Path Utility
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/b8c658df-0cce-4566-bf55-75da109aa6d7/mini.png)](https://insight.sensiolabs.com/projects/b8c658df-0cce-4566-bf55-75da109aa6d7)
 [![Latest Stable Version](https://poser.pugx.org/webmozart/path-util/v/stable.svg)](https://packagist.org/packages/webmozart/path-util)
 [![Total Downloads](https://poser.pugx.org/webmozart/path-util/downloads.svg)](https://packagist.org/packages/webmozart/path-util)
-[![Dependency Status](https://www.versioneye.com/php/webmozart:path-util/1.0.2/badge.svg)](https://www.versioneye.com/php/webmozart:path-util/1.0.2)
+[![Dependency Status](https://www.versioneye.com/php/webmozart:path-util/1.1.0/badge.svg)](https://www.versioneye.com/php/webmozart:path-util/1.1.0)
 
-Latest release: [1.0.2](https://packagist.org/packages/webmozart/path-util#1.0.2)
-
+Latest release: [1.1.0](https://packagist.org/packages/webmozart/path-util#1.1.0)
 PHP >= 5.3.3
 
 This package provides robust, cross-platform utility functions for normalizing,
@@ -21,7 +20,7 @@ Installation
 The utility can be installed with [Composer]:
 
 ```
-$ composer require webmozart/path-util:~1.0
+$ composer require webmozart/path-util:~1.1
 ```
 
 Usage
