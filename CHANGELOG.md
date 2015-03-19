@@ -1,8 +1,13 @@
 Changelog
 =========
 
-* 1.0.3 (@release_date@)
+* 1.1.0 (@release_date@)
 
+ * added `Path::getFilename()`
+ * added `Path::getFilenameWithoutExtension()`
+ * added `Path::getExtension()`
+ * added `Path::hasExtension()`
+ * added `Path::changeExtension()`
  * `Path::makeRelative()` now works when the absolute path and the base path
    have equal directory names beneath different base directories
    (e.g. "/webmozart/css/style.css" relative to "/puli/css")
