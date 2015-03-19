@@ -13,7 +13,19 @@ Latest release: [1.0.2](https://packagist.org/packages/webmozart/path-util#1.0.2
 PHP >= 5.3.3
 
 This package provides robust, cross-platform utility functions for normalizing,
-comparing and modifying file paths:
+comparing and modifying file paths.
+
+Installation
+------------
+
+The utility can be installed with [Composer]:
+
+```
+$ composer require webmozart/path-util:~1.0
+```
+
+Usage
+-----
 
 ```php
 use Webmozart\PathUtil\Path;
@@ -72,15 +84,6 @@ Authors
 
 * [Bernhard Schussek] a.k.a. [@webmozart]
 * [The Community Contributors]
-
-Installation
-------------
-
-The utility can be installed with [Composer]:
-
-```
-$ composer require webmozart/path-util:~1.0
-```
 
 Documentation
 -------------
