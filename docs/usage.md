@@ -32,7 +32,8 @@ The following modifications happen during canonicalization:
 * ".." segments are resolved;
 * backslashes ("\") are converted into forward slashes ("/");
 * root paths ("/" and "C:/") always terminate with a slash;
-* non-root paths never terminate with a slash.
+* non-root paths never terminate with a slash;
+* schemes (such as "phar://") are kept.
 
 You can pass absolute paths and relative paths to `canonicalize()`. When a
 relative path is passed, ".." segments at the beginning of the path are kept:

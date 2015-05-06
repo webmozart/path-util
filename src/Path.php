@@ -118,18 +118,26 @@ class Path
 
         $path = static::canonicalize($path);
 
+        // Maintain scheme
+        if (false !== ($pos = strpos($path, '://'))) {
+            $scheme = substr($path, 0, $pos + 3);
+            $path = substr($path, $pos + 3);
+        } else {
+            $scheme = '';
+        }
+
         if (false !== ($pos = strrpos($path, '/'))) {
             // Directory equals root directory "/"
             if (0 === $pos) {
-                return '/';
+                return $scheme.'/';
             }
 
             // Directory equals Windows root "C:/"
             if (2 === $pos && ctype_alpha($path[0]) && ':' === $path[1]) {
-                return substr($path, 0, 3);
+                return $scheme.substr($path, 0, 3);
             }
 
-            return substr($path, 0, $pos);
+            return $scheme.substr($path, 0, $pos);
         }
 
         return '';
@@ -151,9 +159,17 @@ class Path
             return '';
         }
 
+        // Maintain scheme
+        if (false !== ($pos = strpos($path, '://'))) {
+            $scheme = substr($path, 0, $pos + 3);
+            $path = substr($path, $pos + 3);
+        } else {
+            $scheme = '';
+        }
+
         // UNIX root "/" or "\" (Windows style)
         if ('/' === $path[0] || '\\' === $path[0]) {
-            return '/';
+            return $scheme.'/';
         }
 
         $length = strlen($path);
@@ -162,12 +178,12 @@ class Path
         if ($length > 1 && ctype_alpha($path[0]) && ':' === $path[1]) {
             // Special case: "C:"
             if (2 === $length) {
-                return $path.'/';
+                return $scheme.$path.'/';
             }
 
             // Normal case: "C:/ or "C:\"
             if ('/' === $path[2] || '\\' === $path[2]) {
-                return $path[0].$path[1].'/';
+                return $scheme.$path[0].$path[1].'/';
             }
         }
 
@@ -336,6 +352,11 @@ class Path
             return false;
         }
 
+        // Strip scheme
+        if (false !== ($pos = strpos($path, '://'))) {
+            $path = substr($path, $pos + 3);
+        }
+
         // UNIX root "/" or "\" (Windows style)
         if ('/' === $path[0] || '\\' === $path[0]) {
             return true;
@@ -439,7 +460,14 @@ class Path
             return static::canonicalize($path);
         }
 
-        return static::canonicalize($basePath.'/'.$path);
+        if (false !== ($pos = strpos($basePath, '://'))) {
+            $scheme = substr($basePath, 0, $pos + 3);
+            $basePath = substr($basePath, $pos + 3);
+        } else {
+            $scheme = '';
+        }
+
+        return $scheme.self::canonicalize(rtrim($basePath, '/\\').'/'.$path);
     }
 
     /**
@@ -716,21 +744,28 @@ class Path
             return array('', '');
         }
 
-        $root = '';
+        // Remember scheme as part of the root, if any
+        if (false !== ($pos = strpos($path, '://'))) {
+            $root = substr($path, 0, $pos + 3);
+            $path = substr($path, $pos + 3);
+        } else {
+            $root = '';
+        }
+
         $length = strlen($path);
 
         // Remove and remember root directory
         if ('/' === $path[0]) {
-            $root = '/';
+            $root .= '/';
             $path = $length > 1 ? substr($path, 1) : '';
         } elseif ($length > 1 && ctype_alpha($path[0]) && ':' === $path[1]) {
             if (2 === $length) {
                 // Windows special case: "C:"
-                $root = $path.'/';
+                $root .= $path.'/';
                 $path = '';
             } elseif ('/' === $path[2]) {
                 // Windows normal case: "C:/"..
-                $root = substr($path, 0, 3);
+                $root .= substr($path, 0, 3);
                 $path = $length > 3 ? substr($path, 3) : '';
             }
         }

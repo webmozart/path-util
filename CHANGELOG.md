@@ -1,6 +1,10 @@
 Changelog
 =========
 
+* 1.2.0 (@release_date@)
+
+ * added support for streams, e.g. "phar://C:/path/to/file"
+
 * 1.1.0 (2015-03-19)
 
  * added `Path::getFilename()`

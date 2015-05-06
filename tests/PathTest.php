@@ -107,6 +107,30 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
             // Don't change malformed path
             array('C:css/style.css', 'C:css/style.css'),
+
+            // absolute paths (stream, UNIX)
+            array('phar:///css/style.css', 'phar:///css/style.css'),
+            array('phar:///css/./style.css', 'phar:///css/style.css'),
+            array('phar:///css/../style.css', 'phar:///style.css'),
+            array('phar:///css/./../style.css', 'phar:///style.css'),
+            array('phar:///css/.././style.css', 'phar:///style.css'),
+            array('phar:///./css/style.css', 'phar:///css/style.css'),
+            array('phar:///../css/style.css', 'phar:///css/style.css'),
+            array('phar:///./../css/style.css', 'phar:///css/style.css'),
+            array('phar:///.././css/style.css', 'phar:///css/style.css'),
+            array('phar:///../../css/style.css', 'phar:///css/style.css'),
+
+            // absolute paths (stream, Windows)
+            array('phar://C:/css/style.css', 'phar://C:/css/style.css'),
+            array('phar://C:/css/./style.css', 'phar://C:/css/style.css'),
+            array('phar://C:/css/../style.css', 'phar://C:/style.css'),
+            array('phar://C:/css/./../style.css', 'phar://C:/style.css'),
+            array('phar://C:/css/.././style.css', 'phar://C:/style.css'),
+            array('phar://C:/./css/style.css', 'phar://C:/css/style.css'),
+            array('phar://C:/../css/style.css', 'phar://C:/css/style.css'),
+            array('phar://C:/./../css/style.css', 'phar://C:/css/style.css'),
+            array('phar://C:/.././css/style.css', 'phar://C:/css/style.css'),
+            array('phar://C:/../../css/style.css', 'phar://C:/css/style.css'),
         );
     }
 
@@ -143,6 +167,16 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('C:\\webmozart\\puli', 'C:/webmozart'),
             array('C:\\webmozart', 'C:/'),
             array('C:\\', 'C:/'),
+
+            array('phar:///webmozart/puli/style.css', 'phar:///webmozart/puli'),
+            array('phar:///webmozart/puli', 'phar:///webmozart'),
+            array('phar:///webmozart', 'phar:///'),
+            array('phar:///', 'phar:///'),
+
+            array('phar://C:/webmozart/puli/style.css', 'phar://C:/webmozart/puli'),
+            array('phar://C:/webmozart/puli', 'phar://C:/webmozart'),
+            array('phar://C:/webmozart', 'phar://C:/'),
+            array('phar://C:/', 'phar://C:/'),
 
             array('webmozart/puli/style.css', 'webmozart/puli'),
             array('webmozart/puli', 'webmozart'),
@@ -356,6 +390,9 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('E:\\css\\style.css', true),
             array('F:\\', true),
 
+            array('phar:///css/style.css', true),
+            array('phar:///', true),
+
             // Windows special case
             array('C:', true),
 
@@ -399,6 +436,13 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
             array('D:\\css\\style.css', 'D:/'),
             array('D:\\', 'D:/'),
+
+            array('phar:///css/style.css', 'phar:///'),
+            array('phar:///', 'phar:///'),
+
+            array('phar://C:/css/style.css', 'phar://C:/'),
+            array('phar://C:/', 'phar://C:/'),
+            array('phar://C:', 'phar://C:/'),
         );
     }
 
@@ -473,6 +517,20 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('..\\css\\.\\..\\style.css', 'C:\\', 'C:/style.css'),
             array('..\\css\\..\\.\\style.css', 'C:\\', 'C:/style.css'),
 
+            array('./css/style.css', 'phar:///', 'phar:///css/style.css'),
+            array('../css/style.css', 'phar:///', 'phar:///css/style.css'),
+            array('../css/./style.css', 'phar:///', 'phar:///css/style.css'),
+            array('../css/../style.css', 'phar:///', 'phar:///style.css'),
+            array('../css/./../style.css', 'phar:///', 'phar:///style.css'),
+            array('../css/.././style.css', 'phar:///', 'phar:///style.css'),
+
+            array('./css/style.css', 'phar://C:/', 'phar://C:/css/style.css'),
+            array('../css/style.css', 'phar://C:/', 'phar://C:/css/style.css'),
+            array('../css/./style.css', 'phar://C:/', 'phar://C:/css/style.css'),
+            array('../css/../style.css', 'phar://C:/', 'phar://C:/style.css'),
+            array('../css/./../style.css', 'phar://C:/', 'phar://C:/style.css'),
+            array('../css/.././style.css', 'phar://C:/', 'phar://C:/style.css'),
+
             // absolute paths
             array('/css/style.css', '/webmozart/puli', '/css/style.css'),
             array('\\css\\style.css', '/webmozart/puli', '/css/style.css'),
@@ -530,6 +588,14 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('D:/css/style.css', 'C:\\webmozart\\puli'),
             array('D:\\css\\style.css', 'C:/webmozart/puli'),
             array('D:\\css\\style.css', 'C:\\webmozart\\puli'),
+
+            array('phar:///css/style.css', '/webmozart/puli'),
+            array('/css/style.css', 'phar:///webmozart/puli'),
+
+            array('phar://C:/css/style.css', 'C:/webmozart/puli'),
+            array('phar://C:/css/style.css', 'C:\\webmozart\\puli'),
+            array('phar://C:\\css\\style.css', 'C:/webmozart/puli'),
+            array('phar://C:\\css\\style.css', 'C:\\webmozart\\puli'),
         );
     }
 
@@ -577,6 +643,14 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('C:\\webmozart\\puli\\css\\style.css', 'C:\\webmozart\\puli', 'css/style.css', ),
             array('C:\\webmozart\\css\\style.css', 'C:\\webmozart\\puli', '../css/style.css'),
             array('C:\\css\\style.css', 'C:\\webmozart\\puli', '../../css/style.css'),
+
+            array('phar:///webmozart/puli/css/style.css', 'phar:///webmozart/puli', 'css/style.css', ),
+            array('phar:///webmozart/css/style.css', 'phar:///webmozart/puli', '../css/style.css'),
+            array('phar:///css/style.css', 'phar:///webmozart/puli', '../../css/style.css'),
+
+            array('phar://C:/webmozart/puli/css/style.css', 'phar://C:/webmozart/puli', 'css/style.css', ),
+            array('phar://C:/webmozart/css/style.css', 'phar://C:/webmozart/puli', '../css/style.css'),
+            array('phar://C:/css/style.css', 'phar://C:/webmozart/puli', '../../css/style.css'),
 
             // already relative
             array('css/style.css', '/webmozart/puli', 'css/style.css'),
@@ -669,69 +743,91 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array(array('C:/base/path', 'C:/base/path'), 'C:/base/path'),
             array(array('C:\\base\\path', 'C:\\base\\path'), 'C:/base/path'),
             array(array('C:/base/path', 'C:\\base\\path'), 'C:/base/path'),
+            array(array('phar:///base/path', 'phar:///base/path'), 'phar:///base/path'),
+            array(array('phar://C:/base/path', 'phar://C:/base/path'), 'phar://C:/base/path'),
 
             // trailing slash
             array(array('/base/path/', '/base/path'), '/base/path'),
             array(array('C:/base/path/', 'C:/base/path'), 'C:/base/path'),
             array(array('C:\\base\\path\\', 'C:\\base\\path'), 'C:/base/path'),
             array(array('C:/base/path/', 'C:\\base\\path'), 'C:/base/path'),
+            array(array('phar:///base/path/', 'phar:///base/path'), 'phar:///base/path'),
+            array(array('phar://C:/base/path/', 'phar://C:/base/path'), 'phar://C:/base/path'),
 
             array(array('/base/path', '/base/path/'), '/base/path'),
             array(array('C:/base/path', 'C:/base/path/'), 'C:/base/path'),
             array(array('C:\\base\\path', 'C:\\base\\path\\'), 'C:/base/path'),
             array(array('C:/base/path', 'C:\\base\\path\\'), 'C:/base/path'),
+            array(array('phar:///base/path', 'phar:///base/path/'), 'phar:///base/path'),
+            array(array('phar://C:/base/path', 'phar://C:/base/path/'), 'phar://C:/base/path'),
 
             // first in second
             array(array('/base/path/sub', '/base/path'), '/base/path'),
             array(array('C:/base/path/sub', 'C:/base/path'), 'C:/base/path'),
             array(array('C:\\base\\path\\sub', 'C:\\base\\path'), 'C:/base/path'),
             array(array('C:/base/path/sub', 'C:\\base\\path'), 'C:/base/path'),
+            array(array('phar:///base/path/sub', 'phar:///base/path'), 'phar:///base/path'),
+            array(array('phar://C:/base/path/sub', 'phar://C:/base/path'), 'phar://C:/base/path'),
 
             // second in first
             array(array('/base/path', '/base/path/sub'), '/base/path'),
             array(array('C:/base/path', 'C:/base/path/sub'), 'C:/base/path'),
             array(array('C:\\base\\path', 'C:\\base\\path\\sub'), 'C:/base/path'),
             array(array('C:/base/path', 'C:\\base\\path\\sub'), 'C:/base/path'),
+            array(array('phar:///base/path', 'phar:///base/path/sub'), 'phar:///base/path'),
+            array(array('phar://C:/base/path', 'phar://C:/base/path/sub'), 'phar://C:/base/path'),
 
             // first is prefix
             array(array('/base/path/di', '/base/path/dir'), '/base/path'),
             array(array('C:/base/path/di', 'C:/base/path/dir'), 'C:/base/path'),
             array(array('C:\\base\\path\\di', 'C:\\base\\path\\dir'), 'C:/base/path'),
             array(array('C:/base/path/di', 'C:\\base\\path\\dir'), 'C:/base/path'),
+            array(array('phar:///base/path/di', 'phar:///base/path/dir'), 'phar:///base/path'),
+            array(array('phar://C:/base/path/di', 'phar://C:/base/path/dir'), 'phar://C:/base/path'),
 
             // second is prefix
             array(array('/base/path/dir', '/base/path/di'), '/base/path'),
             array(array('C:/base/path/dir', 'C:/base/path/di'), 'C:/base/path'),
             array(array('C:\\base\\path\\dir', 'C:\\base\\path\\di'), 'C:/base/path'),
             array(array('C:/base/path/dir', 'C:\\base\\path\\di'), 'C:/base/path'),
+            array(array('phar:///base/path/dir', 'phar:///base/path/di'), 'phar:///base/path'),
+            array(array('phar://C:/base/path/dir', 'phar://C:/base/path/di'), 'phar://C:/base/path'),
 
             // root is common base path
             array(array('/first', '/second'), '/'),
             array(array('C:/first', 'C:/second'), 'C:/'),
             array(array('C:\\first', 'C:\\second'), 'C:/'),
             array(array('C:/first', 'C:\\second'), 'C:/'),
+            array(array('phar:///first', 'phar:///second'), 'phar:///'),
+            array(array('phar://C:/first', 'phar://C:/second'), 'phar://C:/'),
 
             // windows vs unix
             array(array('/base/path', 'C:/base/path'), null),
             array(array('C:/base/path', '/base/path'), null),
             array(array('/base/path', 'C:\\base\\path'), null),
+            array(array('phar:///base/path', 'phar://C:/base/path'), null),
 
             // different partitions
             array(array('C:/base/path', 'D:/base/path'), null),
             array(array('C:/base/path', 'D:\\base\\path'), null),
             array(array('C:\\base\\path', 'D:\\base\\path'), null),
+            array(array('phar://C:/base/path', 'phar://D:/base/path'), null),
 
             // three paths
             array(array('/base/path/foo', '/base/path', '/base/path/bar'), '/base/path'),
             array(array('C:/base/path/foo', 'C:/base/path', 'C:/base/path/bar'), 'C:/base/path'),
             array(array('C:\\base\\path\\foo', 'C:\\base\\path', 'C:\\base\\path\\bar'), 'C:/base/path'),
             array(array('C:/base/path//foo', 'C:/base/path', 'C:\\base\\path\\bar'), 'C:/base/path'),
+            array(array('phar:///base/path/foo', 'phar:///base/path', 'phar:///base/path/bar'), 'phar:///base/path'),
+            array(array('phar://C:/base/path/foo', 'phar://C:/base/path', 'phar://C:/base/path/bar'), 'phar://C:/base/path'),
 
             // three paths with root
             array(array('/base/path/foo', '/', '/base/path/bar'), '/'),
             array(array('C:/base/path/foo', 'C:/', 'C:/base/path/bar'), 'C:/'),
             array(array('C:\\base\\path\\foo', 'C:\\', 'C:\\base\\path\\bar'), 'C:/'),
             array(array('C:/base/path//foo', 'C:/', 'C:\\base\\path\\bar'), 'C:/'),
+            array(array('phar:///base/path/foo', 'phar:///', 'phar:///base/path/bar'), 'phar:///'),
+            array(array('phar://C:/base/path/foo', 'phar://C:/', 'phar://C:/base/path/bar'), 'phar://C:/'),
 
             // three paths, different roots
             array(array('/base/path/foo', 'C:/base/path', '/base/path/bar'), null),
@@ -739,11 +835,15 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array(array('C:/base/path/foo', 'D:/base/path', 'C:/base/path/bar'), null),
             array(array('C:\\base\\path\\foo', 'D:\\base\\path', 'C:\\base\\path\\bar'), null),
             array(array('C:/base/path//foo', 'D:/base/path', 'C:\\base\\path\\bar'), null),
+            array(array('phar:///base/path/foo', 'phar://C:/base/path', 'phar:///base/path/bar'), null),
+            array(array('phar://C:/base/path/foo', 'phar://D:/base/path', 'phar://C:/base/path/bar'), null),
 
             // only one path
             array(array('/base/path'), '/base/path'),
             array(array('C:/base/path'), 'C:/base/path'),
             array(array('C:\\base\\path'), 'C:/base/path'),
+            array(array('phar:///base/path'), 'phar:///base/path'),
+            array(array('phar://C:/base/path'), 'phar://C:/base/path'),
         );
     }
 
@@ -763,41 +863,55 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('C:/base/path', 'C:/base/path', true),
             array('C:\\base\\path', 'C:\\base\\path', true),
             array('C:/base/path', 'C:\\base\\path', true),
+            array('phar:///base/path', 'phar:///base/path', true),
+            array('phar://C:/base/path', 'phar://C:/base/path', true),
 
             // trailing slash
             array('/base/path/', '/base/path', true),
             array('C:/base/path/', 'C:/base/path', true),
             array('C:\\base\\path\\', 'C:\\base\\path', true),
             array('C:/base/path/', 'C:\\base\\path', true),
+            array('phar:///base/path/', 'phar:///base/path', true),
+            array('phar://C:/base/path/', 'phar://C:/base/path', true),
 
             array('/base/path', '/base/path/', true),
             array('C:/base/path', 'C:/base/path/', true),
             array('C:\\base\\path', 'C:\\base\\path\\', true),
             array('C:/base/path', 'C:\\base\\path\\', true),
+            array('phar:///base/path', 'phar:///base/path/', true),
+            array('phar://C:/base/path', 'phar://C:/base/path/', true),
 
             // first in second
             array('/base/path/sub', '/base/path', false),
             array('C:/base/path/sub', 'C:/base/path', false),
             array('C:\\base\\path\\sub', 'C:\\base\\path', false),
             array('C:/base/path/sub', 'C:\\base\\path', false),
+            array('phar:///base/path/sub', 'phar:///base/path', false),
+            array('phar://C:/base/path/sub', 'phar://C:/base/path', false),
 
             // second in first
             array('/base/path', '/base/path/sub', true),
             array('C:/base/path', 'C:/base/path/sub', true),
             array('C:\\base\\path', 'C:\\base\\path\\sub', true),
             array('C:/base/path', 'C:\\base\\path\\sub', true),
+            array('phar:///base/path', 'phar:///base/path/sub', true),
+            array('phar://C:/base/path', 'phar://C:/base/path/sub', true),
 
             // first is prefix
             array('/base/path/di', '/base/path/dir', false),
             array('C:/base/path/di', 'C:/base/path/dir', false),
             array('C:\\base\\path\\di', 'C:\\base\\path\\dir', false),
             array('C:/base/path/di', 'C:\\base\\path\\dir', false),
+            array('phar:///base/path/di', 'phar:///base/path/dir', false),
+            array('phar://C:/base/path/di', 'phar://C:/base/path/dir', false),
 
             // second is prefix
             array('/base/path/dir', '/base/path/di', false),
             array('C:/base/path/dir', 'C:/base/path/di', false),
             array('C:\\base\\path\\dir', 'C:\\base\\path\\di', false),
             array('C:/base/path/dir', 'C:\\base\\path\\di', false),
+            array('phar:///base/path/dir', 'phar:///base/path/di', false),
+            array('phar://C:/base/path/dir', 'phar://C:/base/path/di', false),
 
             // root
             array('/', '/second', true),
@@ -805,16 +919,22 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('C:', 'C:/second', true),
             array('C:\\', 'C:\\second', true),
             array('C:/', 'C:\\second', true),
+            array('phar:///', 'phar:///second', true),
+            array('phar://C:/', 'phar://C:/second', true),
 
             // windows vs unix
             array('/base/path', 'C:/base/path', false),
             array('C:/base/path', '/base/path', false),
             array('/base/path', 'C:\\base\\path', false),
+            array('/base/path', 'phar:///base/path', false),
+            array('phar:///base/path', 'phar://C:/base/path', false),
 
             // different partitions
             array('C:/base/path', 'D:/base/path', false),
             array('C:/base/path', 'D:\\base\\path', false),
             array('C:\\base\\path', 'D:\\base\\path', false),
+            array('C:/base/path', 'phar://C:/base/path', false),
+            array('phar://C:/base/path', 'phar://D:/base/path', false),
         );
     }
 
