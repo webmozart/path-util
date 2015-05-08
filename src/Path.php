@@ -60,7 +60,7 @@ class Path
 
         list ($root, $path) = self::split($path);
 
-        $parts = [];
+        $parts = array();
         foreach( explode('/', $path) as $k=>$v ){
             if( $v !== '' ){
                 $parts[$k] = $v;
