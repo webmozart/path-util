@@ -25,6 +25,11 @@ namespace Webmozart\PathUtil;
 class Path
 {
 
+    /**
+     * An cache for canonicalized base paths.
+     *
+     * @var string[]
+     */
     private static $canonicalizedBasePaths = array();
 
     /**
@@ -60,6 +65,7 @@ class Path
 
         list ($root, $path) = self::split($path);
 
+        // Remove empty path segments.
         $parts = array();
         foreach( explode('/', $path) as $k=>$v ){
             if( $v !== '' ){
@@ -716,6 +722,7 @@ class Path
      */
     public static function isBasePath($basePath, $ofPath)
     {
+        // Cache canonicalized base paths.
         if( ! isset( self::$canonicalizedBasePaths[$basePath] ) ){
             $basePath = self::canonicalize($basePath);
             self::$canonicalizedBasePaths[$basePath] = $basePath;
