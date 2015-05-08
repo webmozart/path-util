@@ -24,6 +24,9 @@ namespace Webmozart\PathUtil;
  */
 class Path
 {
+
+    private static $canonicalizedBasePaths = array();
+
     /**
      * Canonicalizes the given path.
      *
@@ -57,7 +60,13 @@ class Path
 
         list ($root, $path) = self::split($path);
 
-        $parts = array_filter(explode('/', $path), 'strlen');
+        $parts = [];
+        foreach( explode('/', $path) as $k=>$v ){
+            if( $v !== '' ){
+                $parts[$k] = $v;
+            }
+        } 
+
         $canonicalParts = array();
 
         // Collapse "." and "..", if possible
@@ -707,7 +716,13 @@ class Path
      */
     public static function isBasePath($basePath, $ofPath)
     {
-        $basePath = self::canonicalize($basePath);
+        if( ! isset( self::$canonicalizedBasePaths[$basePath] ) ){
+            $basePath = self::canonicalize($basePath);
+            self::$canonicalizedBasePaths[$basePath] = $basePath;
+        }else{
+            $basePath = self::$canonicalizedBasePaths[$basePath];
+        }
+
         $ofPath = self::canonicalize($ofPath);
 
         // Append slashes to prevent false positives when two paths have
