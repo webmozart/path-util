@@ -33,7 +33,7 @@ class Path
      *
      * ```php
      * echo Path::canonicalize("\webmozart\puli\..\css\style.css");
-     * // => /webmozart/style.css
+     * // => /webmozart/css/style.css
      *
      * echo Path::canonicalize("../css/./style.css");
      * // => ../css/style.css
