@@ -26,11 +26,11 @@ class Path
 {
 
     /**
-     * An cache for canonicalized base paths.
+     * An cache for canonicalized paths.
      *
      * @var string[]
      */
-    private static $canonicalizedBasePaths = array();
+    private static $canonicalizedPaths = array();
 
     /**
      * Canonicalizes the given path.
@@ -56,6 +56,12 @@ class Path
     public static function canonicalize($path)
     {
         $path = (string) $path;
+        $originalPath = $path;
+
+        // Check for cached result
+        if( isset( self::$canonicalizedPaths[$originalPath] ) ){
+            return self::$canonicalizedPaths[$originalPath];
+        }
 
         if ('' === $path) {
             return '';
@@ -97,7 +103,11 @@ class Path
         }
 
         // Add the root directory again
-        return $root.implode('/', $canonicalParts);
+        $canonical = $root . implode( '/', $canonicalParts );
+
+        // Cache the result
+        self::$canonicalizedPaths[$originalPath] = $canonical;
+        return $canonical;
     }
 
     /**
@@ -722,14 +732,7 @@ class Path
      */
     public static function isBasePath($basePath, $ofPath)
     {
-        // Cache canonicalized base paths.
-        if( ! isset( self::$canonicalizedBasePaths[$basePath] ) ){
-            $basePath = self::canonicalize($basePath);
-            self::$canonicalizedBasePaths[$basePath] = $basePath;
-        }else{
-            $basePath = self::$canonicalizedBasePaths[$basePath];
-        }
-
+        $basePath = self::canonicalize($basePath);
         $ofPath = self::canonicalize($ofPath);
 
         // Append slashes to prevent false positives when two paths have
