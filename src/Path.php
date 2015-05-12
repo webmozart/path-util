@@ -24,6 +24,14 @@ namespace Webmozart\PathUtil;
  */
 class Path
 {
+
+    /**
+     * An cache for canonicalized paths.
+     *
+     * @var string[]
+     */
+    private static $canonicalizedPaths = array();
+
     /**
      * Canonicalizes the given path.
      *
@@ -48,6 +56,12 @@ class Path
     public static function canonicalize($path)
     {
         $path = (string) $path;
+        $originalPath = $path;
+
+        // Check for cached result
+        if( isset( self::$canonicalizedPaths[$originalPath] ) ){
+            return self::$canonicalizedPaths[$originalPath];
+        }
 
         if ('' === $path) {
             return '';
@@ -57,7 +71,14 @@ class Path
 
         list ($root, $path) = self::split($path);
 
-        $parts = array_filter(explode('/', $path), 'strlen');
+        // Remove empty path segments.
+        $parts = array();
+        foreach( explode('/', $path) as $k=>$v ){
+            if( $v !== '' ){
+                $parts[$k] = $v;
+            }
+        } 
+
         $canonicalParts = array();
 
         // Collapse "." and "..", if possible
@@ -82,7 +103,11 @@ class Path
         }
 
         // Add the root directory again
-        return $root.implode('/', $canonicalParts);
+        $canonical = $root . implode( '/', $canonicalParts );
+
+        // Cache the result
+        self::$canonicalizedPaths[$originalPath] = $canonical;
+        return $canonical;
     }
 
     /**
