@@ -44,6 +44,13 @@ class Path
     private static $buffer = array();
 
     /**
+     * The size of the buffer.
+     *
+     * @var int
+     */
+    private static $bufferSize = 0;
+
+    /**
      * Canonicalizes the given path.
      *
      * During normalization, all slashes are replaced by forward slashes ("/").
@@ -112,10 +119,12 @@ class Path
 
         // Add the root directory again
         self::$buffer[$path] = $canonicalPath = $root.implode('/', $canonicalParts);
+        ++self::$bufferSize;
 
         // Clean up regularly to prevent memory leaks
-        if (count(self::$buffer) > self::CLEANUP_THRESHOLD) {
+        if (self::$bufferSize > self::CLEANUP_THRESHOLD) {
             self::$buffer = array_slice(self::$buffer, -self::CLEANUP_SIZE, null, true);
+            self::$bufferSize = self::CLEANUP_SIZE;
         }
 
         return $canonicalPath;
