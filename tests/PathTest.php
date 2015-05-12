@@ -35,7 +35,6 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('.././css/style.css', '../css/style.css'),
             array('../../css/style.css', '../../css/style.css'),
             array('', ''),
-            array(null, ''),
             array('.', ''),
             array('..', '..'),
             array('./..', '..'),
@@ -142,6 +141,15 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($canonicalized, Path::canonicalize($path));
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The path must be a string. Got: array
+     */
+    public function testCanonicalizeFailsIfInvalidPath()
+    {
+        Path::canonicalize(array());
+    }
+
     public function provideGetDirectoryTests()
     {
         return array(
@@ -150,7 +158,6 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('/webmozart', '/'),
             array('/', '/'),
             array('', ''),
-            array(null, ''),
 
             array('\\webmozart\\puli\\style.css', '/webmozart/puli'),
             array('\\webmozart\\puli', '/webmozart'),
@@ -206,6 +213,15 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($directory, Path::getDirectory($path));
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The path must be a string. Got: array
+     */
+    public function testGetDirectoryFailsIfInvalidPath()
+    {
+        Path::getDirectory(array());
+    }
+
     public function provideGetFilenameTests()
     {
         return array(
@@ -225,6 +241,15 @@ class PathTest extends \PHPUnit_Framework_TestCase
     public function testGetFilename($path, $filename)
     {
         $this->assertSame($filename, Path::getFilename($path));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The path must be a string. Got: array
+     */
+    public function testGetFilenameFailsIfInvalidPath()
+    {
+        Path::getFilename(array());
     }
 
     public function provideGetFilenameWithoutExtensionTests()
@@ -260,6 +285,24 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($filename, Path::getFilenameWithoutExtension($path, $extension));
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The path must be a string. Got: array
+     */
+    public function testGetFilenameWithoutExtensionFailsIfInvalidPath()
+    {
+        Path::getFilenameWithoutExtension(array(), '.css');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The extension must be a string or null. Got: array
+     */
+    public function testGetFilenameWithoutExtensionFailsIfInvalidExtension()
+    {
+        Path::getFilenameWithoutExtension('/style.css', array());
+    }
+
     public function provideGetExtensionTests()
     {
         $tests = array(
@@ -290,6 +333,15 @@ class PathTest extends \PHPUnit_Framework_TestCase
     public function testGetExtension($path, $forceLowerCase, $extension)
     {
         $this->assertSame($extension, Path::getExtension($path, $forceLowerCase));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The path must be a string. Got: array
+     */
+    public function testGetExtensionFailsIfInvalidPath()
+    {
+        Path::getExtension(array());
     }
 
     public function provideHasExtensionTests()
@@ -343,6 +395,24 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($hasExtension, Path::hasExtension($path, $extension, $ignoreCase));
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The path must be a string. Got: array
+     */
+    public function testHasExtensionFailsIfInvalidPath()
+    {
+        Path::hasExtension(array());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The extensions must be strings. Got: stdClass
+     */
+    public function testHasExtensionFailsIfInvalidExtension()
+    {
+        Path::hasExtension('/style.css', (object) array());
+    }
+
     public function provideChangeExtensionTests()
     {
         return array(
@@ -371,6 +441,24 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $call++;
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The path must be a string. Got: array
+     */
+    public function testChangeExtensionFailsIfInvalidPath()
+    {
+        Path::changeExtension(array(), '.sass');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The extension must be a string. Got: array
+     */
+    public function testChangeExtensionFailsIfInvalidExtension()
+    {
+        Path::changeExtension('/style.css', array());
+    }
+
     public function provideIsAbsolutePathTests()
     {
         return array(
@@ -378,7 +466,6 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('/', true),
             array('css/style.css', false),
             array('', false),
-            array(null, false),
 
             array('\\css\\style.css', true),
             array('\\', true),
@@ -410,11 +497,29 @@ class PathTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The path must be a string. Got: array
+     */
+    public function testIsAbsoluteFailsIfInvalidPath()
+    {
+        Path::isAbsolute(array());
+    }
+
+    /**
      * @dataProvider provideIsAbsolutePathTests
      */
     public function testIsRelative($path, $isAbsolute)
     {
         $this->assertSame(!$isAbsolute, Path::isRelative($path));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The path must be a string. Got: array
+     */
+    public function testIsRelativeFailsIfInvalidPath()
+    {
+        Path::isRelative(array());
     }
 
     public function provideGetRootTests()
@@ -424,7 +529,6 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('/', '/'),
             array('css/style.css', ''),
             array('', ''),
-            array(null, ''),
 
             array('\\css\\style.css', '/'),
             array('\\', '/'),
@@ -452,6 +556,15 @@ class PathTest extends \PHPUnit_Framework_TestCase
     public function testGetRoot($path, $root)
     {
         $this->assertSame($root, Path::getRoot($path));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The path must be a string. Got: array
+     */
+    public function testGetRootFailsIfInvalidPath()
+    {
+        Path::getRoot(array());
     }
 
     public function providePathTests()
@@ -549,6 +662,25 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The path must be a string. Got: array
+     */
+    public function testMakeAbsoluteFailsIfInvalidPath()
+    {
+        Path::makeAbsolute(array(), '/webmozart/puli');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The base path must be a non-empty string. Got: array
+     */
+    public function testMakeAbsoluteFailsIfInvalidBasePath()
+    {
+        Path::makeAbsolute('css/style.css', array());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The base path "webmozart/puli" is not an absolute path.
      */
     public function testMakeAbsoluteFailsIfBasePathNotAbsolute()
     {
@@ -557,6 +689,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The base path must be a non-empty string. Got: ""
      */
     public function testMakeAbsoluteFailsIfBasePathEmpty()
     {
@@ -565,6 +698,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The base path must be a non-empty string. Got: NULL
      */
     public function testMakeAbsoluteFailsIfBasePathNull()
     {
@@ -664,10 +798,6 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('css/style.css', '', 'css/style.css'),
             array('css\\style.css', '', 'css/style.css'),
 
-            // relative to null
-            array('css/style.css', null, 'css/style.css'),
-            array('css\\style.css', null, 'css/style.css'),
-
             // different slashes in path and base path
             array('/webmozart/puli/css/style.css', '\\webmozart\\puli', 'css/style.css'),
             array('\\webmozart\\puli\\css\\style.css', '/webmozart/puli', 'css/style.css'),
@@ -684,6 +814,25 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The path must be a string. Got: array
+     */
+    public function testMakeRelativeFailsIfInvalidPath()
+    {
+        Path::makeRelative(array(), '/webmozart/puli');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The base path must be a string. Got: array
+     */
+    public function testMakeRelativeFailsIfInvalidBasePath()
+    {
+        Path::makeRelative('/webmozart/puli/css/style.css', array());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The absolute path "/webmozart/puli/css/style.css" cannot be made relative to the relative path "webmozart/puli". You should provide an absolute base path instead.
      */
     public function testMakeRelativeFailsIfAbsolutePathAndBasePathNotAbsolute()
     {
@@ -692,6 +841,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The absolute path "/webmozart/puli/css/style.css" cannot be made relative to the relative path "". You should provide an absolute base path instead.
      */
     public function testMakeRelativeFailsIfAbsolutePathAndBasePathEmpty()
     {
@@ -700,6 +850,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The base path must be a string. Got: NULL
      */
     public function testMakeRelativeFailsIfBasePathNull()
     {
@@ -722,7 +873,6 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('bg.png', true),
             array('http://example.com/bg.png', false),
             array('http://example.com', false),
-            array(null, false),
             array('', false),
         );
     }
@@ -733,6 +883,15 @@ class PathTest extends \PHPUnit_Framework_TestCase
     public function testIsLocal($path, $isLocal)
     {
         $this->assertSame($isLocal, Path::isLocal($path));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The path must be a string. Got: array
+     */
+    public function testIsLocalFailsIfInvalidPath()
+    {
+        Path::isLocal(array());
     }
 
     public function provideGetLongestCommonBasePathTests()
@@ -855,6 +1014,15 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($basePath, Path::getLongestCommonBasePath($paths));
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The paths must be strings. Got: array
+     */
+    public function testGetLongestCommonBasePathFailsIfInvalidPath()
+    {
+        Path::getLongestCommonBasePath(array(array()));
+    }
+
     public function provideIsBasePathTests()
     {
         return array(
@@ -946,16 +1114,32 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($result, Path::isBasePath($path, $ofPath));
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The base path must be a string. Got: array
+     */
+    public function testIsBasePathFailsIfInvalidBasePath()
+    {
+        Path::isBasePath(array(), '/base/path');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The path must be a string. Got: array
+     */
+    public function testIsBasePathFailsIfInvalidPath()
+    {
+        Path::isBasePath('/base/path', array());
+    }
+
     public function provideCombineTests()
     {
-        $object = new ObjectConvertibleToString('object/path');
-
         return array(
-            array(null, null, null),
-            array('/path/to/test', null, '/path/to/test'),
-            array('/path/to//test', null, '/path/to/test'),
-            array(null, '/path/to/test', '/path/to/test'),
-            array(null, '/path/to//test', '/path/to/test'),
+            array('', '', ''),
+            array('/path/to/test', '', '/path/to/test'),
+            array('/path/to//test', '', '/path/to/test'),
+            array('', '/path/to/test', '/path/to/test'),
+            array('', '/path/to//test', '/path/to/test'),
 
             array('/path/to/test', 'subdir', '/path/to/test/subdir'),
             array('/path/to/test/', 'subdir', '/path/to/test/subdir'),
@@ -972,19 +1156,16 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('/path', '../../subdir', '/subdir'),
             array('../path', '../../subdir', '../../subdir'),
 
-            array('/path/to/test', 123, '/path/to/test/123'),
-            array('/path/to/test', $object, '/path/to/test/object/path'),
+            array(array('/path/to/test', 'subdir'), '', '/path/to/test/subdir'),
+            array(array('/path/to/test', '/subdir'), '', '/path/to/test/subdir'),
+            array(array('/path/to/test/', 'subdir'), '', '/path/to/test/subdir'),
+            array(array('/path/to/test/', '/subdir'), '', '/path/to/test/subdir'),
 
-            array(array('/path/to/test', 'subdir'), null, '/path/to/test/subdir'),
-            array(array('/path/to/test', '/subdir'), null, '/path/to/test/subdir'),
-            array(array('/path/to/test/', 'subdir'), null, '/path/to/test/subdir'),
-            array(array('/path/to/test/', '/subdir'), null, '/path/to/test/subdir'),
-
-            array(array('/path'), null, '/path'),
-            array(array('/path', 'to', '/test'), null, '/path/to/test'),
-            array(array('/path', null, '/test'), null, '/path/test'),
-            array(array('path', 'to', 'test'), null, 'path/to/test'),
-            array(array(), null, null),
+            array(array('/path'), '', '/path'),
+            array(array('/path', 'to', '/test'), '', '/path/to/test'),
+            array(array('/path', '', '/test'), '', '/path/test'),
+            array(array('path', 'to', 'test'), '', 'path/to/test'),
+            array(array(), '', ''),
 
             array('base/path', 'to/test', 'base/path/to/test'),
 
@@ -1039,18 +1220,13 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('/path/to/test', Path::combine('/path', 'to', '/test'));
         $this->assertSame('/path/to/test/subdir', Path::combine('/path', 'to', '/test', 'subdir/'));
     }
-}
 
-class ObjectConvertibleToString
-{
-    private $path;
-
-    public function __construct($path)
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The paths must be strings. Got: array
+     */
+    public function testCombineFailsIfInvalidPath()
     {
-        $this->path = $path;
-    }
-    public function __toString()
-    {
-        return $this->path;
+        Path::combine('/path', array());
     }
 }

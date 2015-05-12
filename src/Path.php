@@ -11,6 +11,8 @@
 
 namespace Webmozart\PathUtil;
 
+use Webmozart\Assert\Assert;
+
 /**
  * Contains utility methods for handling path strings.
  *
@@ -47,11 +49,11 @@ class Path
      */
     public static function canonicalize($path)
     {
-        $path = (string) $path;
-
         if ('' === $path) {
             return '';
         }
+
+        Assert::string($path, 'The path must be a string. Got: %s');
 
         $path = str_replace('\\', '/', $path);
 
@@ -116,6 +118,8 @@ class Path
             return '';
         }
 
+        Assert::string($path, 'The path must be a string. Got: %s');
+
         $path = static::canonicalize($path);
 
         // Maintain scheme
@@ -158,6 +162,8 @@ class Path
         if ('' === $path) {
             return '';
         }
+
+        Assert::string($path, 'The path must be a string. Got: %s');
 
         // Maintain scheme
         if (false !== ($pos = strpos($path, '://'))) {
@@ -205,6 +211,8 @@ class Path
             return '';
         }
 
+        Assert::string($path, 'The path must be a string. Got: %s');
+
         return basename($path);
     }
 
@@ -224,6 +232,9 @@ class Path
         if ('' === $path) {
             return '';
         }
+
+        Assert::string($path, 'The path must be a string. Got: %s');
+        Assert::nullOrString($extension, 'The extension must be a string or null. Got: %s');
 
         if (null !== $extension) {
             // remove extension and trailing dot
@@ -251,6 +262,8 @@ class Path
             return '';
         }
 
+        Assert::string($path, 'The path must be a string. Got: %s');
+
         $extension = pathinfo($path, PATHINFO_EXTENSION);
 
         if ($forceLowerCase) {
@@ -263,16 +276,19 @@ class Path
     /**
      * Returns whether the path has an extension.
      *
-     * @param string            $path        The path string
-     * @param string|array|null $extensions  If null or not provided, checks if an
-     *                                       extension exists, otherwise checks for
-     *                                       the specified extension or array of extensions
-     *                                       (with or without leading dot)
-     * @param bool              $ignoreCase  Whether to ignore case-sensitivity
-     *                                       (Requires mbstring extension for correct
-     *                                       multi-byte character handling in extension)
+     * @param string            $path       The path string.
+     * @param string|array|null $extensions If null or not provided, checks if
+     *                                      an extension exists, otherwise
+     *                                      checks for the specified extension
+     *                                      or array of extensions (with or
+     *                                      without leading dot).
+     * @param bool              $ignoreCase Whether to ignore case-sensitivity
+     *                                      (requires mbstring extension for
+     *                                      correct multi-byte character
+     *                                      handling in the extension).
      *
-     * @return bool true if the path has an (or the specified) extension, otherwise false
+     * @return bool Returns `true` if the path has an (or the specified)
+     *              extension and `false` otherwise.
      *
      * @since 1.1
      */
@@ -282,19 +298,18 @@ class Path
             return false;
         }
 
+        $extensions = is_object($extensions) ? array($extensions) : (array) $extensions;
+
+        Assert::allString($extensions, 'The extensions must be strings. Got: %s');
+
         $actualExtension = self::getExtension($path, $ignoreCase);
 
         // Only check if path has any extension
-        if (null === $extensions) {
-            return !empty($actualExtension);
+        if (!$extensions) {
+            return '' !== $actualExtension;
         }
 
-        // Make an array of extensions
-        if (!is_array($extensions)) {
-            $extensions = array($extensions);
-        }
-
-        foreach($extensions as $key => $extension) {
+        foreach ($extensions as $key => $extension) {
             if ($ignoreCase) {
                 $extension = self::toLower($extension);
             }
@@ -321,6 +336,8 @@ class Path
         if ('' === $path) {
             return '';
         }
+
+        Assert::string($extension, 'The extension must be a string. Got: %s');
 
         $actualExtension = self::getExtension($path);
         $extension = ltrim($extension, '.');
@@ -351,6 +368,8 @@ class Path
         if ('' === $path) {
             return false;
         }
+
+        Assert::string($path, 'The path must be a string. Got: %s');
 
         // Strip scheme
         if (false !== ($pos = strpos($path, '://'))) {
@@ -433,7 +452,7 @@ class Path
      */
     public static function makeAbsolute($path, $basePath)
     {
-        $basePath = (string) $basePath;
+        Assert::stringNotEmpty($basePath, 'The base path must be a non-empty string. Got: %s');
 
         if (!static::isAbsolute($basePath)) {
             throw new \InvalidArgumentException(sprintf(
@@ -527,6 +546,8 @@ class Path
      */
     public static function makeRelative($path, $basePath)
     {
+        Assert::string($basePath, 'The base path must be a string. Got: %s');
+
         $path = static::canonicalize($path);
         $basePath = static::canonicalize($basePath);
 
@@ -600,7 +621,9 @@ class Path
      */
     public static function isLocal($path)
     {
-        return is_string($path) && '' !== $path && false === strpos($path, '://');
+        Assert::string($path, 'The path must be a string. Got: %s');
+
+        return '' !== $path && false === strpos($path, '://');
     }
 
     /**
@@ -645,6 +668,8 @@ class Path
      */
     public static function getLongestCommonBasePath(array $paths)
     {
+        Assert::allString($paths, 'The paths must be strings. Got: %s');
+
         list ($bpRoot, $basePath) = self::split(self::canonicalize(reset($paths)));
 
         for (next($paths); null !== key($paths) && '' !== $basePath; next($paths)) {
@@ -689,13 +714,15 @@ class Path
      *
      * @return null|string The combined path
      *
-     * @since 1.2
+     * @since 2.0
      */
     public static function combine($paths)
     {
         if (!is_array($paths)) {
             $paths = func_get_args();
         }
+
+        Assert::allString($paths, 'The paths must be strings. Got: %s');
 
         $finalPath = null;
         $wasScheme = false;
@@ -725,7 +752,7 @@ class Path
         }
 
         if (null === $finalPath) {
-            return null;
+            return '';
         }
 
         return self::canonicalize($finalPath);
@@ -758,6 +785,8 @@ class Path
      */
     public static function isBasePath($basePath, $ofPath)
     {
+        Assert::string($basePath, 'The base path must be a string. Got: %s');
+
         $basePath = self::canonicalize($basePath);
         $ofPath = self::canonicalize($ofPath);
 

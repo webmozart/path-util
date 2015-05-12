@@ -1,9 +1,12 @@
 Changelog
 =========
 
-* 1.2.0 (@release_date@)
+* 2.0.0 (@release_date@)
 
  * added support for streams, e.g. "phar://C:/path/to/file"
+ * added `Path::combine()`
+ * all `Path` methods now throw exceptions if parameters with invalid types are 
+   passed
 
 * 1.1.0 (2015-03-19)
 
