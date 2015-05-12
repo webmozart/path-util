@@ -7,6 +7,8 @@ Changelog
  * added `Path::combine()`
  * all `Path` methods now throw exceptions if parameters with invalid types are 
    passed
+ * added an internal buffer to `Path::canonicalize()` in order to increase the
+   performance of the `Path` class
 
 * 1.1.0 (2015-03-19)
 

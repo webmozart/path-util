@@ -27,6 +27,23 @@ use Webmozart\Assert\Assert;
 class Path
 {
     /**
+     * The number of buffer entries that triggers a cleanup operation.
+     */
+    const CLEANUP_THRESHOLD = 1250;
+
+    /**
+     * The buffer size after the cleanup operation.
+     */
+    const CLEANUP_SIZE = 1000;
+
+    /**
+     * Buffers input/output of {@link canonicalize()}.
+     *
+     * @var array
+     */
+    private static $buffer = array();
+
+    /**
      * Canonicalizes the given path.
      *
      * During normalization, all slashes are replaced by forward slashes ("/").
@@ -55,11 +72,18 @@ class Path
 
         Assert::string($path, 'The path must be a string. Got: %s');
 
+        // This method is called by many other methods in this class. Buffer
+        // the canonicalized paths to make up for the severe performance
+        // decrease.
+        if (isset(self::$buffer[$path])) {
+            return self::$buffer[$path];
+        }
+
         $path = str_replace('\\', '/', $path);
 
-        list ($root, $path) = self::split($path);
+        list ($root, $pathWithoutRoot) = self::split($path);
 
-        $parts = array_filter(explode('/', $path), 'strlen');
+        $parts = array_filter(explode('/', $pathWithoutRoot), 'strlen');
         $canonicalParts = array();
 
         // Collapse "." and "..", if possible
@@ -84,7 +108,14 @@ class Path
         }
 
         // Add the root directory again
-        return $root.implode('/', $canonicalParts);
+        self::$buffer[$path] = $canonicalPath = $root.implode('/', $canonicalParts);
+
+        // Clean up regularly to prevent memory leaks
+        if (count(self::$buffer) > self::CLEANUP_THRESHOLD) {
+            self::$buffer = array_slice(self::$buffer, -self::CLEANUP_SIZE, null, true);
+        }
+
+        return $canonicalPath;
     }
 
     /**
@@ -117,8 +148,6 @@ class Path
         if ('' === $path) {
             return '';
         }
-
-        Assert::string($path, 'The path must be a string. Got: %s');
 
         $path = static::canonicalize($path);
 
