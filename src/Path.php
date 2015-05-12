@@ -83,12 +83,12 @@ class Path
 
         list ($root, $pathWithoutRoot) = self::split($path);
 
-        $parts = array_filter(explode('/', $pathWithoutRoot), 'strlen');
+        $parts = explode('/', $pathWithoutRoot);
         $canonicalParts = array();
 
         // Collapse "." and "..", if possible
         foreach ($parts as $part) {
-            if ('.' === $part) {
+            if ('.' === $part || '' === $part) {
                 continue;
             }
 
