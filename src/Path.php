@@ -60,9 +60,12 @@ class Path
      *
      * This method is able to deal with both UNIX and Windows paths.
      *
-     * @param string $path A path string
+     * @param string $path A path string.
      *
-     * @return string The canonical path
+     * @return string The canonical path.
+     *
+     * @since 1.0 Added method.
+     * @since 2.0 Method now fails if $path is not a string.
      */
     public static function canonicalize($path)
     {
@@ -136,12 +139,15 @@ class Path
      *
      * The result is a canonical path.
      *
-     * @param string $path A path string
+     * @param string $path A path string.
      *
      * @return string The canonical directory part. Returns the root directory
      *                if the root directory is passed. Returns an empty string
      *                if a relative path is passed that contains no slashes.
-     *                Returns an empty string if an empty string is passed
+     *                Returns an empty string if an empty string is passed.
+     *
+     * @since 1.0 Added method.
+     * @since 2.0 Method now fails if $path is not a string.
      */
     public static function getDirectory($path)
     {
@@ -181,10 +187,13 @@ class Path
      *
      * The result is a canonical path.
      *
-     * @param string $path A path string
+     * @param string $path A path string.
      *
      * @return string The canonical root directory. Returns an empty string if
-     *                the given path is relative or empty
+     *                the given path is relative or empty.
+     *
+     * @since 1.0 Added method.
+     * @since 2.0 Method now fails if $path is not a string.
      */
     public static function getRoot($path)
     {
@@ -226,13 +235,14 @@ class Path
     }
 
     /**
-     * Returns the filename from a file path.
+     * Returns the file name from a file path.
      *
-     * @param string $path  The path string
+     * @param string $path The path string.
      *
-     * @return string Filename
+     * @return string The file name.
      *
-     * @since 1.1
+     * @since 1.1 Added method.
+     * @since 2.0 Method now fails if $path is not a string.
      */
     public static function getFilename($path)
     {
@@ -246,15 +256,16 @@ class Path
     }
 
     /**
-     * Returns the filename without the extension from a file path.
+     * Returns the file name without the extension from a file path.
      *
-     * @param string       $path      The path string
-     * @param string|null  $extension If specified, only that extension is cut off
-     *                                (may contain leading dot)
+     * @param string       $path      The path string.
+     * @param string|null  $extension If specified, only that extension is cut
+     *                                off (may contain leading dot).
      *
-     * @return string Filename without extension
+     * @return string The file name without extension.
      *
-     * @since 1.1
+     * @since 1.1 Added method.
+     * @since 2.0 Method now fails if $path or $extension have invalid types.
      */
     public static function getFilenameWithoutExtension($path, $extension = null)
     {
@@ -276,14 +287,15 @@ class Path
     /**
      * Returns the extension from a file path.
      *
-     * @param string $path           The path string
+     * @param string $path           The path string.
      * @param bool   $forceLowerCase Forces the extension to be lower-case
-     *                               (Requires mbstring extension for correct
-     *                               multi-byte character handling in extension)
+     *                               (requires mbstring extension for correct
+     *                               multi-byte character handling in extension).
      *
-     * @return string Extension from a file path (without leading dot)
+     * @return string The extension of the file path (without leading dot).
      *
-     * @since 1.1
+     * @since 1.1 Added method.
+     * @since 2.0 Method now fails if $path is not a string.
      */
     public static function getExtension($path, $forceLowerCase = false)
     {
@@ -319,7 +331,8 @@ class Path
      * @return bool Returns `true` if the path has an (or the specified)
      *              extension and `false` otherwise.
      *
-     * @since 1.1
+     * @since 1.1 Added method.
+     * @since 2.0 Method now fails if $path or $extensions have invalid types.
      */
     public static function hasExtension($path, $extensions = null, $ignoreCase = false)
     {
@@ -353,12 +366,13 @@ class Path
     /**
      * Changes the extension of a path string.
      *
-     * @param string $path      The path string with filename.ext to change
-     * @param string $extension New extension (with or without leading dot)
+     * @param string $path      The path string with filename.ext to change.
+     * @param string $extension New extension (with or without leading dot).
      *
-     * @return string The path string with new file extension
+     * @return string The path string with new file extension.
      *
-     * @since 1.1
+     * @since 1.1 Added method.
+     * @since 2.0 Method now fails if $path or $extension is not a string.
      */
     public static function changeExtension($path, $extension)
     {
@@ -387,10 +401,13 @@ class Path
     /**
      * Returns whether a path is absolute.
      *
-     * @param string $path A path string
+     * @param string $path A path string.
      *
      * @return boolean Returns true if the path is absolute, false if it is
-     *                 relative or empty
+     *                 relative or empty.
+     *
+     * @since 1.0 Added method.
+     * @since 2.0 Method now fails if $path is not a string.
      */
     public static function isAbsolute($path)
     {
@@ -429,10 +446,13 @@ class Path
     /**
      * Returns whether a path is relative.
      *
-     * @param string $path A path string
+     * @param string $path A path string.
      *
      * @return boolean Returns true if the path is relative or empty, false if
-     *                 it is absolute
+     *                 it is absolute.
+     *
+     * @since 1.0 Added method.
+     * @since 2.0 Method now fails if $path is not a string.
      */
     public static function isRelative($path)
     {
@@ -470,14 +490,17 @@ class Path
      *
      * The result is a canonical path.
      *
-     * @param string $path     A path to make absolute
-     * @param string $basePath An absolute base path
+     * @param string $path     A path to make absolute.
+     * @param string $basePath An absolute base path.
      *
-     * @return string An absolute path in canonical form
+     * @return string An absolute path in canonical form.
      *
      * @throws \InvalidArgumentException If the base path is not absolute or if
      *                                   the given path is an absolute path with
-     *                                   a different root than the base path
+     *                                   a different root than the base path.
+     *
+     * @since 1.0 Added method.
+     * @since 2.0 Method now fails if $path or $basePath is not a string.
      */
     public static function makeAbsolute($path, $basePath)
     {
@@ -564,14 +587,17 @@ class Path
      *
      * The result is a canonical path.
      *
-     * @param string $path     A path to make relative
-     * @param string $basePath An base path
+     * @param string $path     A path to make relative.
+     * @param string $basePath A base path.
      *
-     * @return string A relative path in canonical form
+     * @return string A relative path in canonical form.
      *
      * @throws \InvalidArgumentException If the base path is not absolute or if
      *                                   the given path has a different root
-     *                                   than the base path
+     *                                   than the base path.
+     *
+     * @since 1.0 Added method.
+     * @since 2.0 Method now fails if $path or $basePath is not a string.
      */
     public static function makeRelative($path, $basePath)
     {
@@ -644,9 +670,12 @@ class Path
     /**
      * Returns whether the given path is on the local filesystem.
      *
-     * @param string $path A path string
+     * @param string $path A path string.
      *
-     * @return boolean Returns true if the path is local, false for a URL
+     * @return boolean Returns true if the path is local, false for a URL.
+     *
+     * @since 1.0 Added method.
+     * @since 2.0 Method now fails if $path is not a string.
      */
     public static function isLocal($path)
     {
@@ -694,6 +723,9 @@ class Path
      *
      * @return string The longest common base path in canonical form or `null`
      *                if the paths are on different Windows partitions.
+     *
+     * @since 1.0 Added method.
+     * @since 2.0 Method now fails if $paths are not strings.
      */
     public static function getLongestCommonBasePath(array $paths)
     {
@@ -743,7 +775,7 @@ class Path
      *
      * @return null|string The combined path
      *
-     * @since 2.0
+     * @since 2.0 Added method.
      */
     public static function combine($paths)
     {
@@ -811,6 +843,9 @@ class Path
      * @param string $ofPath   The other path.
      *
      * @return bool Whether the base path is a base path of the other path.
+     *
+     * @since 1.0 Added method.
+     * @since 2.0 Method now fails if $basePath or $ofPath is not a string.
      */
     public static function isBasePath($basePath, $ofPath)
     {
