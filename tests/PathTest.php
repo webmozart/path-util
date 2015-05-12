@@ -1132,7 +1132,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
         Path::isBasePath('/base/path', array());
     }
 
-    public function provideCombineTests()
+    public function provideJoinTests()
     {
         return array(
             array('', '', ''),
@@ -1206,27 +1206,27 @@ class PathTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider provideCombineTests
+     * @dataProvider provideJoinTests
      */
-    public function testCombine($path1, $path2, $result)
+    public function testJoin($path1, $path2, $result)
     {
-        $this->assertSame($result, Path::combine($path1, $path2));
+        $this->assertSame($result, Path::join($path1, $path2));
     }
 
-    public function testCombineVarArgs()
+    public function testJoinVarArgs()
     {
-        $this->assertSame('/path', Path::combine('/path'));
-        $this->assertSame('/path/to', Path::combine('/path', 'to'));
-        $this->assertSame('/path/to/test', Path::combine('/path', 'to', '/test'));
-        $this->assertSame('/path/to/test/subdir', Path::combine('/path', 'to', '/test', 'subdir/'));
+        $this->assertSame('/path', Path::join('/path'));
+        $this->assertSame('/path/to', Path::join('/path', 'to'));
+        $this->assertSame('/path/to/test', Path::join('/path', 'to', '/test'));
+        $this->assertSame('/path/to/test/subdir', Path::join('/path', 'to', '/test', 'subdir/'));
     }
 
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The paths must be strings. Got: array
      */
-    public function testCombineFailsIfInvalidPath()
+    public function testJoinFailsIfInvalidPath()
     {
-        Path::combine('/path', array());
+        Path::join('/path', array());
     }
 }

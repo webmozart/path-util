@@ -776,17 +776,17 @@ class Path
     }
 
     /**
-     * Combines two or more path strings.
+     * Joins two or more path strings.
      *
      * The result is a canonical path.
      *
-     * @param array|string $paths,... Paths parts as parameters or array
+     * @param array|string $paths,... Path parts as parameters or array
      *
-     * @return null|string The combined path
+     * @return string The joint path
      *
      * @since 2.0 Added method.
      */
-    public static function combine($paths)
+    public static function join($paths)
     {
         if (!is_array($paths)) {
             $paths = func_get_args();
