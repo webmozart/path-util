@@ -75,6 +75,9 @@ Path::hasExtension('/images/profile.jpg', array('jpg', 'png', 'gif'));
 
 Path::changeExtension('/images/profile.jpeg', 'jpg');
 // => /images/profile.jpg
+
+Path::join('phar://C:/Documents', 'projects/my-project.phar', 'composer.json');
+// => phar://C:/Documents/projects/my-project.phar/composer.json
 ```
 
 Learn more in the [Documentation] and the [API Docs].
