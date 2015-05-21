@@ -1,7 +1,7 @@
 Changelog
 =========
 
-* 2.0.0 (@release_date@)
+* 2.0.0 (2015-05-21)
 
  * added support for streams, e.g. "phar://C:/path/to/file"
  * added `Path::join()`
