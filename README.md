@@ -21,7 +21,7 @@ Installation
 The utility can be installed with [Composer]:
 
 ```
-$ composer require webmozart/path-util:~1.1
+$ composer require webmozart/path-util:^2.0
 ```
 
 Usage
