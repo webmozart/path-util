@@ -1,6 +1,6 @@
 
 var ApiGen = ApiGen || {};
-ApiGen.config = {"options":{"elementDetailsCollapsed":true,"elementsOrder":"natural"},"name":"ApiGen theme","templatesPath":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default","resources":{"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/resources":"resources"},"templates":{"overview":{"filename":"index.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/overview.latte"},"combined":{"filename":"resources\/combined.js","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/combined.js.latte"},"elementlist":{"filename":"elementlist.js","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/elementlist.js.latte"},"404":{"filename":"404.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/404.latte"},"package":{"filename":"package-%s.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/package.latte"},"namespace":{"filename":"namespace-%s.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/namespace.latte"},"class":{"filename":"class-%s.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/class.latte"},"constant":{"filename":"constant-%s.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/constant.latte"},"function":{"filename":"function-%s.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/function.latte"},"source":{"filename":"source-%s.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/source.latte"},"tree":{"filename":"tree.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/tree.latte"},"deprecated":{"filename":"deprecated.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/deprecated.latte"},"todo":{"filename":"todo.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/todo.latte"},"sitemap":{"filename":"sitemap.xml","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/sitemap.xml.latte"},"opensearch":{"filename":"opensearch.xml","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/opensearch.xml.latte"},"robots":{"filename":"robots.txt","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/src\/templates\/default\/robots.txt.latte"}}};
+ApiGen.config = {"options":{"elementDetailsCollapsed":true,"elementsOrder":"natural"},"name":"ApiGen theme","templatesPath":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src","resources":{"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/resources":"resources"},"templates":{"overview":{"filename":"index.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/overview.latte"},"combined":{"filename":"resources\/combined.js","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/combined.js.latte"},"elementlist":{"filename":"elementlist.js","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/elementlist.js.latte"},"404":{"filename":"404.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/404.latte"},"package":{"filename":"package-%s.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/package.latte"},"namespace":{"filename":"namespace-%s.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/namespace.latte"},"class":{"filename":"class-%s.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/class.latte"},"constant":{"filename":"constant-%s.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/constant.latte"},"function":{"filename":"function-%s.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/function.latte"},"annotationGroup":{"filename":"annotation-group-%s.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/annotation-group.latte"},"source":{"filename":"source-%s.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/source.latte"},"tree":{"filename":"tree.html","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/tree.latte"},"sitemap":{"filename":"sitemap.xml","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/sitemap.xml.latte"},"opensearch":{"filename":"opensearch.xml","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/opensearch.xml.latte"},"robots":{"filename":"robots.txt","template":"\/home\/bernhard\/Entwicklung\/Web\/webmozart\/path-util\/vendor\/apigen\/apigen\/bin\/..\/..\/..\/..\/vendor\/apigen\/theme-default\/src\/robots.txt.latte"}}};
 
 
 	/*! jQuery v1.10.2 | (c) 2005, 2013 jQuery Foundation, Inc. | jquery.org/license
@@ -1152,11 +1152,19 @@ jQuery.fn.sortElements = (function(){
 
 	// Open details
 	if (ApiGen.config.options.elementDetailsCollapsed) {
+		var trCollapsed = true;
 		$('tr', $content).filter(':has(.detailed)')
 			.click(function() {
 				var $this = $(this);
-				$('.short', $this).hide();
-				$('.detailed', $this).show();
+				if (trCollapsed) {
+					$('.short', $this).hide();
+					$('.detailed', $this).show();
+					trCollapsed = false;
+				} else {					
+					$('.short', $this).show();
+					$('.detailed', $this).hide();
+					trCollapsed = true;
+				}
 			});
 	}
 
@@ -1249,8 +1257,8 @@ jQuery.fn.sortElements = (function(){
 	$('.l a').click(function(event) {
 		event.preventDefault();
 
-		var $selectedLine = $(this).parent();
-		var selectedLine = parseInt($selectedLine.attr('id'));
+		var selectedLine = $(this).parent().index() + 1;
+		var $selectedLine = $('pre.code .l').eq(selectedLine - 1);
 
 		if (event.shiftKey) {
 			if (lastLine) {

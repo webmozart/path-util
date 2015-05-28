@@ -544,6 +544,10 @@ div.tree span.padding {
 	font-weight: bold;
 }
 
+pre.numbers {
+	float: left;
+}
+
 span.l {
 	display: block;
 }
