@@ -116,7 +116,7 @@ All contents of this package are licensed under the [MIT license].
 [The Community Contributors]: https://github.com/webmozart/path-util/graphs/contributors
 [Composer]: https://getcomposer.org
 [Documentation]: docs/usage.md
-[API Docs]: https://webmozart.github.io/path-util/api
+[API Docs]: https://webmozart.github.io/path-util/api/latest/class-Webmozart.PathUtil.Path.html
 [issue tracker]: https://github.com/webmozart/path-util/issues
 [Git repository]: https://github.com/webmozart/path-util
 [@webmozart]: https://twitter.com/webmozart
