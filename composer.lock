@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6563b80b67697702c72fabd8f66393ec",
+    "hash": "fee02eb20d0d6b3297cd9d00c646f171",
     "packages": [
         {
             "name": "andrewsville/php-token-reflection",
@@ -1798,17 +1798,17 @@
             "time": "2015-05-03 16:36:14"
         },
         {
-            "name": "webmozart/path-util",
-            "version": "1.1.0",
+            "name": "webmozart/assert",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/webmozart/path-util.git",
-                "reference": "86cd0f94363c17f4d557a9f02ed70f67584e9f84"
+                "url": "https://github.com/webmozart/assert.git",
+                "reference": "b8ef76d0f0c3b9a0a1bc987085fe0a0ddba984ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/path-util/zipball/86cd0f94363c17f4d557a9f02ed70f67584e9f84",
-                "reference": "86cd0f94363c17f4d557a9f02ed70f67584e9f84",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/b8ef76d0f0c3b9a0a1bc987085fe0a0ddba984ab",
+                "reference": "b8ef76d0f0c3b9a0a1bc987085fe0a0ddba984ab",
                 "shasum": ""
             },
             "require": {
@@ -1818,6 +1818,56 @@
             "extra": {
                 "branch-alias": {
                     "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Webmozart\\Assert\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bernhard Schussek",
+                    "email": "bschussek@gmail.com"
+                }
+            ],
+            "description": "Assertions to validate method input/output with nice error messages.",
+            "keywords": [
+                "assert",
+                "check",
+                "validate"
+            ],
+            "time": "2015-05-12 15:19:25"
+        },
+        {
+            "name": "webmozart/path-util",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webmozart/path-util.git",
+                "reference": "ff82d231236bec95020c7d2bfa10780402b0cbeb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webmozart/path-util/zipball/ff82d231236bec95020c7d2bfa10780402b0cbeb",
+                "reference": "ff82d231236bec95020c7d2bfa10780402b0cbeb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "webmozart/assert": "~1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
                 }
             },
             "autoload": {
@@ -1836,7 +1886,7 @@
                 }
             ],
             "description": "A robust cross-platform utility for normalizing, comparing and modifying file paths.",
-            "time": "2015-03-19 10:57:25"
+            "time": "2015-05-21 10:43:18"
         }
     ],
     "packages-dev": [],

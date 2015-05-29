@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "webmozart/path-util": "~1.0",
+        "webmozart/path-util": "~2.0",
         "apigen/apigen": "~4.1@dev"
     },
     "config": {
