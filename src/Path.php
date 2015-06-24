@@ -89,6 +89,11 @@ class Path
             return self::$buffer[$path];
         }
 
+        // Replace "~" with user's home directory.
+        if ($path[0] === '~') {
+            $path = static::getHomeDirectory() . substr($path, 1);
+        }
+
         $path = str_replace('\\', '/', $path);
 
         list ($root, $pathWithoutRoot) = self::split($path);
@@ -189,6 +194,39 @@ class Path
         }
 
         return '';
+    }
+
+    /**
+     * Returns canonical path of the user's home directory.
+     *
+     * Supported operating systems:
+     *
+     *  - UNIX
+     *  - Windows8 and upper
+     *
+     * If your operation system or environment isn't supported, an exception is thrown.
+     *
+     * The result is a canonical path.
+     *
+     * @return string The canonical home directory
+     *
+     * @throws \RuntimeException If your operation system or environment isn't supported
+     *
+     * @since 2.1 Added method.
+     */
+    public static function getHomeDirectory()
+    {
+        // For UNIX support
+        if (getenv('HOME')) {
+            return static::canonicalize(getenv('HOME'));
+        }
+
+        // For >= Windows8 support
+        if (getenv('HOMEDRIVE') && getenv('HOMEPATH')) {
+            return static::canonicalize(getenv('HOMEDRIVE') . getenv('HOMEPATH'));
+        }
+
+        throw new \RuntimeException("Your environment or operation system isn't supported");
     }
 
     /**

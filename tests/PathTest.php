@@ -22,6 +22,10 @@ class PathTest extends \PHPUnit_Framework_TestCase
 {
     public function provideCanonicalizationTests()
     {
+        putenv('HOME=/home/webmozart');
+        putenv('HOMEDRIVE=');
+        putenv('HOMEPATH=');
+
         return array(
             // relative paths (forward slash)
             array('css/./style.css', 'css/style.css'),
@@ -130,6 +134,18 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('phar://C:/./../css/style.css', 'phar://C:/css/style.css'),
             array('phar://C:/.././css/style.css', 'phar://C:/css/style.css'),
             array('phar://C:/../../css/style.css', 'phar://C:/css/style.css'),
+
+            // paths with "~" UNIX
+            array('~/css/style.css', '/home/webmozart/css/style.css'),
+            array('~/css/./style.css', '/home/webmozart/css/style.css'),
+            array('~/css/../style.css', '/home/webmozart/style.css'),
+            array('~/css/./../style.css', '/home/webmozart/style.css'),
+            array('~/css/.././style.css', '/home/webmozart/style.css'),
+            array('~/./css/style.css', '/home/webmozart/css/style.css'),
+            array('~/../css/style.css', '/home/css/style.css'),
+            array('~/./../css/style.css', '/home/css/style.css'),
+            array('~/.././css/style.css', '/home/css/style.css'),
+            array('~/../../css/style.css', '/css/style.css'),
         );
     }
 
@@ -1228,5 +1244,36 @@ class PathTest extends \PHPUnit_Framework_TestCase
     public function testJoinFailsIfInvalidPath()
     {
         Path::join('/path', array());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Your environment or operation system isn't supported
+     */
+    public function testGetHomeDirectoryFailsIfNotSupportedOperationSystem()
+    {
+        putenv('HOME=');
+        putenv('HOMEDRIVE=');
+        putenv('HOMEPATH=');
+
+        Path::getHomeDirectory();
+    }
+
+    public function testGetHomeDirectoryForUnix()
+    {
+        putenv('HOME=/home/webmozart');
+        putenv('HOMEDRIVE=');
+        putenv('HOMEPATH=');
+
+        $this->assertEquals('/home/webmozart', Path::getHomeDirectory());
+    }
+
+    public function testGetHomeDirectoryForWindows()
+    {
+        putenv('HOME=');
+        putenv('HOMEDRIVE=C:');
+        putenv('HOMEPATH=/users/webmozart');
+
+        $this->assertEquals('C:/users/webmozart', Path::getHomeDirectory());
     }
 }
