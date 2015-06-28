@@ -20,12 +20,28 @@ use Webmozart\PathUtil\Path;
  */
 class PathTest extends \PHPUnit_Framework_TestCase
 {
-    public function provideCanonicalizationTests()
+    protected $storedEnv = array();
+
+    public function setUp()
     {
+        $this->storedEnv['HOME']      = getenv('HOME');
+        $this->storedEnv['HOMEDRIVE'] = getenv('HOMEDRIVE');
+        $this->storedEnv['HOMEPATH']  = getenv('HOMEPATH');
+
         putenv('HOME=/home/webmozart');
         putenv('HOMEDRIVE=');
         putenv('HOMEPATH=');
+    }
 
+    public function tearDown()
+    {
+        putenv('HOME=' . $this->storedEnv['HOME']);
+        putenv('HOMEDRIVE=' . $this->storedEnv['HOMEDRIVE']);
+        putenv('HOMEPATH=' . $this->storedEnv['HOMEPATH']);
+    }
+
+    public function provideCanonicalizationTests()
+    {
         return array(
             // relative paths (forward slash)
             array('css/./style.css', 'css/style.css'),

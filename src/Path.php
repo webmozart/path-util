@@ -90,7 +90,7 @@ class Path
         }
 
         // Replace "~" with user's home directory.
-        if ($path[0] === '~') {
+        if ('~' === $path[0]) {
             $path = static::getHomeDirectory() . substr($path, 1);
         }
 
