@@ -1269,18 +1269,12 @@ class PathTest extends \PHPUnit_Framework_TestCase
     public function testGetHomeDirectoryFailsIfNotSupportedOperationSystem()
     {
         putenv('HOME=');
-        putenv('HOMEDRIVE=');
-        putenv('HOMEPATH=');
 
         Path::getHomeDirectory();
     }
 
     public function testGetHomeDirectoryForUnix()
     {
-        putenv('HOME=/home/webmozart');
-        putenv('HOMEDRIVE=');
-        putenv('HOMEPATH=');
-
         $this->assertEquals('/home/webmozart', Path::getHomeDirectory());
     }
 
