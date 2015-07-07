@@ -24,9 +24,9 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->storedEnv['HOME']      = getenv('HOME');
+        $this->storedEnv['HOME'] = getenv('HOME');
         $this->storedEnv['HOMEDRIVE'] = getenv('HOMEDRIVE');
-        $this->storedEnv['HOMEPATH']  = getenv('HOMEPATH');
+        $this->storedEnv['HOMEPATH'] = getenv('HOMEPATH');
 
         putenv('HOME=/home/webmozart');
         putenv('HOMEDRIVE=');
@@ -35,9 +35,9 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        putenv('HOME=' . $this->storedEnv['HOME']);
-        putenv('HOMEDRIVE=' . $this->storedEnv['HOMEDRIVE']);
-        putenv('HOMEPATH=' . $this->storedEnv['HOMEPATH']);
+        putenv('HOME='.$this->storedEnv['HOME']);
+        putenv('HOMEDRIVE='.$this->storedEnv['HOMEDRIVE']);
+        putenv('HOMEPATH='.$this->storedEnv['HOMEPATH']);
     }
 
     public function provideCanonicalizationTests()

@@ -93,7 +93,7 @@ class Path
 
         // Replace "~" with user's home directory.
         if ('~' === $path[0]) {
-            $path = static::getHomeDirectory() . substr($path, 1);
+            $path = static::getHomeDirectory().substr($path, 1);
         }
 
         $path = str_replace('\\', '/', $path);
@@ -225,7 +225,7 @@ class Path
 
         // For >= Windows8 support
         if (getenv('HOMEDRIVE') && getenv('HOMEPATH')) {
-            return static::canonicalize(getenv('HOMEDRIVE') . getenv('HOMEPATH'));
+            return static::canonicalize(getenv('HOMEDRIVE').getenv('HOMEPATH'));
         }
 
         throw new RuntimeException("Your environment or operation system isn't supported");
@@ -545,8 +545,8 @@ class Path
      * @return string An absolute path in canonical form.
      *
      * @throws InvalidArgumentException If the base path is not absolute or if
-     *                                   the given path is an absolute path with
-     *                                   a different root than the base path.
+     *                                  the given path is an absolute path with
+     *                                  a different root than the base path.
      *
      * @since 1.0 Added method.
      * @since 2.0 Method now fails if $path or $basePath is not a string.
@@ -642,8 +642,8 @@ class Path
      * @return string A relative path in canonical form.
      *
      * @throws InvalidArgumentException If the base path is not absolute or if
-     *                                   the given path has a different root
-     *                                   than the base path.
+     *                                  the given path has a different root
+     *                                  than the base path.
      *
      * @since 1.0 Added method.
      * @since 2.0 Method now fails if $path or $basePath is not a string.
