@@ -11,6 +11,8 @@
 
 namespace Webmozart\PathUtil;
 
+use InvalidArgumentException;
+use RuntimeException;
 use Webmozart\Assert\Assert;
 
 /**
@@ -87,6 +89,11 @@ class Path
         // decrease.
         if (isset(self::$buffer[$path])) {
             return self::$buffer[$path];
+        }
+
+        // Replace "~" with user's home directory.
+        if ('~' === $path[0]) {
+            $path = static::getHomeDirectory().substr($path, 1);
         }
 
         $path = str_replace('\\', '/', $path);
@@ -189,6 +196,39 @@ class Path
         }
 
         return '';
+    }
+
+    /**
+     * Returns canonical path of the user's home directory.
+     *
+     * Supported operating systems:
+     *
+     *  - UNIX
+     *  - Windows8 and upper
+     *
+     * If your operation system or environment isn't supported, an exception is thrown.
+     *
+     * The result is a canonical path.
+     *
+     * @return string The canonical home directory
+     *
+     * @throws RuntimeException If your operation system or environment isn't supported
+     *
+     * @since 2.1 Added method.
+     */
+    public static function getHomeDirectory()
+    {
+        // For UNIX support
+        if (getenv('HOME')) {
+            return static::canonicalize(getenv('HOME'));
+        }
+
+        // For >= Windows8 support
+        if (getenv('HOMEDRIVE') && getenv('HOMEPATH')) {
+            return static::canonicalize(getenv('HOMEDRIVE').getenv('HOMEPATH'));
+        }
+
+        throw new RuntimeException("Your environment or operation system isn't supported");
     }
 
     /**
@@ -504,9 +544,9 @@ class Path
      *
      * @return string An absolute path in canonical form.
      *
-     * @throws \InvalidArgumentException If the base path is not absolute or if
-     *                                   the given path is an absolute path with
-     *                                   a different root than the base path.
+     * @throws InvalidArgumentException If the base path is not absolute or if
+     *                                  the given path is an absolute path with
+     *                                  a different root than the base path.
      *
      * @since 1.0 Added method.
      * @since 2.0 Method now fails if $path or $basePath is not a string.
@@ -516,7 +556,7 @@ class Path
         Assert::stringNotEmpty($basePath, 'The base path must be a non-empty string. Got: %s');
 
         if (!static::isAbsolute($basePath)) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'The base path "%s" is not an absolute path.',
                 $basePath
             ));
@@ -527,7 +567,7 @@ class Path
             $baseRoot = static::getRoot($basePath);
 
             if ($root !== $baseRoot) {
-                throw new \InvalidArgumentException(sprintf(
+                throw new InvalidArgumentException(sprintf(
                     'The path "%s" cannot be made absolute based on "%s", '.
                     'because their roots are different ("%s" and "%s").',
                     $path,
@@ -601,9 +641,9 @@ class Path
      *
      * @return string A relative path in canonical form.
      *
-     * @throws \InvalidArgumentException If the base path is not absolute or if
-     *                                   the given path has a different root
-     *                                   than the base path.
+     * @throws InvalidArgumentException If the base path is not absolute or if
+     *                                  the given path has a different root
+     *                                  than the base path.
      *
      * @since 1.0 Added method.
      * @since 2.0 Method now fails if $path or $basePath is not a string.
@@ -628,7 +668,7 @@ class Path
         // If the passed path is absolute, but the base path is not, we
         // cannot generate a relative path
         if ('' !== $root && '' === $baseRoot) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'The absolute path "%s" cannot be made relative to the '.
                 'relative path "%s". You should provide an absolute base '.
                 'path instead.',
@@ -639,7 +679,7 @@ class Path
 
         // Fail if the roots of the two paths are different
         if ($baseRoot && $root !== $baseRoot) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'The path "%s" cannot be made relative to "%s", because they '.
                 'have different roots ("%s" and "%s").',
                 $path,

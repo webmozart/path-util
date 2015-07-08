@@ -36,6 +36,9 @@ echo Path::canonicalize('/var/www/vhost/webmozart/../config.ini');
 echo Path::canonicalize('C:\Programs\Webmozart\..\config.ini');
 // => C:/Programs/config.ini
 
+echo Path::canonicalize('~/config.ini');
+// => /home/webmozart/config.ini
+
 echo Path::makeAbsolute('config/config.yml', '/var/www/project');
 // => /var/www/project/config/config.yml
 
@@ -78,6 +81,9 @@ Path::changeExtension('/images/profile.jpeg', 'jpg');
 
 Path::join('phar://C:/Documents', 'projects/my-project.phar', 'composer.json');
 // => phar://C:/Documents/projects/my-project.phar/composer.json
+
+Path::getHomeDirectory();
+// => /home/webmozart
 ```
 
 Learn more in the [Documentation] and the [API Docs].

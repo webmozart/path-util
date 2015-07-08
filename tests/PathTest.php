@@ -20,6 +20,26 @@ use Webmozart\PathUtil\Path;
  */
 class PathTest extends \PHPUnit_Framework_TestCase
 {
+    protected $storedEnv = array();
+
+    public function setUp()
+    {
+        $this->storedEnv['HOME'] = getenv('HOME');
+        $this->storedEnv['HOMEDRIVE'] = getenv('HOMEDRIVE');
+        $this->storedEnv['HOMEPATH'] = getenv('HOMEPATH');
+
+        putenv('HOME=/home/webmozart');
+        putenv('HOMEDRIVE=');
+        putenv('HOMEPATH=');
+    }
+
+    public function tearDown()
+    {
+        putenv('HOME='.$this->storedEnv['HOME']);
+        putenv('HOMEDRIVE='.$this->storedEnv['HOMEDRIVE']);
+        putenv('HOMEPATH='.$this->storedEnv['HOMEPATH']);
+    }
+
     public function provideCanonicalizationTests()
     {
         return array(
@@ -130,6 +150,18 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('phar://C:/./../css/style.css', 'phar://C:/css/style.css'),
             array('phar://C:/.././css/style.css', 'phar://C:/css/style.css'),
             array('phar://C:/../../css/style.css', 'phar://C:/css/style.css'),
+
+            // paths with "~" UNIX
+            array('~/css/style.css', '/home/webmozart/css/style.css'),
+            array('~/css/./style.css', '/home/webmozart/css/style.css'),
+            array('~/css/../style.css', '/home/webmozart/style.css'),
+            array('~/css/./../style.css', '/home/webmozart/style.css'),
+            array('~/css/.././style.css', '/home/webmozart/style.css'),
+            array('~/./css/style.css', '/home/webmozart/css/style.css'),
+            array('~/../css/style.css', '/home/css/style.css'),
+            array('~/./../css/style.css', '/home/css/style.css'),
+            array('~/.././css/style.css', '/home/css/style.css'),
+            array('~/../../css/style.css', '/css/style.css'),
         );
     }
 
@@ -1228,5 +1260,30 @@ class PathTest extends \PHPUnit_Framework_TestCase
     public function testJoinFailsIfInvalidPath()
     {
         Path::join('/path', array());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Your environment or operation system isn't supported
+     */
+    public function testGetHomeDirectoryFailsIfNotSupportedOperationSystem()
+    {
+        putenv('HOME=');
+
+        Path::getHomeDirectory();
+    }
+
+    public function testGetHomeDirectoryForUnix()
+    {
+        $this->assertEquals('/home/webmozart', Path::getHomeDirectory());
+    }
+
+    public function testGetHomeDirectoryForWindows()
+    {
+        putenv('HOME=');
+        putenv('HOMEDRIVE=C:');
+        putenv('HOMEPATH=/users/webmozart');
+
+        $this->assertEquals('C:/users/webmozart', Path::getHomeDirectory());
     }
 }
