@@ -75,6 +75,7 @@ class Path
      *
      * @since 1.0 Added method.
      * @since 2.0 Method now fails if $path is not a string.
+     * @since 2.1 Added support for `~`.
      */
     public static function canonicalize($path)
     {

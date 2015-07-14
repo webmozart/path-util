@@ -1,6 +1,11 @@
 Changelog
 =========
 
+* 2.1.0 (2015-07-14)
+
+ * `Path::canonicalize()` now turns `~` into the user's home directory on
+   Unix and Windows 8 or later.
+
 * 2.0.0 (2015-05-21)
 
  * added support for streams, e.g. "phar://C:/path/to/file"
