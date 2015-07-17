@@ -27,7 +27,7 @@ use Webmozart\Assert\Assert;
  * @author Bernhard Schussek <bschussek@gmail.com>
  * @author Thomas Schulz <mail@king2500.net>
  */
-class Path
+final class Path
 {
     /**
      * The number of buffer entries that triggers a cleanup operation.
@@ -398,7 +398,7 @@ class Path
         $actualExtension = self::getExtension($path, $ignoreCase);
 
         // Only check if path has any extension
-        if (!$extensions) {
+        if (empty($extensions)) {
             return '' !== $actualExtension;
         }
 
@@ -772,8 +772,9 @@ class Path
      *
      * @param array $paths A list of paths.
      *
-     * @return string The longest common base path in canonical form or `null`
-     *                if the paths are on different Windows partitions.
+     * @return string|null The longest common base path in canonical form or
+     *                     `null` if the paths are on different Windows
+     *                     partitions.
      *
      * @since 1.0 Added method.
      * @since 2.0 Method now fails if $paths are not strings.
@@ -822,9 +823,9 @@ class Path
      *
      * The result is a canonical path.
      *
-     * @param array|string $paths,... Path parts as parameters or array
+     * @param string[]|string $paths Path parts as parameters or array.
      *
-     * @return string The joint path
+     * @return string The joint path.
      *
      * @since 2.0 Added method.
      */
@@ -928,10 +929,10 @@ class Path
      * list ($root, $path) = Path::split("C:")
      * // => array("C:/", "")
      *
-     * @param string $path The canonical path to split
+     * @param string $path The canonical path to split.
      *
-     * @return array An array with the root directory and the remaining relative
-     *               path
+     * @return string[] An array with the root directory and the remaining
+     *                  relative path.
      */
     private static function split($path)
     {
