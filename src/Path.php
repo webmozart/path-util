@@ -23,6 +23,7 @@ use Webmozart\Assert\Assert;
  * containing only forward slashes and no excess "." and ".." segments.
  *
  * @since  1.0
+ *
  * @author Bernhard Schussek <bschussek@gmail.com>
  * @author Thomas Schulz <mail@king2500.net>
  */
@@ -99,7 +100,7 @@ class Path
 
         $path = str_replace('\\', '/', $path);
 
-        list ($root, $pathWithoutRoot) = self::split($path);
+        list($root, $pathWithoutRoot) = self::split($path);
 
         $parts = explode('/', $pathWithoutRoot);
         $canonicalParts = array();
@@ -113,7 +114,7 @@ class Path
             // Collapse ".." with the previous part, if one exists
             // Don't collapse ".." if the previous part is also ".."
             if ('..' === $part && count($canonicalParts) > 0
-                    && '..' !== $canonicalParts[count($canonicalParts)-1]) {
+                    && '..' !== $canonicalParts[count($canonicalParts) - 1]) {
                 array_pop($canonicalParts);
 
                 continue;
@@ -308,9 +309,9 @@ class Path
     /**
      * Returns the file name without the extension from a file path.
      *
-     * @param string       $path      The path string.
-     * @param string|null  $extension If specified, only that extension is cut
-     *                                off (may contain leading dot).
+     * @param string      $path      The path string.
+     * @param string|null $extension If specified, only that extension is cut
+     *                               off (may contain leading dot).
      *
      * @return string The file name without extension.
      *
@@ -436,13 +437,13 @@ class Path
         $extension = ltrim($extension, '.');
 
         // No extension for paths
-        if ('/' == substr($path, -1)) {
+        if ('/' === substr($path, -1)) {
             return $path;
         }
 
         // No actual extension in path
         if (empty($actualExtension)) {
-            return $path . ('.' == substr($path, -1) ? '' : '.') . $extension;
+            return $path.('.' === substr($path, -1) ? '' : '.').$extension;
         }
 
         return substr($path, 0, -strlen($actualExtension)).$extension;
@@ -453,8 +454,8 @@ class Path
      *
      * @param string $path A path string.
      *
-     * @return boolean Returns true if the path is absolute, false if it is
-     *                 relative or empty.
+     * @return bool Returns true if the path is absolute, false if it is
+     *              relative or empty.
      *
      * @since 1.0 Added method.
      * @since 2.0 Method now fails if $path is not a string.
@@ -498,8 +499,8 @@ class Path
      *
      * @param string $path A path string.
      *
-     * @return boolean Returns true if the path is relative or empty, false if
-     *                 it is absolute.
+     * @return bool Returns true if the path is relative or empty, false if
+     *              it is absolute.
      *
      * @since 1.0 Added method.
      * @since 2.0 Method now fails if $path is not a string.
@@ -656,8 +657,8 @@ class Path
         $path = static::canonicalize($path);
         $basePath = static::canonicalize($basePath);
 
-        list ($root, $relativePath) = self::split($path);
-        list ($baseRoot, $relativeBasePath) = self::split($basePath);
+        list($root, $relativePath) = self::split($path);
+        list($baseRoot, $relativeBasePath) = self::split($basePath);
 
         // If the base path is given as absolute path and the path is already
         // relative, consider it to be relative to the given absolute path
@@ -722,7 +723,7 @@ class Path
      *
      * @param string $path A path string.
      *
-     * @return boolean Returns true if the path is local, false for a URL.
+     * @return bool Returns true if the path is local, false for a URL.
      *
      * @since 1.0 Added method.
      * @since 2.0 Method now fails if $path is not a string.
@@ -781,10 +782,10 @@ class Path
     {
         Assert::allString($paths, 'The paths must be strings. Got: %s');
 
-        list ($bpRoot, $basePath) = self::split(self::canonicalize(reset($paths)));
+        list($bpRoot, $basePath) = self::split(self::canonicalize(reset($paths)));
 
         for (next($paths); null !== key($paths) && '' !== $basePath; next($paths)) {
-            list ($root, $path) = self::split(self::canonicalize(current($paths)));
+            list($root, $path) = self::split(self::canonicalize(current($paths)));
 
             // If we deal with different roots (e.g. C:/ vs. D:/), it's time
             // to quit
@@ -971,6 +972,7 @@ class Path
      * Converts string to lower-case (multi-byte safe if mbstring is installed).
      *
      * @param string $str The string
+     *
      * @return string Lower case string
      */
     private static function toLower($str)

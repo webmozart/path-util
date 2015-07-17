@@ -15,6 +15,7 @@ use Webmozart\PathUtil\Path;
 
 /**
  * @since  1.0
+ *
  * @author Bernhard Schussek <bschussek@gmail.com>
  * @author Thomas Schulz <mail@king2500.net>
  */
@@ -470,7 +471,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
     {
         static $call = 0;
         $this->assertSame($pathExpected, Path::changeExtension($path, $extension));
-        $call++;
+        ++$call;
     }
 
     /**
@@ -802,19 +803,19 @@ class PathTest extends \PHPUnit_Framework_TestCase
             array('\\webmozart\\css\\style.css', '\\webmozart\\puli', '../css/style.css'),
             array('\\css\\style.css', '\\webmozart\\puli', '../../css/style.css'),
 
-            array('C:/webmozart/puli/css/style.css', 'C:/webmozart/puli', 'css/style.css', ),
+            array('C:/webmozart/puli/css/style.css', 'C:/webmozart/puli', 'css/style.css'),
             array('C:/webmozart/css/style.css', 'C:/webmozart/puli', '../css/style.css'),
             array('C:/css/style.css', 'C:/webmozart/puli', '../../css/style.css'),
 
-            array('C:\\webmozart\\puli\\css\\style.css', 'C:\\webmozart\\puli', 'css/style.css', ),
+            array('C:\\webmozart\\puli\\css\\style.css', 'C:\\webmozart\\puli', 'css/style.css'),
             array('C:\\webmozart\\css\\style.css', 'C:\\webmozart\\puli', '../css/style.css'),
             array('C:\\css\\style.css', 'C:\\webmozart\\puli', '../../css/style.css'),
 
-            array('phar:///webmozart/puli/css/style.css', 'phar:///webmozart/puli', 'css/style.css', ),
+            array('phar:///webmozart/puli/css/style.css', 'phar:///webmozart/puli', 'css/style.css'),
             array('phar:///webmozart/css/style.css', 'phar:///webmozart/puli', '../css/style.css'),
             array('phar:///css/style.css', 'phar:///webmozart/puli', '../../css/style.css'),
 
-            array('phar://C:/webmozart/puli/css/style.css', 'phar://C:/webmozart/puli', 'css/style.css', ),
+            array('phar://C:/webmozart/puli/css/style.css', 'phar://C:/webmozart/puli', 'css/style.css'),
             array('phar://C:/webmozart/css/style.css', 'phar://C:/webmozart/puli', '../css/style.css'),
             array('phar://C:/css/style.css', 'phar://C:/webmozart/puli', '../../css/style.css'),
 
