@@ -26,12 +26,27 @@ class UrlTest extends \PHPUnit_Framework_TestCase
      */
     public function testMakeRelative($absoluteUrl, $baseUrl, $relativePath)
     {
-        // URL
         $relative = Url::makeRelative($absoluteUrl, $baseUrl);
-        $this->assertSame($this->createUrl($relativePath), $this->createUrl($relative));
+        $this->assertSame($relativePath, $relative);
+    }
 
-        // path
-        $relative = Url::makeRelative($absoluteUrl, $baseUrl);
+    /**
+     * @dataProvider provideMakeRelativeTests
+     */
+    public function testMakeRelativeWithUrl($absoluteUrl, $baseUrl, $relativePath)
+    {
+        $relative = Url::makeRelative($this->createUrl($absoluteUrl), $this->createUrl($baseUrl));
+        $this->assertSame($relativePath, $relative);
+    }
+
+    /**
+     * @dataProvider provideMakeRelativeTests
+     */
+    public function testMakeRelativeWithFullUrl($absoluteUrl, $baseUrl, $relativePath)
+    {
+        $url = 'ftp://user:password@example.com:8080';
+
+        $relative = Url::makeRelative($this->createUrl($absoluteUrl, $url), $this->createUrl($baseUrl, $url));
         $this->assertSame($relativePath, $relative);
     }
 
@@ -55,7 +70,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The absolute path "http://example.com/webmozart/puli/css/style.css" cannot be made relative to the relative path "webmozart/puli". You should provide an absolute base path instead.
+     * @expectedExceptionMessage The absolute path "/webmozart/puli/css/style.css" cannot be made relative to the relative path "webmozart/puli". You should provide an absolute base path instead.
      */
     public function testMakeRelativeFailsIfAbsolutePathAndBasePathNotAbsolute()
     {
@@ -64,7 +79,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The absolute path "http://example.com/webmozart/puli/css/style.css" cannot be made relative to the relative path "". You should provide an absolute base path instead.
+     * @expectedExceptionMessage The absolute path "/webmozart/puli/css/style.css" cannot be made relative to the relative path "". You should provide an absolute base path instead.
      */
     public function testMakeRelativeFailsIfAbsolutePathAndBasePathEmpty()
     {
@@ -82,10 +97,10 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Domain "http://example.com" doesn't equal to base "http://example2.com".
      */
-    public function testMakeRelativeFailsIfDifferentRoot()
+    public function testMakeRelativeFailsIfDifferentDomains()
     {
-        $this->markTestSkipped();
         Url::makeRelative('http://example.com/webmozart/puli/css/style.css', 'http://example2.com/webmozart/puli');
     }
 
@@ -140,7 +155,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
      */
     private function createUrl($path, $domain = 'http://example.com')
     {
-        if (0 < strlen($path) || '/' === $path[0]) {
+        if (0 < strlen($path) && '/' === $path[0]) {
             $path = $domain.$path;
         }
 
