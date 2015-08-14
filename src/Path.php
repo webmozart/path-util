@@ -140,6 +140,30 @@ final class Path
     }
 
     /**
+     * Normalizes the given path.
+     *
+     * During normalization, all slashes are replaced by forward slashes ("/").
+     * Contrary to {@link canonicalize()}, this method does not remove invalid
+     * or dot path segments. Consequently, it is much more efficient and should
+     * be used whenever the given path is known to be a valid, absolute system
+     * path.
+     *
+     * This method is able to deal with both UNIX and Windows paths.
+     *
+     * @param string $path A path string.
+     *
+     * @return string The normalized path.
+     *
+     * @since 2.2 Added method.
+     */
+    public static function normalize($path)
+    {
+        Assert::string($path, 'The path must be a string. Got: %s');
+
+        return str_replace('\\', '/', $path);
+    }
+
+    /**
      * Returns the directory part of the path.
      *
      * This method is similar to PHP's dirname(), but handles various cases

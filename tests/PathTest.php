@@ -1287,4 +1287,17 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('C:/users/webmozart', Path::getHomeDirectory());
     }
+
+    public function testNormalize()
+    {
+        $this->assertSame('C:/Foo/Bar/test', Path::normalize('C:\\Foo\\Bar/test'));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testNormalizeFailsIfNoString()
+    {
+        Path::normalize(true);
+    }
 }

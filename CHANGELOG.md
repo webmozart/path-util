@@ -1,6 +1,10 @@
 Changelog
 =========
 
+* 2.2.0 (2015-08-14)
+
+ * added `Path::normalize()`
+
 * 2.1.0 (2015-07-14)
 
  * `Path::canonicalize()` now turns `~` into the user's home directory on
