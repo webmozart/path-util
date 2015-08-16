@@ -158,7 +158,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Based of the given path this function creates a absolute or relative URL
+     * Based of the given path this function creates a absolute or relative URL.
      *
      * @param string $path
      *
