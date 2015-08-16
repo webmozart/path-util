@@ -12,7 +12,6 @@
 namespace Webmozart\PathUtil;
 
 use InvalidArgumentException;
-use RuntimeException;
 use Webmozart\Assert\Assert;
 
 /**
@@ -33,7 +32,7 @@ final class Url
      * If the base path is not an absolute path or URL, an exception is thrown.
      * If the Domain name of path and basepath does not match, an exception is thrown.
      *
-     * The result is a canonical path. This class is using functionality of Path class
+     * The result is a canonical path. This class is using functionality of Path class.
      *
      * @see Path
      *
