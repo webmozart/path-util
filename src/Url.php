@@ -28,8 +28,17 @@ use Webmozart\Assert\Assert;
 final class Url
 {
     /**
-     * @param string $path
-     * @param string $basePath
+     * Turns an URL into a relative path.
+     *
+     * If the base path is not an absolute path or URL, an exception is thrown.
+     * If the Domain name of path and basepath does not match, an exception is thrown.
+     *
+     * The result is a canonical path. This class is using functionality of Path class
+     *
+     * @see Path
+     *
+     * @param string $path     An URL to make relative.
+     * @param string $basePath A base path or URL.
      *
      * @return string
      */
@@ -61,7 +70,7 @@ final class Url
      * returned.
      *
      * list ($root, $path) = Path::split("http://example.com/webmozart")
-     * // => array("http://example.com", "webmozart")
+     * // => array("http://example.com", "/webmozart")
      *
      * list ($root, $path) = Path::split("http://example.com")
      * // => array("http://example.com", "")

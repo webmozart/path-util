@@ -23,6 +23,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider provideMakeRelativeTests
+     * @covers Url
      */
     public function testMakeRelative($absoluteUrl, $baseUrl, $relativePath)
     {
@@ -32,6 +33,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideMakeRelativeTests
+     * @covers Url
      */
     public function testMakeRelativeWithUrl($absoluteUrl, $baseUrl, $relativePath)
     {
@@ -41,6 +43,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideMakeRelativeTests
+     * @covers Url
      */
     public function testMakeRelativeWithFullUrl($absoluteUrl, $baseUrl, $relativePath)
     {
@@ -53,6 +56,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The path must be a string. Got: array
+     * @covers Url
      */
     public function testMakeRelativeFailsIfInvalidPath()
     {
@@ -62,6 +66,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The base path must be a string. Got: array
+     * @covers Url
      */
     public function testMakeRelativeFailsIfInvalidBasePath()
     {
@@ -71,6 +76,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The absolute path "/webmozart/puli/css/style.css" cannot be made relative to the relative path "webmozart/puli". You should provide an absolute base path instead.
+     * @covers Url
      */
     public function testMakeRelativeFailsIfAbsolutePathAndBasePathNotAbsolute()
     {
@@ -80,6 +86,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The absolute path "/webmozart/puli/css/style.css" cannot be made relative to the relative path "". You should provide an absolute base path instead.
+     * @covers Url
      */
     public function testMakeRelativeFailsIfAbsolutePathAndBasePathEmpty()
     {
@@ -89,6 +96,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The base path must be a string. Got: NULL
+     * @covers Url
      */
     public function testMakeRelativeFailsIfBasePathNull()
     {
@@ -98,6 +106,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Domain "http://example.com" doesn't equal to base "http://example2.com".
+     * @covers Url
      */
     public function testMakeRelativeFailsIfDifferentDomains()
     {
@@ -109,6 +118,8 @@ class UrlTest extends \PHPUnit_Framework_TestCase
         return array(
 
             array('/webmozart/puli/css/style.css', '/webmozart/puli', 'css/style.css'),
+            array('/webmozart/puli/css/style.css?key=value&key2=value', '/webmozart/puli', 'css/style.css?key=value&key2=value'),
+            array('/webmozart/puli/css/style.css?key[]=value&key[]=value', '/webmozart/puli', 'css/style.css?key[]=value&key[]=value'),
             array('/webmozart/css/style.css', '/webmozart/puli', '../css/style.css'),
             array('/css/style.css', '/webmozart/puli', '../../css/style.css'),
 
