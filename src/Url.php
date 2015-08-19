@@ -19,7 +19,7 @@ use Webmozart\Assert\Assert;
  *
  * The methods in this class are able to deal with URLs.
  *
- * @since  1.0
+ * @since  2.3
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  * @author Claudio Zizza <claudio@budgegeria.de>
@@ -36,18 +36,18 @@ final class Url
      *
      * @see Path
      *
-     * @param string $path     An URL to make relative.
-     * @param string $basePath A base path or URL.
+     * @param string $url     An URL to make relative.
+     * @param string $baseUrl A base path or URL.
      *
      * @return string
      */
-    public static function makeRelative($path, $basePath)
+    public static function makeRelative($url, $baseUrl)
     {
-        Assert::string($path, 'The path must be a string. Got: %s');
-        Assert::string($basePath, 'The base path must be a string. Got: %s');
+        Assert::string($url, 'The path must be a string. Got: %s');
+        Assert::string($baseUrl, 'The base path must be a string. Got: %s');
 
-        list($root, $relativePath) = self::split($path);
-        list($baseRoot, $relativeBasePath) = self::split($basePath);
+        list($root, $relativePath) = self::split($url);
+        list($baseRoot, $relativeBasePath) = self::split($baseUrl);
 
         $path = Path::makeRelative($relativePath, $relativeBasePath);
 
@@ -74,29 +74,29 @@ final class Url
      * list ($root, $path) = Path::split("http://example.com")
      * // => array("http://example.com", "")
      *
-     * @param string $path The URL to split.
+     * @param string $url The URL to split.
      *
      * @return string[] An array with the domain and the remaining
      *                  relative path.
      */
-    private static function split($path)
+    private static function split($url)
     {
-        if ('' === $path) {
+        if ('' === $url) {
             return array('', '');
         }
 
         // Remember scheme as part of the root, if any
-        if (false !== ($pos = strpos($path, '://'))) {
-            $scheme = substr($path, 0, $pos + 3);
-            $path = substr($path, $pos + 3);
+        if (false !== ($pos = strpos($url, '://'))) {
+            $scheme = substr($url, 0, $pos + 3);
+            $url = substr($url, $pos + 3);
 
-            if (false !== ($pos = strpos($path, '/'))) {
-                $domain = substr($path, 0, $pos);
-                $path = substr($path, $pos);
+            if (false !== ($pos = strpos($url, '/'))) {
+                $domain = substr($url, 0, $pos);
+                $url = substr($url, $pos);
             } else {
                 // No path, only domain
-                $domain = $path;
-                $path = '';
+                $domain = $url;
+                $url = '';
             }
         } else {
             $scheme = '';
@@ -106,6 +106,6 @@ final class Url
         // At this point, we have $scheme, $domain and $path
         $root = $scheme.$domain;
 
-        return array($root, $path);
+        return array($root, $url);
     }
 }

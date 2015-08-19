@@ -14,7 +14,7 @@ namespace Webmozart\PathUtil\Tests;
 use Webmozart\PathUtil\Url;
 
 /**
- * @since  2.2
+ * @since  2.3
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  * @author Claudio Zizza <claudio@budgegeria.de>
@@ -25,9 +25,9 @@ class UrlTest extends \PHPUnit_Framework_TestCase
      * @dataProvider provideMakeRelativeTests
      * @covers Webmozart\PathUtil\Url
      */
-    public function testMakeRelative($absoluteUrl, $baseUrl, $relativePath)
+    public function testMakeRelative($absolutePath, $basePath, $relativePath)
     {
-        $relative = Url::makeRelative($absoluteUrl, $baseUrl);
+        $relative = Url::makeRelative($absolutePath, $basePath);
         $this->assertSame($relativePath, $relative);
     }
 
@@ -35,9 +35,9 @@ class UrlTest extends \PHPUnit_Framework_TestCase
      * @dataProvider provideMakeRelativeTests
      * @covers Webmozart\PathUtil\Url
      */
-    public function testMakeRelativeWithUrl($absoluteUrl, $baseUrl, $relativePath)
+    public function testMakeRelativeWithUrl($absolutePath, $basePath, $relativePath)
     {
-        $relative = Url::makeRelative($this->createUrl($absoluteUrl), $this->createUrl($baseUrl));
+        $relative = Url::makeRelative($this->createUrl($absolutePath), $this->createUrl($basePath));
         $this->assertSame($relativePath, $relative);
     }
 
@@ -45,11 +45,11 @@ class UrlTest extends \PHPUnit_Framework_TestCase
      * @dataProvider provideMakeRelativeTests
      * @covers Webmozart\PathUtil\Url
      */
-    public function testMakeRelativeWithFullUrl($absoluteUrl, $baseUrl, $relativePath)
+    public function testMakeRelativeWithFullUrl($absolutePath, $basePath, $relativePath)
     {
         $url = 'ftp://user:password@example.com:8080';
 
-        $relative = Url::makeRelative($this->createUrl($absoluteUrl, $url), $this->createUrl($baseUrl, $url));
+        $relative = Url::makeRelative($this->createUrl($absolutePath, $url), $this->createUrl($basePath, $url));
         $this->assertSame($relativePath, $relative);
     }
 
@@ -58,7 +58,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage The path must be a string. Got: array
      * @covers Webmozart\PathUtil\Url
      */
-    public function testMakeRelativeFailsIfInvalidPath()
+    public function testMakeRelativeFailsIfInvalidUrl()
     {
         Url::makeRelative(array(), 'http://example.com/webmozart/puli');
     }
@@ -68,7 +68,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage The base path must be a string. Got: array
      * @covers Webmozart\PathUtil\Url
      */
-    public function testMakeRelativeFailsIfInvalidBasePath()
+    public function testMakeRelativeFailsIfInvalidBaseUrl()
     {
         Url::makeRelative('http://example.com/webmozart/puli/css/style.css', array());
     }
@@ -78,7 +78,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage The absolute path "/webmozart/puli/css/style.css" cannot be made relative to the relative path "webmozart/puli". You should provide an absolute base path instead.
      * @covers Webmozart\PathUtil\Url
      */
-    public function testMakeRelativeFailsIfAbsolutePathAndBasePathNotAbsolute()
+    public function testMakeRelativeFailsIfBaseUrlNoUrl()
     {
         Url::makeRelative('http://example.com/webmozart/puli/css/style.css', 'webmozart/puli');
     }
@@ -88,7 +88,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage The absolute path "/webmozart/puli/css/style.css" cannot be made relative to the relative path "". You should provide an absolute base path instead.
      * @covers Webmozart\PathUtil\Url
      */
-    public function testMakeRelativeFailsIfAbsolutePathAndBasePathEmpty()
+    public function testMakeRelativeFailsIfBaseUrlEmpty()
     {
         Url::makeRelative('http://example.com/webmozart/puli/css/style.css', '');
     }
@@ -98,7 +98,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessage The base path must be a string. Got: NULL
      * @covers Webmozart\PathUtil\Url
      */
-    public function testMakeRelativeFailsIfBasePathNull()
+    public function testMakeRelativeFailsIfBaseUrlNull()
     {
         Url::makeRelative('http://example.com/webmozart/puli/css/style.css', null);
     }
