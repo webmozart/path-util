@@ -768,11 +768,12 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideAbsolutePathsWithDifferentRoots
-     * @expectedException \InvalidArgumentException
      */
-    public function testMakeAbsoluteFailsIfDifferentRoot($basePath, $relativePath)
+    public function testMakeAbsoluteDoesNotFailIfDifferentRoot($basePath, $absolutePath)
     {
-        Path::makeAbsolute($relativePath, $basePath);
+        // If a path in partition D: is passed, but $basePath is in partition
+        // C:, the path should be returned unchanged
+        $this->assertSame(Path::canonicalize($absolutePath), Path::makeAbsolute($absolutePath, $basePath));
     }
 
     public function provideMakeRelativeTests()

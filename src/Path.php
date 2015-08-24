@@ -574,8 +574,10 @@ final class Path
      *                                  the given path is an absolute path with
      *                                  a different root than the base path.
      *
-     * @since 1.0 Added method.
-     * @since 2.0 Method now fails if $path or $basePath is not a string.
+     * @since 1.0   Added method.
+     * @since 2.0   Method now fails if $path or $basePath is not a string.
+     * @since 2.2.2 Method does not fail anymore of $path and $basePath are
+     *              absolute, but on different partitions.
      */
     public static function makeAbsolute($path, $basePath)
     {
@@ -589,20 +591,6 @@ final class Path
         }
 
         if (static::isAbsolute($path)) {
-            $root = static::getRoot($path);
-            $baseRoot = static::getRoot($basePath);
-
-            if ($root !== $baseRoot) {
-                throw new InvalidArgumentException(sprintf(
-                    'The path "%s" cannot be made absolute based on "%s", '.
-                    'because their roots are different ("%s" and "%s").',
-                    $path,
-                    $basePath,
-                    $root,
-                    $baseRoot
-                ));
-            }
-
             return static::canonicalize($path);
         }
 

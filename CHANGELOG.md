@@ -1,6 +1,11 @@
 Changelog
 =========
 
+* 2.2.2 (2015-08-24)
+
+ * `Path::makeAbsolute()` does not fail anymore if an absolute path is passed
+   with a different root (partition) than the base path
+
 * 2.2.1 (2015-08-24)
 
  * fixed minimum versions in composer.json
