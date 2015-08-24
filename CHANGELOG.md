@@ -1,6 +1,10 @@
 Changelog
 =========
 
+* 2.2.1 (2015-08-24)
+
+ * fixed minimum versions in composer.json
+
 * 2.2.0 (2015-08-14)
 
  * added `Path::normalize()`
