@@ -80,7 +80,6 @@ final class Url
      *                  relative path.
      *
      * @throws InvalidArgumentException If $url is not an URL.
-     *
      */
     private static function split($url)
     {
