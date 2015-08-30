@@ -124,6 +124,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
             array('/webmozart/puli/css/style.css?key[]=value&key[]=value', '/webmozart/puli', 'css/style.css?key[]=value&key[]=value'),
             array('/webmozart/css/style.css', '/webmozart/puli', '../css/style.css'),
             array('/css/style.css', '/webmozart/puli', '../../css/style.css'),
+            array('/', '/', ''),
 
             // relative to root
             array('/css/style.css', '/', 'css/style.css'),

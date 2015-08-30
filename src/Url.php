@@ -29,9 +29,6 @@ final class Url
     /**
      * Turns an URL into a relative path.
      *
-     * If the base path is not an absolute path or URL, an exception is thrown.
-     * If the Domain name of path and basepath does not match, an exception is thrown.
-     *
      * The result is a canonical path. This class is using functionality of Path class.
      *
      * @see Path
@@ -40,6 +37,9 @@ final class Url
      * @param string $baseUrl A base path or URL.
      *
      * @return string
+     *
+     * @throws InvalidArgumentException If the hostname of url and baseUrl does
+     *                                  not match.
      */
     public static function makeRelative($url, $baseUrl)
     {
@@ -78,27 +78,29 @@ final class Url
      *
      * @return string[] An array with the domain and the remaining
      *                  relative path.
+     *
+     * @throws InvalidArgumentException If $url is not an URL.
+     *
      */
     private static function split($url)
     {
-        // Remember scheme as part of the root, if any
-        if (false !== ($pos = strpos($url, '://'))) {
-            $scheme = substr($url, 0, $pos + 3);
-            $url = substr($url, $pos + 3);
-
-            if (false !== ($pos = strpos($url, '/'))) {
-                $domain = substr($url, 0, $pos);
-                $url = substr($url, $pos);
-            } else {
-                // No path, only domain
-                $domain = $url;
-                $url = '';
-            }
-        } else {
+        if (false === ($pos = strpos($url, '://'))) {
             throw new InvalidArgumentException(sprintf(
                 '"%s" is not a valid Url.',
                 $url
             ));
+        }
+
+        $scheme = substr($url, 0, $pos + 3);
+        $url = substr($url, $pos + 3);
+
+        if (false !== ($pos = strpos($url, '/'))) {
+            $domain = substr($url, 0, $pos);
+            $url = substr($url, $pos);
+        } else {
+            // No path, only domain
+            $domain = $url;
+            $url = '';
         }
 
         // At this point, we have $scheme, $domain and $path
