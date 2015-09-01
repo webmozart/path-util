@@ -89,7 +89,7 @@ Path::getHomeDirectory();
 ```php
 use Webmozart\PathUtil\Url;
 
-echo Url::makeRelative('/webmozart/css/style.css', '/webmozart/puli');
+echo Url::makeRelative('http://example.com/webmozart/css/style.css', 'http://example.com/webmozart/puli');
 // => ../css/style.css
 ```
 
