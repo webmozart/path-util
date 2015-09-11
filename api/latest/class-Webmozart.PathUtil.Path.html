@@ -98,18 +98,18 @@ containing only forward slashes and no excess "." and ".." segments.</p>
 
 
 	<div class="info">
-		
+		<b>Final</b><br>
 		
 		<b>Namespace:</b> <a href="namespace-Webmozart.html">Webmozart</a>\<a href="namespace-Webmozart.PathUtil.html">PathUtil</a><br>
 		
 
-				<b>Since:</b>
-				1.0<br>
 				<b>Author:</b>
 				Bernhard Schussek <a href="&#x6d;&#x61;&#105;&#108;&#116;&#x6f;&#x3a;&#x62;&#115;&#99;h&#x75;&#x73;&#115;&#101;&#107;&#x40;&#x67;&#x6d;&#97;&#105;l&#x2e;&#x63;&#111;&#109;">&#x62;&#115;&#99;h&#x75;&#x73;&#115;&#101;&#107;&#x40;&#x67;&#x6d;&#97;&#105;l&#x2e;&#x63;&#111;&#109;</a><br>
 				<b>Author:</b>
 				Thomas Schulz <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#x6d;&#97;&#x69;&#108;&#x40;&#107;&#x69;&#110;&#x67;&#50;&#x35;&#48;&#x30;&#46;&#x6e;&#101;&#x74;">&#x6d;&#97;&#x69;&#108;&#x40;&#107;&#x69;&#110;&#x67;&#50;&#x35;&#48;&#x30;&#46;&#x6e;&#101;&#x74;</a><br>
-			<b>Located at</b> <a href="source-class-Webmozart.PathUtil.Path.html#18-988" title="Go to source code">Path.php</a>
+				<b>Since:</b>
+				1.0<br>
+			<b>Located at</b> <a href="source-class-Webmozart.PathUtil.Path.html#18-1003" title="Go to source code">Path.php</a>
 		<br>
 	</div>
 
@@ -129,7 +129,7 @@ containing only forward slashes and no excess "." and ".." segments.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_canonicalize">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#55-139" title="Go to source code">canonicalize</a>( <span>string <var>$path</var></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#56-140" title="Go to source code">canonicalize</a>( <span>string <var>$path</var></span> )</code>
 
 		<div class="description short">
 			<p>Canonicalizes the given path.</p>
@@ -174,6 +174,57 @@ Furthermore, all "." and ".." segments are removed as far as possible.
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="normalize" id="_normalize">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_normalize">#</a>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#142-164" title="Go to source code">normalize</a>( <span>string <var>$path</var></span> )</code>
+
+		<div class="description short">
+			<p>Normalizes the given path.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Normalizes the given path.</p>
+
+<p>During normalization, all slashes are replaced by forward slashes ("/").
+Contrary to <code><a href="class-Webmozart.PathUtil.Path.html#_canonicalize">Webmozart\PathUtil\Path::canonicalize()</a></code>, this method does not remove invalid
+or dot path segments. Consequently, it is much more efficient and should
+be used whenever the given path is known to be a valid, absolute system
+path.</p>
+
+<p>This method is able to deal with both UNIX and Windows paths.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd>A path string.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>The normalized path.
+				</div>
+
+
+				<h4>Since</h4>
+				<div class="list">
+						2.2 Added method.<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="getDirectory" id="_getDirectory">
 
 		<td class="attributes"><code>
@@ -186,7 +237,7 @@ Furthermore, all "." and ".." segments are removed as far as possible.
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getDirectory">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#141-200" title="Go to source code">getDirectory</a>( <span>string <var>$path</var></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#166-225" title="Go to source code">getDirectory</a>( <span>string <var>$path</var></span> )</code>
 
 		<div class="description short">
 			<p>Returns the directory part of the path.</p>
@@ -242,7 +293,7 @@ otherwise.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getHomeDirectory">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#202-233" title="Go to source code">getHomeDirectory</a>( )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#227-258" title="Go to source code">getHomeDirectory</a>( )</code>
 
 		<div class="description short">
 			<p>Returns canonical path of the user's home directory.</p>
@@ -291,7 +342,7 @@ otherwise.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getRoot">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#235-285" title="Go to source code">getRoot</a>( <span>string <var>$path</var></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#260-310" title="Go to source code">getRoot</a>( <span>string <var>$path</var></span> )</code>
 
 		<div class="description short">
 			<p>Returns the root directory of a path.</p>
@@ -338,7 +389,7 @@ otherwise.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getFilename">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#287-306" title="Go to source code">getFilename</a>( <span>string <var>$path</var></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#312-331" title="Go to source code">getFilename</a>( <span>string <var>$path</var></span> )</code>
 
 		<div class="description short">
 			<p>Returns the file name from a file path.</p>
@@ -382,7 +433,7 @@ otherwise.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getFilenameWithoutExtension">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#308-335" title="Go to source code">getFilenameWithoutExtension</a>( <span>string <var>$path</var></span>, <span>string|null <var>$extension</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#333-360" title="Go to source code">getFilenameWithoutExtension</a>( <span>string <var>$path</var></span>, <span>string|null <var>$extension</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Returns the file name without the extension from a file path.</p>
@@ -398,7 +449,7 @@ otherwise.</p>
 					<dd>The path string.</dd>
 					<dt><var>$extension</var></dt>
 					<dd><p>If specified, only that extension is cut
-                               off (may contain leading dot).</p></dd>
+                              off (may contain leading dot).</p></dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -429,7 +480,7 @@ otherwise.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getExtension">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#337-365" title="Go to source code">getExtension</a>( <span>string <var>$path</var></span>, <span>boolean <var>$forceLowerCase</var> = <span class="php-keyword1">false</span></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#362-390" title="Go to source code">getExtension</a>( <span>string <var>$path</var></span>, <span>boolean <var>$forceLowerCase</var> = <span class="php-keyword1">false</span></span> )</code>
 
 		<div class="description short">
 			<p>Returns the extension from a file path.</p>
@@ -477,7 +528,7 @@ otherwise.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_hasExtension">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#367-414" title="Go to source code">hasExtension</a>( <span>string <var>$path</var></span>, <span>string|array|null <var>$extensions</var> = <span class="php-keyword1">null</span></span>, <span>boolean <var>$ignoreCase</var> = <span class="php-keyword1">false</span></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#392-439" title="Go to source code">hasExtension</a>( <span>string <var>$path</var></span>, <span>string|array|null <var>$extensions</var> = <span class="php-keyword1">null</span></span>, <span>boolean <var>$ignoreCase</var> = <span class="php-keyword1">false</span></span> )</code>
 
 		<div class="description short">
 			<p>Returns whether the path has an extension.</p>
@@ -533,7 +584,7 @@ otherwise.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_changeExtension">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#416-449" title="Go to source code">changeExtension</a>( <span>string <var>$path</var></span>, <span>string <var>$extension</var></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#441-474" title="Go to source code">changeExtension</a>( <span>string <var>$path</var></span>, <span>string <var>$extension</var></span> )</code>
 
 		<div class="description short">
 			<p>Changes the extension of a path string.</p>
@@ -579,7 +630,7 @@ otherwise.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isAbsolute">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#451-494" title="Go to source code">isAbsolute</a>( <span>string <var>$path</var></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#476-519" title="Go to source code">isAbsolute</a>( <span>string <var>$path</var></span> )</code>
 
 		<div class="description short">
 			<p>Returns whether a path is absolute.</p>
@@ -598,7 +649,7 @@ otherwise.</p>
 				<h4>Returns</h4>
 				<div class="list">
 					boolean<br><p>Returns true if the path is absolute, false if it is
-                relative or empty.</p>
+             relative or empty.</p>
 				</div>
 
 
@@ -624,7 +675,7 @@ otherwise.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isRelative">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#496-510" title="Go to source code">isRelative</a>( <span>string <var>$path</var></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#521-535" title="Go to source code">isRelative</a>( <span>string <var>$path</var></span> )</code>
 
 		<div class="description short">
 			<p>Returns whether a path is relative.</p>
@@ -643,7 +694,7 @@ otherwise.</p>
 				<h4>Returns</h4>
 				<div class="list">
 					boolean<br><p>Returns true if the path is relative or empty, false if
-                it is absolute.</p>
+             it is absolute.</p>
 				</div>
 
 
@@ -669,7 +720,7 @@ otherwise.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_makeAbsolute">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#512-592" title="Go to source code">makeAbsolute</a>( <span>string <var>$path</var></span>, <span>string <var>$basePath</var></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#537-605" title="Go to source code">makeAbsolute</a>( <span>string <var>$path</var></span>, <span>string <var>$basePath</var></span> )</code>
 
 		<div class="description short">
 			<p>Turns a relative path into an absolute path.</p>
@@ -725,8 +776,10 @@ Path::makeAbsolute(<span class="php-quote">&quot;C:/style.css&quot;</span>, <spa
 
 				<h4>Since</h4>
 				<div class="list">
-						1.0 Added method.<br>
-						2.0 Method now fails if $path or $basePath is not a string.<br>
+						1.0   Added method.<br>
+						2.0   Method now fails if $path or $basePath is not a string.<br>
+						<p>2.2.2 Method does not fail anymore of $path and $basePath are
+             absolute, but on different partitions.</p><br>
 				</div>
 
 
@@ -745,7 +798,7 @@ Path::makeAbsolute(<span class="php-quote">&quot;C:/style.css&quot;</span>, <spa
 
 		<td class="name"><div>
 		<a class="anchor" href="#_makeRelative">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#594-718" title="Go to source code">makeRelative</a>( <span>string <var>$path</var></span>, <span>string <var>$basePath</var></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#607-731" title="Go to source code">makeRelative</a>( <span>string <var>$path</var></span>, <span>string <var>$basePath</var></span> )</code>
 
 		<div class="description short">
 			<p>Turns a path into a relative path.</p>
@@ -830,7 +883,7 @@ is thrown as well:</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isLocal">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#720-735" title="Go to source code">isLocal</a>( <span>string <var>$path</var></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#733-748" title="Go to source code">isLocal</a>( <span>string <var>$path</var></span> )</code>
 
 		<div class="description short">
 			<p>Returns whether the given path is on the local filesystem.</p>
@@ -867,14 +920,14 @@ is thrown as well:</p>
 		<td class="attributes"><code>
 			 public static
 
-			string
+			string|null
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getLongestCommonBasePath">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#737-817" title="Go to source code">getLongestCommonBasePath</a>( <span>array <var>$paths</var></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#750-831" title="Go to source code">getLongestCommonBasePath</a>( <span>array <var>$paths</var></span> )</code>
 
 		<div class="description short">
 			<p>Returns the longest common base path of a set of paths.</p>
@@ -912,8 +965,9 @@ returned.</p>
 
 				<h4>Returns</h4>
 				<div class="list">
-					string<br><p>The longest common base path in canonical form or <code>null</code>
-               if the paths are on different Windows partitions.</p>
+					string|null<br><p>The longest common base path in canonical form or
+                    <code>null</code> if the paths are on different Windows
+                    partitions.</p>
 				</div>
 
 
@@ -939,7 +993,7 @@ returned.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_join">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#819-870" title="Go to source code">join</a>( <span>array|string <var>$paths</var></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#833-884" title="Go to source code">join</a>( <span>string[]|string <var>$paths</var></span> )</code>
 
 		<div class="description short">
 			<p>Joins two or more path strings.</p>
@@ -954,12 +1008,12 @@ returned.</p>
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$paths</var></dt>
-					<dd>Path parts as parameters or array</dd>
+					<dd>Path parts as parameters or array.</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
-					string<br>The joint path
+					string<br>The joint path.
 				</div>
 
 
@@ -984,7 +1038,7 @@ returned.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_isBasePath">#</a>
-		<code><a href="source-class-Webmozart.PathUtil.Path.html#872-913" title="Go to source code">isBasePath</a>( <span>string <var>$basePath</var></span>, <span>string <var>$ofPath</var></span> )</code>
+		<code><a href="source-class-Webmozart.PathUtil.Path.html#886-927" title="Go to source code">isBasePath</a>( <span>string <var>$basePath</var></span>, <span>string <var>$ofPath</var></span> )</code>
 
 		<div class="description short">
 			<p>Returns whether a path is a base path of another path.</p>
@@ -1049,7 +1103,7 @@ Path::isBasePath(<span class="php-quote">'/webmozart'</span>, <span class="php-q
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-constant-CLEANUP_THRESHOLD.html#31-34" title="Go to source code"><b>CLEANUP_THRESHOLD</b></a>
+				<a href="source-class-Webmozart.PathUtil.Path.html#32-35" title="Go to source code"><b>CLEANUP_THRESHOLD</b></a>
 			</code>
 
 			<div class="description short">
@@ -1073,7 +1127,7 @@ Path::isBasePath(<span class="php-quote">'/webmozart'</span>, <span class="php-q
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-constant-CLEANUP_SIZE.html#36-39" title="Go to source code"><b>CLEANUP_SIZE</b></a>
+				<a href="source-class-Webmozart.PathUtil.Path.html#37-40" title="Go to source code"><b>CLEANUP_SIZE</b></a>
 			</code>
 
 			<div class="description short">
