@@ -3,6 +3,7 @@ preset: symfony
 enabled:
     - ordered_use
     - strict
+    - psr4
 
 disabled:
     - empty_return
