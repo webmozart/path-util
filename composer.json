@@ -12,6 +12,10 @@
         "php": ">=5.3.3",
         "webmozart/assert": "~1.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^4.6",
+        "sebastian/version": "^1.0.1"
+    },
     "autoload": {
         "psr-4": {
             "Webmozart\\PathUtil\\": "src/"
@@ -26,8 +30,5 @@
         "branch-alias": {
             "dev-master": "2.3-dev"
         }
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^4.6"
     }
 }
