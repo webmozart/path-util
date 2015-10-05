@@ -6,9 +6,9 @@ File Path Utility
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webmozart/path-util/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/webmozart/path-util/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/webmozart/path-util/v/stable.svg)](https://packagist.org/packages/webmozart/path-util)
 [![Total Downloads](https://poser.pugx.org/webmozart/path-util/downloads.svg)](https://packagist.org/packages/webmozart/path-util)
-[![Dependency Status](https://www.versioneye.com/php/webmozart:path-util/2.2.2/badge.svg)](https://www.versioneye.com/php/webmozart:path-util/2.2.2)
+[![Dependency Status](https://www.versioneye.com/php/webmozart:path-util/2.2.3/badge.svg)](https://www.versioneye.com/php/webmozart:path-util/2.2.3)
 
-Latest release: [2.2.2](https://packagist.org/packages/webmozart/path-util#2.2.2)
+Latest release: [2.2.3](https://packagist.org/packages/webmozart/path-util#2.2.3)
 
 PHP >= 5.3.3
 
