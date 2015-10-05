@@ -727,7 +727,7 @@ final class Path
             $dotDotPrefix .= '../';
         }
 
-        return $dotDotPrefix.implode('/', $parts);
+        return rtrim($dotDotPrefix.implode('/', $parts), '/');
     }
 
     /**

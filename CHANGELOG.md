@@ -1,6 +1,11 @@
 Changelog
 =========
 
+* 2.2.3 (2015-10-05)
+
+ * fixed `Path::makeRelative()` to produce `..` when called with the parent
+   directory of a path
+
 * 2.2.2 (2015-08-24)
 
  * `Path::makeAbsolute()` does not fail anymore if an absolute path is passed
