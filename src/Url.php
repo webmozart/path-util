@@ -27,59 +27,55 @@ use Webmozart\Assert\Assert;
 final class Url
 {
     /**
-     * Turns an URL into a relative path.
+     * Turns a URL into a relative path.
      *
      * The result is a canonical path. This class is using functionality of Path class.
      *
      * @see Path
      *
-     * @param string $url     An URL to make relative.
-     * @param string $baseUrl A base path or URL.
+     * @param string $url     A URL to make relative.
+     * @param string $baseUrl A base URL.
      *
      * @return string
      *
-     * @throws InvalidArgumentException If the hostname of url and baseUrl does
+     * @throws InvalidArgumentException If the URL and base URL does
      *                                  not match.
      */
     public static function makeRelative($url, $baseUrl)
     {
-        Assert::string($url, 'The path must be a string. Got: %s');
-        Assert::string($baseUrl, 'The base path must be a string. Got: %s');
+        Assert::string($url, 'The URL must be a string. Got: %s');
+        Assert::string($baseUrl, 'The base URL must be a string. Got: %s');
 
-        list($root, $relativePath) = self::split($url);
-        list($baseRoot, $relativeBasePath) = self::split($baseUrl);
+        list($host, $path) = self::split($url);
+        list($baseHost, $basePath) = self::split($baseUrl);
 
-        $path = Path::makeRelative($relativePath, $relativeBasePath);
-
-        if ('' !== $root && '' !== $baseRoot && $root !== $baseRoot) {
+        if ('' !== $host && '' !== $baseHost && $host !== $baseHost) {
             throw new InvalidArgumentException(sprintf(
-                'Domain "%s" doesn\'t equal to base "%s".',
-                $root,
-                $baseRoot
+                'The URL "%s" cannot be made relative to "%s" since their host names are different.',
+                $host,
+                $baseHost
             ));
         }
 
-        return $path;
+        return Path::makeRelative($path, $basePath);
     }
 
     /**
-     * Splits a part into its root directory and the remainder.
+     * Splits a URL into its host and the path.
      *
-     * If the path has no URL, an empty root directory will be
-     * returned.
-     *
+     * ```php
      * list ($root, $path) = Path::split("http://example.com/webmozart")
      * // => array("http://example.com", "/webmozart")
      *
      * list ($root, $path) = Path::split("http://example.com")
      * // => array("http://example.com", "")
+     * ```
      *
      * @param string $url The URL to split.
      *
-     * @return string[] An array with the domain and the remaining
-     *                  relative path.
+     * @return string[] An array with the host and the path of the URL.
      *
-     * @throws InvalidArgumentException If $url is not an URL.
+     * @throws InvalidArgumentException If $url is not a URL.
      */
     private static function split($url)
     {
@@ -94,16 +90,16 @@ final class Url
         $url = substr($url, $pos + 3);
 
         if (false !== ($pos = strpos($url, '/'))) {
-            $domain = substr($url, 0, $pos);
+            $host = substr($url, 0, $pos);
             $url = substr($url, $pos);
         } else {
-            // No path, only domain
-            $domain = $url;
+            // No path, only host
+            $host = $url;
             $url = '';
         }
 
-        // At this point, we have $scheme, $domain and $path
-        $root = $scheme.$domain;
+        // At this point, we have $scheme, $host and $path
+        $root = $scheme.$host;
 
         return array($root, $url);
     }

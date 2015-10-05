@@ -57,7 +57,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The path must be a string. Got: array
+     * @expectedExceptionMessage The URL must be a string. Got: array
      * @covers Webmozart\PathUtil\Url
      */
     public function testMakeRelativeFailsIfInvalidUrl()
@@ -67,7 +67,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The base path must be a string. Got: array
+     * @expectedExceptionMessage The base URL must be a string. Got: array
      * @covers Webmozart\PathUtil\Url
      */
     public function testMakeRelativeFailsIfInvalidBaseUrl()
@@ -97,7 +97,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The base path must be a string. Got: NULL
+     * @expectedExceptionMessage The base URL must be a string. Got: NULL
      * @covers Webmozart\PathUtil\Url
      */
     public function testMakeRelativeFailsIfBaseUrlNull()
@@ -107,7 +107,8 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Domain "http://example.com" doesn't equal to base "http://example2.com".
+     * @expectedExceptionMessage The URL "http://example.com" cannot be made relative to "http://example2.com" since
+     *                           their host names are different.
      * @covers Webmozart\PathUtil\Url
      */
     public function testMakeRelativeFailsIfDifferentDomains()
