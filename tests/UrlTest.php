@@ -47,12 +47,12 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage "/webmozart/puli/css/style.css" is not a valid Url.
+     * @expectedExceptionMessage "/webmozart/puli/css/style.css" is not an absolute Url.
      * @covers Webmozart\PathUtil\Url
      */
     public function testMakeRelativeWithoutFullUrl()
     {
-        $relative = Url::makeRelative('/webmozart/puli/css/style.css', 'http://example.com/webmozart/puli');
+        Url::makeRelative('/webmozart/puli/css/style.css', 'http://example.com/webmozart/puli');
     }
 
     /**
@@ -77,7 +77,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage "webmozart/puli" is not a valid Url.
+     * @expectedExceptionMessage "webmozart/puli" is not an absolute Url.
      * @covers Webmozart\PathUtil\Url
      */
     public function testMakeRelativeFailsIfBaseUrlNoUrl()
@@ -87,7 +87,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage "" is not a valid Url.
+     * @expectedExceptionMessage "" is not an absolute Url.
      * @covers Webmozart\PathUtil\Url
      */
     public function testMakeRelativeFailsIfBaseUrlEmpty()

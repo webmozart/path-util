@@ -81,7 +81,7 @@ final class Url
     {
         if (false === ($pos = strpos($url, '://'))) {
             throw new InvalidArgumentException(sprintf(
-                '"%s" is not a valid Url.',
+                '"%s" is not an absolute Url.',
                 $url
             ));
         }
