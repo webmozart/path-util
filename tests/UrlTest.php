@@ -31,6 +31,20 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
         $relative = Url::makeRelative($host.$absolutePath, $host.$basePath);
         $this->assertSame($relativePath, $relative);
+        $relative = Url::makeRelative($absolutePath, $host.$basePath);
+        $this->assertSame($relativePath, $relative);
+    }
+
+    /**
+     * @dataProvider provideMakeRelativeIsAlreadyRelativeTests
+     * @covers Webmozart\PathUtil\Url
+     */
+    public function testMakeRelativeIsAlreadyRelative($absolutePath, $basePath, $relativePath)
+    {
+        $host = 'http://example.com';
+
+        $relative = Url::makeRelative($absolutePath, $host.$basePath);
+        $this->assertSame($relativePath, $relative);
     }
 
     /**
@@ -43,16 +57,6 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
         $relative = Url::makeRelative($host.$absolutePath, $host.$basePath);
         $this->assertSame($relativePath, $relative);
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage "/webmozart/puli/css/style.css" is not an absolute Url.
-     * @covers Webmozart\PathUtil\Url
-     */
-    public function testMakeRelativeWithoutFullUrl()
-    {
-        Url::makeRelative('/webmozart/puli/css/style.css', 'http://example.com/webmozart/puli');
     }
 
     /**
@@ -149,6 +153,18 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
             // second argument shorter than first
             array('/webmozart/puli', '/css', '../webmozart/puli'),
+
+            array('', '', ''),
+        );
+    }
+
+    public function provideMakeRelativeIsAlreadyRelativeTests()
+    {
+        return array(
+            array('css/style.css', '/webmozart/puli', 'css/style.css'),
+            array('css/style.css', '', 'css/style.css'),
+            array('css/../style.css', '', 'style.css'),
+            array('css/./style.css', '', 'css/style.css'),
         );
     }
 }

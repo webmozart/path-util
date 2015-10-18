@@ -45,11 +45,22 @@ final class Url
     {
         Assert::string($url, 'The URL must be a string. Got: %s');
         Assert::string($baseUrl, 'The base URL must be a string. Got: %s');
+        Assert::contains($baseUrl, '://', '%s is not an absolute Url.');
 
-        list($host, $path) = self::split($url);
         list($baseHost, $basePath) = self::split($baseUrl);
 
-        if ('' !== $host && '' !== $baseHost && $host !== $baseHost) {
+        if (false === strpos($url, '://')) {
+            if (0 === strpos($url, '/')) {
+                $host = $baseHost;
+            } else {
+                $host = '';
+            }
+            $path = $url;
+        } else {
+            list($host, $path) = self::split($url);
+        }
+
+        if ('' !== $host && $host !== $baseHost) {
             throw new InvalidArgumentException(sprintf(
                 'The URL "%s" cannot be made relative to "%s" since their host names are different.',
                 $host,
@@ -79,13 +90,7 @@ final class Url
      */
     private static function split($url)
     {
-        if (false === ($pos = strpos($url, '://'))) {
-            throw new InvalidArgumentException(sprintf(
-                '"%s" is not an absolute Url.',
-                $url
-            ));
-        }
-
+        $pos = strpos($url, '://');
         $scheme = substr($url, 0, $pos + 3);
         $url = substr($url, $pos + 3);
 
