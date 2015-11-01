@@ -678,7 +678,7 @@ final class Path
         if ('' === $root && '' !== $baseRoot) {
             // If base path is already in its root
             if ('' === $relativeBasePath) {
-                $relativePath = ltrim($relativePath, './');
+                $relativePath = ltrim($relativePath, './\\');
             }
 
             return $relativePath;
