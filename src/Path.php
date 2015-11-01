@@ -680,6 +680,7 @@ final class Path
             if ('' === $relativeBasePath) {
                 $relativePath = ltrim($relativePath, './');
             }
+
             return $relativePath;
         }
 
