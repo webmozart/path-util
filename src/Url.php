@@ -100,7 +100,7 @@ final class Url
         } else {
             // No path, only host
             $host = $url;
-            $url = '';
+            $url = '/';
         }
 
         // At this point, we have $scheme, $host and $path

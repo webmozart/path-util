@@ -165,6 +165,15 @@ class UrlTest extends \PHPUnit_Framework_TestCase
             array('css/style.css', '', 'css/style.css'),
             array('css/../style.css', '', 'style.css'),
             array('css/./style.css', '', 'css/style.css'),
+            array('../style.css', '/', 'style.css'),
+            array('./style.css', '/', 'style.css'),
+            array('../../style.css', '/', 'style.css'),
+            array('../../style.css', '', 'style.css'),
+            array('./style.css', '', 'style.css'),
+            array('../style.css', '', 'style.css'),
+            array('./../style.css', '', 'style.css'),
+            array('css/./../style.css', '', 'style.css'),
+            array('css//style.css', '', 'css/style.css'),
         );
     }
 }
