@@ -13,7 +13,7 @@ Latest release: [2.2.3](https://packagist.org/packages/webmozart/path-util#2.2.3
 PHP >= 5.3.3
 
 This package provides robust, cross-platform utility functions for normalizing,
-comparing and modifying file paths.
+comparing and modifying file paths and URLs.
 
 Installation
 ------------
@@ -26,6 +26,8 @@ $ composer require webmozart/path-util:^2.2
 
 Usage
 -----
+
+Use the `Path` class to handle file paths:
 
 ```php
 use Webmozart\PathUtil\Path;
@@ -86,11 +88,16 @@ Path::getHomeDirectory();
 // => /home/webmozart
 ```
 
+Use the `Url` class to handle URLs:
+
 ```php
 use Webmozart\PathUtil\Url;
 
-echo Url::makeRelative('http://example.com/webmozart/css/style.css', 'http://example.com/webmozart/puli');
+echo Url::makeRelative('http://example.com/css/style.css', 'http://example.com/puli');
 // => ../css/style.css
+
+echo Url::makeRelative('http://cdn.example.com/css/style.css', 'http://example.com/puli');
+// => http://cdn.example.com/css/style.css
 ```
 
 Learn more in the [Documentation] and the [API Docs].

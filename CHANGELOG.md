@@ -1,6 +1,12 @@
 Changelog
 =========
 
+* 2.3.0 (2015-12-17)
+
+ * added `Url::makeRelative()` for calculating relative paths between URLs
+ * fixed `Path::makeRelative()` to trim leading dots when moving outside of
+   the base path
+
 * 2.2.3 (2015-10-05)
 
  * fixed `Path::makeRelative()` to produce `..` when called with the parent
