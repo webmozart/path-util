@@ -1,9 +1,9 @@
 File Path Utility
 =================
 
-[![Build Status](https://travis-ci.org/webmozart/path-util.svg?branch=master)](https://travis-ci.org/webmozart/path-util)
+[![Build Status](https://travis-ci.org/webmozart/path-util.svg?branch=2.3.0)](https://travis-ci.org/webmozart/path-util)
 [![Build status](https://ci.appveyor.com/api/projects/status/d5uuypr6p162gpxf/branch/master?svg=true)](https://ci.appveyor.com/project/webmozart/path-util/branch/master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webmozart/path-util/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/webmozart/path-util/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webmozart/path-util/badges/quality-score.png?b=2.3.0)](https://scrutinizer-ci.com/g/webmozart/path-util/?branch=2.3.0)
 [![Latest Stable Version](https://poser.pugx.org/webmozart/path-util/v/stable.svg)](https://packagist.org/packages/webmozart/path-util)
 [![Total Downloads](https://poser.pugx.org/webmozart/path-util/downloads.svg)](https://packagist.org/packages/webmozart/path-util)
 [![Dependency Status](https://www.versioneye.com/php/webmozart:path-util/2.3.0/badge.svg)](https://www.versioneye.com/php/webmozart:path-util/2.3.0)
