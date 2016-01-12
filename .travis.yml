@@ -33,10 +33,3 @@ install: composer update $COMPOSER_FLAGS --prefer-dist --no-interaction
 script: if [[ $COVERAGE = yes ]]; then vendor/bin/phpunit --verbose --coverage-clover=coverage.clover; else vendor/bin/phpunit --verbose; fi
 
 after_script: if [[ $COVERAGE = yes ]]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
-
-notifications:
-  webhooks:
-    urls: ['https://webhooks.gitter.im/e/9ccc2378e6c0de6480f8']
-    on_success: change
-    on_failure: always
-    on_start:   never
