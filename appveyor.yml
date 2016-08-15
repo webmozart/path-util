@@ -2,6 +2,10 @@ build: false
 platform: x86
 clone_folder: c:\projects\webmozart\path-util
 
+branches:
+  only:
+    - master
+
 cache:
   - c:\php -> appveyor.yml
 
