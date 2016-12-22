@@ -327,7 +327,7 @@ final class Path
 
         Assert::string($path, 'The path must be a string. Got: %s');
 
-        return basename($path);
+        return pathinfo($path, PATHINFO_BASENAME);
     }
 
     /**
