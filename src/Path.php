@@ -932,6 +932,45 @@ final class Path
     }
 
     /**
+     * Return the target of a link.
+     *
+     * @param string $path          A path string.
+     * @param boolean $finalTarget  Whether to recursively follow links
+     *                              until a final target is reached or not.
+     *
+     * @return string Return the resolved link.
+     *
+     * @since 2.4 Added method.
+     */
+    public static function readLink($path, $finalTarget = false)
+    {
+        Assert::fileExists($path, 'The link %s does not exist and cannot be read.');
+
+        if (!is_link($path)) {
+            return $path;
+        }
+
+        // On Windows, transitive links are resolved to the final target by
+        // readlink(). realpath(), however, returns the target link on Windows,
+        // but not on Unix.
+
+        // /link1 -> /link2 -> /file
+
+        // Windows: readlink(/link1) => /file
+        //          realpath(/link1) => /link2
+
+        // Unix:    readlink(/link1) => /link2
+        //          realpath(/link1) => /file
+
+        if ('\\' === DIRECTORY_SEPARATOR) {
+            // Windows
+            return $finalTarget ? readlink($path) : realpath($path);
+        }
+
+        return $finalTarget ? realpath($path) : readlink($path);
+    }
+
+    /**
      * Splits a part into its root directory and the remainder.
      *
      * If the path has no root directory, an empty root directory will be
