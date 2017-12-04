@@ -249,8 +249,8 @@ final class Path
             return static::canonicalize(getenv('HOME'));
         }
 
-        if (posix_getpwuid(posix_getuid())) {
-            return static::canonicalize(posix_getpwuid(posix_getuid()));
+        if (!empty(posix_getpwuid(posix_getuid()))) {
+            return static::canonicalize(posix_getpwuid(posix_getuid())['dir']);
         }
 
         // For >= Windows8 support
