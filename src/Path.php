@@ -249,6 +249,10 @@ final class Path
             return static::canonicalize(getenv('HOME'));
         }
 
+        if (posix_getpwuid(posix_getuid())) {
+            return static::canonicalize(posix_getpwuid(posix_getuid()));
+        }
+
         // For >= Windows8 support
         if (getenv('HOMEDRIVE') && getenv('HOMEPATH')) {
             return static::canonicalize(getenv('HOMEDRIVE').getenv('HOMEPATH'));
