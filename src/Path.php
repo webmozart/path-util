@@ -558,7 +558,7 @@ final class Path
      * // => C:/style.css
      *
      * Path::makeAbsolute("C:/style.css", "/webmozart/puli/css");
-     * // InvalidArgumentException
+     * // => C:/style.css
      * ```
      *
      * If the base path is not an absolute path, an exception is thrown.
@@ -570,9 +570,7 @@ final class Path
      *
      * @return string An absolute path in canonical form.
      *
-     * @throws InvalidArgumentException If the base path is not absolute or if
-     *                                  the given path is an absolute path with
-     *                                  a different root than the base path.
+     * @throws InvalidArgumentException If the base path is not absolute.
      *
      * @since 1.0   Added method.
      * @since 2.0   Method now fails if $path or $basePath is not a string.
