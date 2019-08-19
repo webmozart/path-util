@@ -13,10 +13,13 @@ cache:
 matrix:
   include:
     - php: 5.3
+      dist: precise
     - php: 5.4
+      dist: trusty
     - php: 5.5
+      dist: trusty
     - php: 5.6
-    - php: hhvm
+    - php: hhvm3.30
     - php: nightly
     - php: 7.0
       env: COVERAGE=yes
@@ -27,7 +30,7 @@ matrix:
     - php: 7.3
     - php: 7.4snapshot
   allow_failures:
-    - php: hhvm
+    - php: hhvm3.30
     - php: nightly
     - php: 7.4snapshot
   fast_finish: true
