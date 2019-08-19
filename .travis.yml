@@ -22,9 +22,14 @@ matrix:
       env: COVERAGE=yes
     - php: 7.0
       env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
+    - php: 7.1
+    - php: 7.2
+    - php: 7.3
+    - php: 7.4snapshot
   allow_failures:
     - php: hhvm
     - php: nightly
+    - php: 7.4snapshot
   fast_finish: true
 
 before_install:
