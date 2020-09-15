@@ -848,8 +848,9 @@ final class Path
      */
     public static function join($paths)
     {
+        $args = func_get_args();
         if (!is_array($paths)) {
-            $paths = func_get_args();
+            $paths = $args;
         }
 
         Assert::allString($paths, 'The paths must be strings. Got: %s');
