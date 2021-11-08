@@ -15,6 +15,11 @@ PHP >= 5.3.3
 This package provides robust, cross-platform utility functions for normalizing,
 comparing and modifying file paths and URLs.
 
+Deprecation
+-----------
+
+This package has been merged into [the Symfony Filesystem Component 5.4]. It is not maintained anymore.
+
 Installation
 ------------
 
@@ -141,3 +146,4 @@ All contents of this package are licensed under the [MIT license].
 [Git repository]: https://github.com/webmozart/path-util
 [@webmozart]: https://twitter.com/webmozart
 [MIT license]: LICENSE
+[the Symfony Filesystem Component 5.4]: https://github.com/symfony/filesystem/tree/5.4
