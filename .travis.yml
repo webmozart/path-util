@@ -13,22 +13,30 @@ cache:
 matrix:
   include:
     - php: 5.3
+      dist: precise
     - php: 5.4
+      dist: trusty
     - php: 5.5
+      dist: trusty
     - php: 5.6
-    - php: hhvm
+    - php: hhvm-3.30
     - php: nightly
     - php: 7.0
       env: COVERAGE=yes
     - php: 7.0
       env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
+    - php: 7.1
+    - php: 7.2
+    - php: 7.3
+    - php: 7.4snapshot
   allow_failures:
-    - php: hhvm
+    - php: hhvm-3.30
     - php: nightly
+    - php: 7.4snapshot
   fast_finish: true
 
 before_install:
-  - if [[ $TRAVIS_PHP_VERSION != hhvm && $COVERAGE != yes ]]; then phpenv config-rm xdebug.ini; fi;
+  - if [[ $TRAVIS_PHP_VERSION != hhvm && $COVERAGE != yes ]]; then phpenv config-rm xdebug.ini || true; fi;
   - if [[ $TRAVIS_REPO_SLUG = webmozart/path-util ]]; then cp .composer-auth.json ~/.composer/auth.json; fi;
   - composer self-update
 
